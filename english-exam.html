@@ -689,10 +689,6 @@
                                 <iconify-icon icon="material-symbols:visibility"></iconify-icon>
                                 Review Results
                             </button>
-                            <button class="btn btn-primary" onclick="retakeExam('${exam.id}')">
-                                <iconify-icon icon="material-symbols:refresh"></iconify-icon>
-                                Retake Exam
-                            </button>
                         ` : (exam.status === 'available' || exam.published === true) ? `
                             <button class="btn btn-primary" onclick="startExam('${exam.id}')">
                                 <iconify-icon icon="material-symbols:play-arrow"></iconify-icon>
@@ -1161,14 +1157,6 @@
             document.getElementById('timer').style.fontWeight = 'normal';
         });
 
-        function retakeExam(examId) {
-            const exam = exams.find(e => e.id === examId);
-            if (exam) {
-                if (confirm(`Are you sure you want to retake "${exam.title}"? Your previous score will be replaced.`)) {
-                    startExam(examId);
-                }
-            }
-        }
 
         // Search functionality
         document.getElementById('examSearch').addEventListener('input', function(e) {

@@ -49,11 +49,18 @@
         .dashboard-nav .nav-link {
             color: #333;
             font-weight: 600;
-            padding: 12px 24px;
+            padding: 10px 16px;
             border-radius: 25px;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dashboard-nav .nav-link iconify-icon {
+            font-size: 1.4rem;
         }
 
         .dashboard-nav .nav-link:hover,
@@ -402,6 +409,27 @@
                 gap: 0.5rem;
             }
         }
+
+        /* Modal Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -416,25 +444,6 @@
                         <button class="hamburger-menu-btn" onclick="toggleSidebar()" style="width: 45px; height: 45px; background: white; border: 1px solid #e9ecef; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-right: 1rem;" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
                             <iconify-icon icon="material-symbols:menu" style="font-size: 1.5rem; color: #333;"></iconify-icon>
                         </button>
-                        
-                        <!-- Personalized Greeting -->
-                        <div class="personalized-greeting" onclick="toggleBadgesBar()" style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.9); border-radius: 25px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)'">
-                            <div class="greeting-content">
-                                <div class="greeting-text" id="greetingText" style="font-weight: 600; color: #333; font-size: 0.9rem;">Good afternoon, Alex!</div>
-                                <div class="ranking-info" style="font-size: 0.75rem; color: #666; display: flex; align-items: center; gap: 0.3rem;">
-                                    <span id="studentRanking">#2 in class</span>
-                                    <span>•</span>
-                                    <span id="totalPoints" style="color: #667eea; font-weight: 600;">0 points</span>
-                                    <span>•</span>
-                                    <span id="earnedBadges">3 badges</span>
-                                </div>
-                            </div>
-                            <div class="sample-badges" style="display: flex; gap: 0.2rem;">
-                                <div class="badge-sample" style="width: 24px; height: 24px; background: linear-gradient(135deg, #ffd700, #ffed4e); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #333; font-weight: bold;">1</div>
-                                <div class="badge-sample" style="width: 24px; height: 24px; background: linear-gradient(135deg, #c0c0c0, #e5e5e5); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #333; font-weight: bold;">2</div>
-                                <div class="badge-sample" style="width: 24px; height: 24px; background: linear-gradient(135deg, #cd7f32, #daa520); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: white; font-weight: bold;">3</div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="col-6">
@@ -468,34 +477,28 @@
                 </div>
             </div>
             
-            <!-- Navigation Menu -->
+            <!-- Navigation Menu - Icon Only -->
             <div class="row">
                 <div class="col-12">
                     <nav class="dashboard-nav">
                         <div class="nav nav-pills justify-content-center">
-                            <a class="nav-link" href="physics-dashboard.html">
-                                <iconify-icon icon="material-symbols:dashboard" style="margin-right: 0.5rem;"></iconify-icon>
-                                Dashboard
+                            <a class="nav-link" href="physics-dashboard.html" title="Dashboard">
+                                <iconify-icon icon="material-symbols:dashboard"></iconify-icon>
                             </a>
-                            <a class="nav-link" href="physics-lectures.html">
-                                <iconify-icon icon="material-symbols:play-circle" style="margin-right: 0.5rem;"></iconify-icon>
-                                Lectures
+                            <a class="nav-link" href="physics-lectures.html" title="Lectures">
+                                <iconify-icon icon="material-symbols:play-circle"></iconify-icon>
                             </a>
-                            <a class="nav-link" href="physics-progress.html">
-                                <iconify-icon icon="material-symbols:trending-up" style="margin-right: 0.5rem;"></iconify-icon>
-                                Progress
+                            <a class="nav-link" href="physics-progress.html" title="Progress">
+                                <iconify-icon icon="material-symbols:trending-up"></iconify-icon>
                             </a>
-                            <a class="nav-link" href="physics-practice.html">
-                                <iconify-icon icon="material-symbols:quiz" style="margin-right: 0.5rem;"></iconify-icon>
-                                Practice
+                            <a class="nav-link" href="physics-practice.html" title="Practice">
+                                <iconify-icon icon="material-symbols:quiz"></iconify-icon>
                             </a>
-                            <a class="nav-link active" href="physics-past-papers.html">
-                                <iconify-icon icon="material-symbols:description" style="margin-right: 0.5rem;"></iconify-icon>
-                                Past Papers
+                            <a class="nav-link active" href="physics-past-papers.html" title="Past Papers">
+                                <iconify-icon icon="material-symbols:description"></iconify-icon>
                             </a>
-                            <a class="nav-link" href="physics-badges.html">
-                                <iconify-icon icon="material-symbols:workspace-premium" style="margin-right: 0.5rem;"></iconify-icon>
-                                Badges
+                            <a class="nav-link" href="physics-badges.html" title="Badges">
+                                <iconify-icon icon="material-symbols:workspace-premium"></iconify-icon>
                             </a>
                         </div>
                     </nav>
@@ -519,7 +522,7 @@
             <!-- Books Section -->
             <div class="menu-section">
                 <div class="menu-item" onclick="window.location.href='physics-library.html'" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                         <iconify-icon icon="material-symbols:menu-book" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
@@ -533,7 +536,7 @@
             <!-- Lectures Section -->
             <div class="menu-section">
                 <div class="menu-item" onclick="window.location.href='physics-lectures.html'" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                         <iconify-icon icon="material-symbols:play-circle" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
@@ -547,7 +550,7 @@
             <!-- Track Progress Section -->
             <div class="menu-section">
                 <div class="menu-item" onclick="toggleSubmenu('progress')" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                         <iconify-icon icon="material-symbols:trending-up" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
@@ -566,7 +569,7 @@
             <!-- Practice Section -->
             <div class="menu-section">
                 <div class="menu-item" onclick="window.location.href='coming-soon.html'" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                         <iconify-icon icon="material-symbols:fitness-center" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
@@ -580,7 +583,7 @@
             <!-- Badges Section -->
             <div class="menu-section">
                 <div class="menu-item" onclick="toggleSubmenu('badges')" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                         <iconify-icon icon="material-symbols:workspace-premium" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
@@ -596,15 +599,15 @@
                 </div>
             </div>
 
-            <!-- Flashcards Section -->
+            <!-- Live Sessions Section -->
             <div class="menu-section">
-                <div class="menu-item" onclick="window.location.href='physics-flashcards.html'" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
-                        <iconify-icon icon="material-symbols:style" style="font-size: 1.5rem; color: white;"></iconify-icon>
+                <div class="menu-item" onclick="window.location.href='physics-live-sessions.html'" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                        <iconify-icon icon="material-symbols:video-call" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
-                        <div class="menu-title" style="font-weight: 600; color: #333; font-size: 1rem;">Flashcards</div>
-                        <div class="menu-subtitle" style="font-size: 0.8rem; color: #666;">Interactive Study Cards</div>
+                        <div class="menu-title" style="font-weight: 600; color: #333; font-size: 1rem;">Live Sessions</div>
+                        <div class="menu-subtitle" style="font-size: 0.8rem; color: #666;">Interactive Learning Sessions</div>
                     </div>
                     <iconify-icon icon="material-symbols:keyboard-arrow-right" style="font-size: 1.2rem; color: #666;"></iconify-icon>
                 </div>
@@ -612,22 +615,33 @@
 
             <!-- Past Papers Section -->
             <div class="menu-section">
-                <div class="menu-item" onclick="window.location.href='physics-past-papers.html'" style="display: flex; align-items: center; padding: 1rem; background: #e8f5e8; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease; border: 2px solid #10b981;" onmouseover="this.style.background='#d4edda'" onmouseout="this.style.background='#e8f5e8'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                <div class="menu-item" onclick="toggleSubmenu('papers')" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                         <iconify-icon icon="material-symbols:description" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
-                        <div class="menu-title" style="font-weight: 600; color: #10b981; font-size: 1rem;">Past Papers</div>
-                        <div class="menu-subtitle" style="font-size: 0.8rem; color: #059669;">Exam Practice & Solutions</div>
+                        <div class="menu-title" style="font-weight: 600; color: #333; font-size: 1rem;">Past Papers</div>
+                        <div class="menu-subtitle" style="font-size: 0.8rem; color: #666;">Previous Exam Papers & Solutions</div>
                     </div>
-                    <iconify-icon icon="material-symbols:keyboard-arrow-right" style="font-size: 1.2rem; color: #10b981;"></iconify-icon>
+                    <iconify-icon id="papers-arrow" icon="material-symbols:keyboard-arrow-down" style="font-size: 1.2rem; color: #666; transition: transform 0.3s ease;"></iconify-icon>
+                </div>
+                <div id="papers-submenu" class="submenu" style="display: none; margin-left: 1rem; margin-bottom: 0.5rem;">
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">All Past Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2025.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2025 Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2024.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2024 Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2023.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2023 Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2022.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2022 Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2021.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2021 Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2020.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2020 Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2019.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2019 Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2018.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2018 Papers</div>
                 </div>
             </div>
 
             <!-- Community Section -->
             <div class="menu-section">
                 <div class="menu-item" onclick="window.location.href='physics-community.html'" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                         <iconify-icon icon="material-symbols:groups" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
@@ -923,26 +937,181 @@
         </div>
     </div>
 
+    <!-- Load centralized notification system -->
+    <script src="js/notifications.js"></script>
+
     <script>
         function navigateToFocusMode() {
             window.location.href = 'focus-mode.html';
         }
 
         function navigateToNotifications() {
-            window.location.href = 'notifications.html';
+            console.log('Notifications button clicked');
+            showNotificationsModal();
         }
 
         function navigateToCommunity() {
-            window.location.href = 'community.html';
+            console.log('Community button clicked');
+            window.location.href = 'physics-community.html';
         }
 
         function navigateToProfile() {
-            window.location.href = 'profile.html';
+            console.log('Profile button clicked');
+            
+            // Get actual user info from localStorage
+            const userName = localStorage.getItem('userName') || 'Student';
+            const userEmail = localStorage.getItem('userEmail') || 'student@example.com';
+            
+            // Calculate total points from completed work
+            const studentId = localStorage.getItem('userId') || 'current';
+            const pointsData = calculateStudentPoints(studentId);
+            const totalPoints = pointsData.totalPoints || 0;
+            
+            // Create profile dropdown menu
+            const dropdownHtml = `
+                <div id="profileDropdown" style="position: fixed; top: 70px; right: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); padding: 1rem; z-index: 9999; min-width: 250px; animation: fadeIn 0.3s ease;">
+                    <div style="border-bottom: 1px solid #e9ecef; padding-bottom: 0.75rem; margin-bottom: 0.75rem;">
+                        <div style="font-weight: 600; color: #333; font-size: 1.1rem;">${userName}</div>
+                        <div style="font-size: 0.85rem; color: #666;">${userEmail}</div>
+                        <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem;">
+                            <span style="background: #667eea; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">${totalPoints} pts</span>
+                            <span style="background: #22c55e; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">Active</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <button onclick="event.stopPropagation(); window.location.href='student-profile.html'" style="width: 100%; text-align: left; padding: 0.75rem; background: transparent; border: none; cursor: pointer; border-radius: 8px; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">
+                            <iconify-icon icon="material-symbols:person" style="font-size: 1.2rem; color: #667eea;"></iconify-icon>
+                            <span>My Profile</span>
+                        </button>
+                        <button onclick="event.stopPropagation(); handleLogout()" style="width: 100%; text-align: left; padding: 0.75rem; background: transparent; border: none; cursor: pointer; border-radius: 8px; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; color: #ef4444;" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='transparent'">
+                            <iconify-icon icon="material-symbols:logout" style="font-size: 1.2rem;"></iconify-icon>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing dropdown if any
+            const existing = document.getElementById('profileDropdown');
+            if (existing) {
+                existing.remove();
+                return;
+            }
+            
+            // Add dropdown to page
+            document.body.insertAdjacentHTML('beforeend', dropdownHtml);
+            
+            // Close on outside click
+            setTimeout(() => {
+                document.addEventListener('click', function closeDropdown(e) {
+                    const dropdown = document.getElementById('profileDropdown');
+                    if (dropdown && !dropdown.contains(e.target)) {
+                        dropdown.remove();
+                        document.removeEventListener('click', closeDropdown);
+                    }
+                }, {once: false});
+            }, 100);
         }
 
-        function toggleBadgesBar() {
-            window.location.href = 'badges.html';
+        // Cache for student points
+        let studentPointsCache = {};
+        let cacheExpiry = 0;
+
+        function calculateStudentPoints(studentId) {
+            // Check cache first
+            if (studentPointsCache[studentId] && Date.now() < cacheExpiry) {
+                return studentPointsCache[studentId];
+            }
+
+            let totalPoints = 0;
+            let quizPoints = 0;
+            let assignmentPoints = 0;
+            let examPoints = 0;
+            let completedQuizzes = 0;
+            let completedAssignments = 0;
+            let completedExams = 0;
+
+            // Calculate quiz points from all quiz storage keys
+            const studentQuizzes = JSON.parse(localStorage.getItem('physicsQuizzes') || '[]');
+            const teacherQuizzes = JSON.parse(localStorage.getItem('physicsTeacherQuizzes') || '[]');
+            
+            [...studentQuizzes, ...teacherQuizzes].forEach(quiz => {
+                if (quiz.completed === true && quiz.score !== undefined) {
+                    const points = Math.round((quiz.score / 100) * (quiz.points || (quiz.questions ? quiz.questions.length * 10 : 50)));
+                    quizPoints += points;
+                    totalPoints += points;
+                    completedQuizzes++;
+                }
+            });
+
+            // Calculate assignment points from all assignment storage keys
+            const studentAssignments = JSON.parse(localStorage.getItem('physicsAssignments') || '[]');
+            const teacherAssignments = JSON.parse(localStorage.getItem('physicsTeacherAssignments') || '[]');
+            
+            [...studentAssignments, ...teacherAssignments].forEach(assignment => {
+                if ((assignment.status === 'completed' || assignment.completed === true) && assignment.score !== undefined) {
+                    let points = 0;
+                    
+                    if (assignment.points) {
+                        points = assignment.points;
+                    } else if (assignment.totalScore && assignment.score !== undefined) {
+                        points = Math.round((assignment.score / assignment.totalScore) * (assignment.points || 100));
+                    } else {
+                        points = 50; // Default points
+                    }
+                    
+                    assignmentPoints += points;
+                    totalPoints += points;
+                    completedAssignments++;
+                }
+            });
+
+            // Calculate exam points
+            const studentExams = JSON.parse(localStorage.getItem('physicsExams') || '[]');
+            const teacherExams = JSON.parse(localStorage.getItem('physicsTeacherExams') || '[]');
+            
+            [...studentExams, ...teacherExams].forEach(exam => {
+                if (exam.completed === true && exam.score !== undefined) {
+                    const points = exam.points || Math.round((exam.score / 100) * 100);
+                    examPoints += points;
+                    totalPoints += points;
+                    completedExams++;
+                }
+            });
+
+            const result = {
+                totalPoints,
+                quizPoints,
+                assignmentPoints,
+                examPoints,
+                completedQuizzes,
+                completedAssignments,
+                completedExams
+            };
+
+            // Cache for 5 minutes
+            studentPointsCache[studentId] = result;
+            cacheExpiry = Date.now() + 300000;
+
+            return result;
         }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('userId');
+                localStorage.removeItem('userLoggedIn');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Page initialization code here if needed
+        });
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');

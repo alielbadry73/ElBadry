@@ -1006,36 +1006,71 @@
                             ${isFileBased ? '<span class="file-badge"><iconify-icon icon="material-symbols:upload-file"></iconify-icon> File-Based</span>' : ''}
                         </div>
                         
-                        <div class="assignment-meta">
-                            <span><iconify-icon icon="material-symbols:schedule"></iconify-icon> Due: ${new Date(dueDate).toLocaleDateString()}</span>
-                            <span><iconify-icon icon="material-symbols:star"></iconify-icon> ${points} pts</span>
-                            ${!isFileBased ? `<span><iconify-icon icon="material-symbols:quiz"></iconify-icon> ${questionsCount} questions</span>` : ''}
-                        </div>
-                        
-                        <div class="assignment-description">
-                            <p>${description}</p>
-                        </div>
-                        
-                        <div class="assignment-details">
-                            <div class="detail-item">
-                                <iconify-icon icon="material-symbols:trending-up"></iconify-icon>
-                                <span>${difficulty}</span>
+                        ${status === 'completed' ? `
+                            <div class="assignment-meta">
+                                <span><iconify-icon icon="material-symbols:star"></iconify-icon> Scored: ${assignment.score || 0}/${assignment.totalPoints || points} (${assignment.percentage || 0}%)</span>
+                                ${assignment.grade ? `<span><iconify-icon icon="material-symbols:grade"></iconify-icon> Grade: ${assignment.grade}</span>` : ''}
                             </div>
-                            <div class="detail-item">
-                                <iconify-icon icon="material-symbols:schedule"></iconify-icon>
-                                <span>${estimatedTime}</span>
+                            
+                            <div class="assignment-description">
+                                <p>${description}</p>
                             </div>
-                        </div>
+                            
+                            <div class="assignment-details">
+                                ${assignment.completedAt ? `
+                                    <div class="detail-item">
+                                        <iconify-icon icon="material-symbols:check-circle"></iconify-icon>
+                                        <span>Solved in: ${new Date(assignment.completedAt).toLocaleDateString()}</span>
+                                    </div>
+                                ` : ''}
+                                ${assignment.timeSpent ? `
+                                    <div class="detail-item">
+                                        <iconify-icon icon="material-symbols:timer"></iconify-icon>
+                                        <span>Timing: ${assignment.timeSpent} min</span>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        ` : `
+                            <div class="assignment-meta">
+                                <span><iconify-icon icon="material-symbols:star"></iconify-icon> ${points} pts</span>
+                                ${estimatedTime !== 'No time limit' ? `<span><iconify-icon icon="material-symbols:schedule"></iconify-icon> Duration: ${estimatedTime}</span>` : ''}
+                                <span><iconify-icon icon="material-symbols:calendar-today"></iconify-icon> Due: ${new Date(dueDate).toLocaleDateString()}</span>
+                            </div>
+                            
+                            <div class="assignment-description">
+                                <p>${description}</p>
+                            </div>
+                            
+                            <div class="assignment-details">
+                                <div class="detail-item">
+                                    <iconify-icon icon="material-symbols:trending-up"></iconify-icon>
+                                    <span>${difficulty}</span>
+                                </div>
+                                ${!isFileBased ? `
+                                    <div class="detail-item">
+                                        <iconify-icon icon="material-symbols:quiz"></iconify-icon>
+                                        <span>${questionsCount} questions</span>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `}
                         
                         <div class="assignment-actions">
-                            <button class="btn btn-primary" onclick="startAssignment('${assignment.id}')">
-                                <iconify-icon icon="material-symbols:play-arrow"></iconify-icon>
-                                Start Assignment
-                            </button>
-                            <button class="btn btn-outline-secondary" onclick="viewAssignmentDetails('${assignment.id}')">
-                                <iconify-icon icon="material-symbols:visibility"></iconify-icon>
-                                View Details
-                            </button>
+                            ${status === 'completed' ? `
+                                <button class="btn btn-success" onclick="viewAssignmentDetails('${assignment.id}')">
+                                    <iconify-icon icon="material-symbols:visibility"></iconify-icon>
+                                    Review Answers
+                                </button>
+                            ` : `
+                                <button class="btn btn-primary" onclick="startAssignment('${assignment.id}')">
+                                    <iconify-icon icon="material-symbols:play-arrow"></iconify-icon>
+                                    Start Assignment
+                                </button>
+                                <button class="btn btn-outline-secondary" onclick="viewAssignmentDetails('${assignment.id}')">
+                                    <iconify-icon icon="material-symbols:visibility"></iconify-icon>
+                                    View Details
+                                </button>
+                            `}
                         </div>
                     </div>
                 `;

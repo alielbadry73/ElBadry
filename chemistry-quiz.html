@@ -357,62 +357,307 @@
             color: #721c24;
         }
         
-        .quiz-filters {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        .homework-filters { 
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 12px; 
+            padding: 1rem; 
+            margin-bottom: 1.5rem; 
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06); 
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
         }
         
-        .filter-tabs {
+        .homework-filters::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+        }
+        
+        /* Header Section */
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #f1f3f4;
+        }
+        
+        .filters-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .filters-title h3 {
+            margin: 0;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .filters-icon {
+            font-size: 1.2rem;
+            color: #667eea;
+        }
+        
+        .filter-stats {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Controls Section */
+        .filters-controls {
             display: flex;
             gap: 1rem;
             margin-bottom: 1rem;
+            align-items: center;
+            justify-content: space-between;
         }
         
-        .filter-tab {
-            padding: 0.5rem 1rem;
-            border: none;
-            background: transparent;
-            color: #666;
-            font-weight: 500;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .filter-tab.active {
-            background: #8e44ad;
-            color: white;
-        }
-        
-        .filter-tab:hover {
-            background: #f8f9fa;
-        }
-        
-        .filter-tab.active:hover {
-            background: #9b59b6;
+        .search-section {
+            min-width: 200px;
+            max-width: 300px;
         }
         
         .search-box {
             position: relative;
-        }
-        
-        .search-input {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 3rem;
+            display: flex;
+            align-items: center;
+            background: white;
             border: 1px solid #e9ecef;
             border-radius: 8px;
-            font-size: 1rem;
+            padding: 0.5rem 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        
+        .search-box:focus-within {
+            border-color: #667eea;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15);
         }
         
         .search-icon {
+            color: #6c757d;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+        }
+        
+        .search-input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 0.9rem;
+            color: #2c3e50;
+        }
+        
+        .search-input::placeholder {
+            color: #adb5bd;
+        }
+        
+        .search-clear {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .search-clear:hover {
+            background: #f8f9fa;
+            color: #495057;
+        }
+        
+        .sort-section {
+            min-width: 160px;
+        }
+        
+        .sort-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        
+        .sort-dropdown:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15);
+        }
+        
+        .sort-icon {
+            color: #6c757d;
+            font-size: 1rem;
+        }
+        
+        .sort-label {
+            color: #6c757d;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+        
+        .sort-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .sort-value {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        .sort-arrow {
+            color: #6c757d;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .sort-selector:hover .sort-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .sort-clear {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .sort-clear:hover {
+            background: #f8f9fa;
+            color: #495057;
+        }
+        
+        /* Category Filters */
+        .category-filters {
+            margin-bottom: 1rem;
+        }
+        
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            gap: 1rem;
+        }
+        
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .category-icon {
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+        
+        .filter-tabs { 
+            display: flex; 
+            gap: 0.5rem; 
+            flex-wrap: wrap;
+        }
+        
+        .filter-tab { 
+            padding: 0.5rem 1rem; 
+            border: 1px solid #e9ecef; 
+            background: white; 
+            color: #6c757d; 
+            font-weight: 500; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        .filter-tab::before {
+            content: '';
             position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .filter-tab:hover::before {
+            left: 100%;
+        }
+        
+        .filter-tab:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.15);
+        }
+        
+        .filter-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-color: #667eea;
+            color: white;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+        }
+        
+        .filter-tab.active::before {
+            display: none;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .filters-controls {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .sort-section {
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .category-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.75rem;
+            }
+            
+            .search-section {
+                min-width: auto;
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -465,20 +710,86 @@
         </div>
         
         <!-- Quiz Filters -->
-        <div class="quiz-filters">
-            <div class="filter-tabs">
-                <button class="filter-tab active" onclick="filterQuizzes('all')">All Quizzes</button>
-                <button class="filter-tab" onclick="filterQuizzes('organic')">Organic Chemistry</button>
-                <button class="filter-tab" onclick="filterQuizzes('inorganic')">Inorganic Chemistry</button>
-                <button class="filter-tab" onclick="filterQuizzes('physical')">Physical Chemistry</button>
-                <button class="filter-tab" onclick="filterQuizzes('analytical')">Analytical Chemistry</button>
+        <div class="homework-filters">
+            <!-- Header Section -->
+            <div class="filters-header">
+                <div class="filters-title">
+                    <iconify-icon icon="material-symbols:tune" class="filters-icon"></iconify-icon>
+                    <h3>Quiz Filters</h3>
+                </div>
+                <div class="filter-stats">
+                </div>
+            </div>
+
+            <!-- Sort Section -->
+            <div class="filters-controls">
+                <div class="sort-section">
+                    <div class="sort-dropdown">
+                        <iconify-icon icon="material-symbols:sort" class="sort-icon"></iconify-icon>
+                        <span class="sort-label">Sort by:</span>
+                        <div class="sort-selector" onclick="showSortOptions()">
+                            <span class="sort-value" id="currentSort">Difficulty</span>
+                            <iconify-icon icon="material-symbols:keyboard-arrow-down" class="sort-arrow"></iconify-icon>
+                        </div>
+                        <button class="sort-clear" onclick="clearSort()" id="sortClearBtn" style="display: none;">
+                            <iconify-icon icon="material-symbols:close"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="search-section">
+                    <div class="search-box">
+                        <iconify-icon icon="material-symbols:search" class="search-icon"></iconify-icon>
+                        <input type="text" class="search-input" placeholder="Search quizzes..." id="quizSearch">
+                        <button class="search-clear" onclick="clearSearch()" id="searchClearBtn" style="display: none;">
+                            <iconify-icon icon="material-symbols:close"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
             </div>
             
-            <div class="search-box">
-                <iconify-icon icon="material-symbols:search" class="search-icon"></iconify-icon>
-                <input type="text" class="search-input" placeholder="Search quizzes..." id="quizSearch">
+            <!-- Category Filters -->
+            <div class="category-filters">
+                <div class="category-header">
+                    <div class="category-title">
+                        <iconify-icon icon="material-symbols:category" class="category-icon"></iconify-icon>
+                        <span>Topics</span>
+                    </div>
+                </div>
+                <div class="filter-tabs" id="filterTabs">
+                    <button class="filter-tab active" onclick="filterQuizzes('all',event)">
+                        <iconify-icon icon="material-symbols:apps"></iconify-icon>
+                        All Quizzes
+                    </button>
+                    <button class="filter-tab" onclick="filterQuizzes('organic',event)">
+                        <iconify-icon icon="material-symbols:science"></iconify-icon>
+                        Organic Chemistry
+                    </button>
+                    <button class="filter-tab" onclick="filterQuizzes('inorganic',event)">
+                        <iconify-icon icon="material-symbols:biotech"></iconify-icon>
+                        Inorganic Chemistry
+                    </button>
+                    <button class="filter-tab" onclick="filterQuizzes('physical',event)">
+                        <iconify-icon icon="material-symbols:calculate"></iconify-icon>
+                        Physical Chemistry
+                    </button>
+                    <button class="filter-tab" onclick="filterQuizzes('analytical',event)">
+                        <iconify-icon icon="material-symbols:analytics"></iconify-icon>
+                        Analytical Chemistry
+                    </button>
+                </div>
             </div>
-            <button onclick="clearAllQuizzes()" style="background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 6px; margin-left: 10px;">Clear All Quizzes</button>
+            
+            <!-- Hidden sort select for functionality -->
+            <select id="sortSelect" style="display: none;" onchange="sortQuizzes()">
+                <option value="difficulty-asc">Difficulty (Easy to Hard)</option>
+                <option value="difficulty-desc">Difficulty (Hard to Easy)</option>
+                <option value="title-asc">Title (A-Z)</option>
+                <option value="title-desc">Title (Z-A)</option>
+                <option value="points-asc">Points (Low to High)</option>
+                <option value="points-desc">Points (High to Low)</option>
+                <option value="questions-asc">Questions (Few to Many)</option>
+                <option value="questions-desc">Questions (Many to Few)</option>
+            </select>
         </div>
         
         <!-- Quiz Grid -->
@@ -672,11 +983,12 @@
                         ${quiz.completed ? `
                             <button class="btn btn-outline" onclick="reviewQuiz(${quiz.id})">
                                 <iconify-icon icon="material-symbols:visibility"></iconify-icon>
-                                Review (${quiz.score}%)
-                            </button>
-                            <button class="btn btn-primary" onclick="retakeQuiz(${quiz.id})">
-                                <iconify-icon icon="material-symbols:refresh"></iconify-icon>
-                                Retake
+                                Review (${(() => {
+                                  const percentage = quiz.score;
+                                  const totalPoints = quiz.points || 50;
+                                  const pointsEarned = Math.round((percentage / 100) * totalPoints);
+                                  return `${pointsEarned}/${totalPoints} (${percentage}%)`;
+                                })()})
                             </button>
                         ` : `
                             <button class="btn btn-primary" onclick="startQuiz(${quiz.id})">
@@ -737,18 +1049,13 @@
         function reviewQuiz(quizId) {
             const quiz = quizzes.find(q => q.id === quizId);
             if (quiz) {
-                alert(`Reviewing quiz: ${quiz.title}\n\nYour Score: ${quiz.score}%\n\nReview functionality will be implemented soon!`);
+                const percentage = quiz.score;
+                const totalPoints = quiz.points || 50;
+                const pointsEarned = Math.round((percentage / 100) * totalPoints);
+                alert(`Reviewing quiz: ${quiz.title}\n\nYour Score: ${pointsEarned}/${totalPoints} (${percentage}%)\n\nReview functionality will be implemented soon!`);
             }
         }
 
-        function retakeQuiz(quizId) {
-            const quiz = quizzes.find(q => q.id === quizId);
-            if (quiz) {
-                if (confirm(`Are you sure you want to retake "${quiz.title}"? Your previous score will be replaced.`)) {
-                    startQuiz(quizId);
-                }
-            }
-        }
 
         // Search functionality
         document.getElementById('quizSearch').addEventListener('input', function(e) {
@@ -776,6 +1083,13 @@
                 console.log('All quizzes cleared');
                 alert('All quizzes have been deleted!');
             }
+        }
+
+        // Search functionality
+        function clearSearch() {
+            document.getElementById('quizSearch').value = '';
+            document.getElementById('searchClearBtn').style.display = 'none';
+            loadQuizzes();
         }
 
         // Quiz-taking functionality

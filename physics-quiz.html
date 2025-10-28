@@ -247,8 +247,36 @@
 
         // Load quizzes on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Only clear data on first visit (if flag doesn't exist)
+            if (!localStorage.getItem('physicsAcademicDataCleared')) {
+                clearPhysicsAcademicData();
+                localStorage.setItem('physicsAcademicDataCleared', 'true');
+            }
             loadQuizzes();
         });
+        
+        // Function to clear all quizzes, assignments, and exams
+        function clearPhysicsAcademicData() {
+            // Clear quizzes
+            localStorage.removeItem('physicsQuizzes');
+            localStorage.removeItem('physicsTeacherQuizzes');
+            localStorage.removeItem('physicsQuizzesList');
+            
+            // Clear assignments (homeworks)
+            localStorage.removeItem('physicsAssignments');
+            localStorage.removeItem('physicsTeacherAssignments');
+            localStorage.removeItem('physicsAssignmentsList');
+            
+            // Clear exams
+            localStorage.removeItem('physicsExams');
+            localStorage.removeItem('physicsTeacherExams');
+            localStorage.removeItem('physicsExamsList');
+            
+            // Clear assessments (used by the new system)
+            localStorage.removeItem('physicsAssessments');
+            
+            console.log('✅ Cleared all physics quizzes, assignments, and exams from localStorage');
+        }
 
         // Load quizzes from localStorage
         function loadQuizzes() {
@@ -259,7 +287,12 @@
                 try {
                     const assessments = JSON.parse(rawData);
                     const quizAssessments = assessments.filter(assessment => 
-                        assessment.type === 'quiz' && assessment.status === 'published'
+                        assessment.type === 'quiz' && (
+                            assessment.status === 'published' || 
+                            assessment.status === 'completed' ||
+                            assessment.published === true ||
+                            assessment.published === undefined
+                        )
                     );
                     
                     allQuizzes = quizAssessments.map(assessment => ({
@@ -286,7 +319,11 @@
                     try {
                         const assignments = JSON.parse(oldData);
                         const quizAssignments = assignments.filter(assignment => 
-                            assignment.subject === 'physics' && assignment.published === true
+                            assignment.subject === 'physics' && (
+                                assignment.published === true ||
+                                assignment.published === undefined ||
+                                assignment.status === 'completed'
+                            )
                         );
                         
                         allQuizzes = quizAssignments.map(assignment => ({
@@ -372,26 +409,53 @@
                     </div>
                     
                     <div class="quiz-meta">
-                        <div class="meta-item">
-                            <iconify-icon icon="material-symbols:schedule"></iconify-icon>
-                            <span>${quiz.timeLimit ? quiz.timeLimit + ' min' : 'No time limit'}</span>
-                        </div>
-                        <div class="meta-item">
-                            <iconify-icon icon="material-symbols:star"></iconify-icon>
-                            <span>${quiz.difficulty || 'Medium'}</span>
-                        </div>
-                        <div class="meta-item">
-                            <iconify-icon icon="material-symbols:quiz"></iconify-icon>
-                            <span>${quiz.questions.length} questions</span>
-                        </div>
-                        <div class="meta-item">
-                            <iconify-icon icon="material-symbols:grade"></iconify-icon>
-                            <span>${quiz.points} points</span>
-                        </div>
-                        <div class="meta-item">
-                            <iconify-icon icon="material-symbols:event"></iconify-icon>
-                            <span>Due: ${new Date(quiz.dueDate).toLocaleDateString()}</span>
-                        </div>
+                        ${quiz.status === 'completed' ? `
+                            <div class="meta-item">
+                                <iconify-icon icon="material-symbols:grade"></iconify-icon>
+                                <span>Scored: ${quiz.score || 0}/${quiz.totalPoints || quiz.points} (${quiz.percentage || 0}%)</span>
+                            </div>
+                            ${quiz.grade ? `
+                                <div class="meta-item">
+                                    <iconify-icon icon="material-symbols:star"></iconify-icon>
+                                    <span>Grade: ${quiz.grade}</span>
+                                </div>
+                            ` : ''}
+                            ${quiz.completedAt ? `
+                                <div class="meta-item">
+                                    <iconify-icon icon="material-symbols:check-circle"></iconify-icon>
+                                    <span>Solved in: ${new Date(quiz.completedAt).toLocaleDateString()}</span>
+                                </div>
+                            ` : ''}
+                            ${quiz.timeSpent ? `
+                                <div class="meta-item">
+                                    <iconify-icon icon="material-symbols:timer"></iconify-icon>
+                                    <span>Timing: ${quiz.timeSpent} min</span>
+                                </div>
+                            ` : ''}
+                        ` : `
+                            <div class="meta-item">
+                                <iconify-icon icon="material-symbols:grade"></iconify-icon>
+                                <span>${quiz.points} pts</span>
+                            </div>
+                            ${quiz.timeLimit ? `
+                                <div class="meta-item">
+                                    <iconify-icon icon="material-symbols:schedule"></iconify-icon>
+                                    <span>Duration: ${quiz.timeLimit} min</span>
+                                </div>
+                            ` : ''}
+                            <div class="meta-item">
+                                <iconify-icon icon="material-symbols:calendar-today"></iconify-icon>
+                                <span>Due: ${new Date(quiz.dueDate).toLocaleDateString()}</span>
+                            </div>
+                            <div class="meta-item">
+                                <iconify-icon icon="material-symbols:star"></iconify-icon>
+                                <span>${quiz.difficulty || 'Medium'}</span>
+                            </div>
+                            <div class="meta-item">
+                                <iconify-icon icon="material-symbols:quiz"></iconify-icon>
+                                <span>${quiz.questions.length} questions</span>
+                            </div>
+                        `}
                     </div>
                     
                     <div class="quiz-actions">
@@ -420,10 +484,6 @@
                         <button class="btn btn-success" onclick="viewResults('${quiz.id}')">
                             <iconify-icon icon="material-symbols:check-circle"></iconify-icon>
                             View Results
-                        </button>
-                        <button class="btn btn-outline-secondary" onclick="retakeQuiz('${quiz.id}')">
-                            <iconify-icon icon="material-symbols:refresh"></iconify-icon>
-                            Retake
                         </button>
                     `;
                 case 'expired':
@@ -482,12 +542,6 @@
             window.location.href = `physics-quiz-results.html?quizId=${quizId}`;
         }
 
-        // Retake quiz
-        function retakeQuiz(quizId) {
-            if (confirm('Are you sure you want to retake this quiz? Your previous score will be replaced.')) {
-                startQuiz(quizId);
-            }
-        }
 
         // View quiz (for expired quizzes)
         function viewQuiz(quizId) {

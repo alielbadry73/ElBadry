@@ -456,27 +456,86 @@
         </div>
         
         <!-- Quiz Filters -->
-        <div class="quiz-filters">
-            <div class="filters-top">
-                <div class="filters-left">
-                    <span class="filters-label">
-                        <iconify-icon icon="mdi:filter-variant"></iconify-icon>
-                        Topics
-                    </span>
-                    <div class="filter-tabs">
-                        <button class="filter-tab active" onclick="filterQuizzes('all')">All</button>
-                        <button class="filter-tab" onclick="filterQuizzes('reading')">Reading</button>
-                        <button class="filter-tab" onclick="filterQuizzes('writing')">Writing</button>
-                        <button class="filter-tab" onclick="filterQuizzes('grammar')">Grammar</button>
-                        <button class="filter-tab" onclick="filterQuizzes('vocabulary')">Vocabulary</button>
-                    </div>
+        <div class="homework-filters">
+            <!-- Header Section -->
+            <div class="filters-header">
+                <div class="filters-title">
+                    <iconify-icon icon="material-symbols:tune" class="filters-icon"></iconify-icon>
+                    <h3>Quiz Filters</h3>
                 </div>
-                
-                <div class="search-box">
-                    <iconify-icon icon="material-symbols:search" class="search-icon"></iconify-icon>
-                    <input type="text" class="search-input" placeholder="Search quizzes..." id="quizSearch">
+                <div class="filter-stats">
                 </div>
             </div>
+
+            <!-- Sort Section -->
+            <div class="filters-controls">
+                <div class="sort-section">
+                    <div class="sort-dropdown">
+                        <iconify-icon icon="material-symbols:sort" class="sort-icon"></iconify-icon>
+                        <span class="sort-label">Sort by:</span>
+                        <div class="sort-selector" onclick="showSortOptions()">
+                            <span class="sort-value" id="currentSort">Difficulty</span>
+                            <iconify-icon icon="material-symbols:keyboard-arrow-down" class="sort-arrow"></iconify-icon>
+                        </div>
+                        <button class="sort-clear" onclick="clearSort()" id="sortClearBtn" style="display: none;">
+                            <iconify-icon icon="material-symbols:close"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="search-section">
+                    <div class="search-box">
+                        <iconify-icon icon="material-symbols:search" class="search-icon"></iconify-icon>
+                        <input type="text" class="search-input" placeholder="Search quizzes..." id="quizSearch">
+                        <button class="search-clear" onclick="clearSearch()" id="searchClearBtn" style="display: none;">
+                            <iconify-icon icon="material-symbols:close"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Category Filters -->
+            <div class="category-filters">
+                <div class="category-header">
+                    <div class="category-title">
+                        <iconify-icon icon="material-symbols:category" class="category-icon"></iconify-icon>
+                        <span>Topics</span>
+                    </div>
+                </div>
+                <div class="filter-tabs" id="filterTabs">
+                    <button class="filter-tab active" onclick="filterQuizzes('all',event)">
+                        <iconify-icon icon="material-symbols:apps"></iconify-icon>
+                        All
+                    </button>
+                    <button class="filter-tab" onclick="filterQuizzes('reading',event)">
+                        <iconify-icon icon="material-symbols:menu-book"></iconify-icon>
+                        Reading
+                    </button>
+                    <button class="filter-tab" onclick="filterQuizzes('writing',event)">
+                        <iconify-icon icon="material-symbols:edit"></iconify-icon>
+                        Writing
+                    </button>
+                    <button class="filter-tab" onclick="filterQuizzes('grammar',event)">
+                        <iconify-icon icon="material-symbols:spell-check"></iconify-icon>
+                        Grammar
+                    </button>
+                    <button class="filter-tab" onclick="filterQuizzes('vocabulary',event)">
+                        <iconify-icon icon="material-symbols:translate"></iconify-icon>
+                        Vocabulary
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Hidden sort select for functionality -->
+            <select id="sortSelect" style="display: none;" onchange="sortQuizzes()">
+                <option value="difficulty-asc">Difficulty (Easy to Hard)</option>
+                <option value="difficulty-desc">Difficulty (Hard to Easy)</option>
+                <option value="title-asc">Title (A-Z)</option>
+                <option value="title-desc">Title (Z-A)</option>
+                <option value="points-asc">Points (Low to High)</option>
+                <option value="points-desc">Points (High to Low)</option>
+                <option value="questions-asc">Questions (Few to Many)</option>
+                <option value="questions-desc">Questions (Many to Few)</option>
+            </select>
         </div>
         
         <!-- Quiz Grid -->
@@ -860,11 +919,12 @@
                         ${quiz.completed ? `
                             <button class="btn btn-outline" onclick="reviewQuiz('${quiz.id}')">
                                 <iconify-icon icon="material-symbols:visibility"></iconify-icon>
-                                Review (${quiz.score}%)
-                            </button>
-                            <button class="btn btn-primary" onclick="retakeQuiz('${quiz.id}')">
-                                <iconify-icon icon="material-symbols:refresh"></iconify-icon>
-                                Retake
+                                Review (${(() => {
+                                  const percentage = quiz.score;
+                                  const totalPoints = quiz.points || 50;
+                                  const pointsEarned = Math.round((percentage / 100) * totalPoints);
+                                  return `${pointsEarned}/${totalPoints} (${percentage}%)`;
+                                })()})
                             </button>
                         ` : `
                             <button class="btn btn-primary" onclick="startQuiz('${quiz.id}')">
@@ -971,11 +1031,12 @@
                         ${quiz.completed ? `
                             <button class="btn btn-outline" onclick="reviewQuiz('${quiz.id}')">
                                 <iconify-icon icon="material-symbols:visibility"></iconify-icon>
-                                Review (${quiz.score}%)
-                            </button>
-                            <button class="btn btn-primary" onclick="retakeQuiz('${quiz.id}')">
-                                <iconify-icon icon="material-symbols:refresh"></iconify-icon>
-                                Retake
+                                Review (${(() => {
+                                  const percentage = quiz.score;
+                                  const totalPoints = quiz.points || 50;
+                                  const pointsEarned = Math.round((percentage / 100) * totalPoints);
+                                  return `${pointsEarned}/${totalPoints} (${percentage}%)`;
+                                })()})
                             </button>
                         ` : `
                             <button class="btn btn-primary" onclick="startQuiz('${quiz.id}')">
@@ -1108,7 +1169,10 @@
         function reviewQuiz(quizId) {
             const quiz = quizzes.find(q => q.id === quizId);
             if (quiz) {
-                alert(`Reviewing quiz: ${quiz.title}\n\nYour Score: ${quiz.score}%\n\nReview functionality will be implemented soon!`);
+                const percentage = quiz.score;
+                const totalPoints = quiz.points || 50;
+                const pointsEarned = Math.round((percentage / 100) * totalPoints);
+                alert(`Reviewing quiz: ${quiz.title}\n\nYour Score: ${pointsEarned}/${totalPoints} (${percentage}%)\n\nReview functionality will be implemented soon!`);
             }
         }
 
@@ -1484,14 +1548,6 @@
             document.getElementById('timer').style.fontWeight = 'normal';
         });
 
-        function retakeQuiz(quizId) {
-            const quiz = quizzes.find(q => q.id === quizId);
-            if (quiz) {
-                if (confirm(`Are you sure you want to retake "${quiz.title}"? Your previous score will be replaced.`)) {
-                    startQuiz(quizId);
-                }
-            }
-        }
 
         // Search functionality
         document.getElementById('quizSearch').addEventListener('input', function(e) {

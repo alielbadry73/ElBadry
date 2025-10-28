@@ -68,7 +68,6 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            cursor: pointer;
         }
 
         .group-avatar {
@@ -594,6 +593,85 @@
             font-size: 0.85rem;
         }
 
+        /* Members List */
+        .members-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .member-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .member-item:hover {
+            background: #f1f5f9;
+            border-color: rgba(102, 126, 234, 0.2);
+            transform: translateX(4px);
+        }
+
+        .member-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .member-avatar.online::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background: #10b981;
+            border: 2px solid white;
+            border-radius: 50%;
+        }
+
+        .member-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .member-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .member-role {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            color: #667eea;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
         /* Search Modal */
         .search-input {
             width: 100%;
@@ -733,11 +811,7 @@
     <div class="chat-container">
         <!-- Chat Header -->
         <div class="chat-header">
-            <button class="back-btn" onclick="goBack()">
-                <iconify-icon icon="material-symbols:arrow-back"></iconify-icon>
-            </button>
-            
-            <div class="group-info" onclick="showGroupInfo()">
+            <div class="group-info">
                 <div class="group-avatar">
                     ⚛️
                 </div>
@@ -745,15 +819,6 @@
                     <h3 id="groupName">Physics IGCSE</h3>
                     <p id="groupMembers">142 members</p>
                 </div>
-            </div>
-
-            <div class="header-actions">
-                <button class="header-btn" onclick="searchMessages()">
-                    <iconify-icon icon="material-symbols:search"></iconify-icon>
-                </button>
-                <button class="header-btn" onclick="showMenu()">
-                    <iconify-icon icon="material-symbols:more-vert"></iconify-icon>
-                </button>
             </div>
         </div>
 
@@ -767,15 +832,6 @@
         <!-- Input Area -->
         <div class="chat-input-area">
             <div class="input-container">
-                <div class="input-actions">
-                    <button class="input-btn" title="Attach file">
-                        <iconify-icon icon="material-symbols:attach-file"></iconify-icon>
-                    </button>
-                    <button class="input-btn" title="Take photo">
-                        <iconify-icon icon="material-symbols:photo-camera"></iconify-icon>
-                    </button>
-                </div>
-
                 <div class="message-input-wrapper">
                     <button class="emoji-btn">😊</button>
                     <textarea 
@@ -836,6 +892,13 @@
                         <strong>Dr. Sarah Ahmed</strong>
                         <span>Course instructor</span>
                     </div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h3>Members (<span id="memberCount">0</span>)</h3>
+                <div id="membersList" class="members-list">
+                    <!-- Members will be dynamically loaded here -->
                 </div>
             </div>
 
@@ -935,74 +998,28 @@
 
     <script>
         // Sample messages data
-        const sampleMessages = [
-            {
-                id: 1,
-                sender: 'Dr. Sarah Ahmed',
-                avatar: 'SA',
-                text: 'Good morning everyone! Today we will be covering quadratic equations. Make sure you have your notes ready.',
-                time: '09:15 AM',
-                isSent: false,
-                isRead: true
-            },
-            {
-                id: 2,
-                sender: 'You',
-                avatar: 'ME',
-                text: 'Good morning Dr. Sarah! I have a question about yesterday\'s homework.',
-                time: '09:17 AM',
-                isSent: true,
-                isRead: true
-            },
-            {
-                id: 3,
-                sender: 'Ahmed Hassan',
-                avatar: 'AH',
-                text: 'Can we review the factorization method again?',
-                time: '09:18 AM',
-                isSent: false,
-                isRead: true
-            },
-            {
-                id: 4,
-                sender: 'Dr. Sarah Ahmed',
-                avatar: 'SA',
-                text: 'Of course! Let me share a video explanation in the lecture section. Also, I\'ll post some practice problems.',
-                time: '09:20 AM',
-                isSent: false,
-                isRead: true
-            },
-            {
-                id: 5,
-                sender: 'Layla Mohammed',
-                avatar: 'LM',
-                text: 'Thank you Dr. Sarah! The explanations are very helpful 🙏',
-                time: '09:22 AM',
-                isSent: false,
-                isRead: true
-            },
-            {
-                id: 6,
-                sender: 'You',
-                avatar: 'ME',
-                text: 'I finished the assignment. Where should I submit it?',
-                time: '09:25 AM',
-                isSent: true,
-                isRead: true
-            },
-            {
-                id: 7,
-                sender: 'Dr. Sarah Ahmed',
-                avatar: 'SA',
-                text: 'Great! You can submit it through the assignments section in your dashboard. The deadline is tomorrow at 11:59 PM.',
-                time: '09:27 AM',
-                isSent: false,
-                isRead: true
-            }
+        const sampleMessages = [];
+
+        // Community members data
+        const communityMembers = [
+            { name: 'Dr. Sarah Ahmed', role: 'Teacher', avatar: 'SA', isOnline: true },
+            { name: 'Ahmed Hassan', role: 'Student', avatar: 'AH', isOnline: true },
+            { name: 'Layla Mohammed', role: 'Student', avatar: 'LM', isOnline: false },
+            { name: 'Omar Khaled', role: 'Student', avatar: 'OK', isOnline: true },
+            { name: 'Fatima Ali', role: 'Student', avatar: 'FA', isOnline: false },
+            { name: 'Youssef Ibrahim', role: 'Student', avatar: 'YI', isOnline: true },
+            { name: 'Nour Abdel', role: 'Student', avatar: 'NA', isOnline: true },
+            { name: 'Karim Mahmoud', role: 'Student', avatar: 'KM', isOnline: false }
         ];
 
         // Initialize chat
         function initializeChat() {
+            // Update member count in header
+            const headerMemberCount = document.getElementById('groupMembers');
+            if (headerMemberCount) {
+                headerMemberCount.textContent = `${communityMembers.length} members`;
+            }
+            
             renderMessages();
             scrollToBottom();
         }
@@ -1010,6 +1027,18 @@
         function renderMessages() {
             const container = document.getElementById('messagesContainer');
             
+            if (sampleMessages.length === 0) {
+                // Show empty state
+                container.innerHTML = `
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #94a3b8; text-align: center; padding: 2rem;">
+                        <iconify-icon icon="material-symbols:chat-bubble-outline" style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.5;"></iconify-icon>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; color: #64748b; margin-bottom: 0.5rem;">No messages yet</h3>
+                        <p style="font-size: 0.9rem; color: #94a3b8;">Start the conversation by sending a message below!</p>
+                    </div>
+                `;
+                return;
+            }
+
             // Add date separator
             container.innerHTML = `
                 <div class="date-separator">
@@ -1022,9 +1051,6 @@
                 const messageEl = createMessageElement(msg);
                 container.appendChild(messageEl);
             });
-
-            // Add typing indicator
-            // addTypingIndicator();
         }
 
         function createMessageElement(msg) {
@@ -1121,7 +1147,32 @@
 
         function showGroupInfo() {
             closeModal('menuModal'); // Close menu if open
+            renderMembersList();
             document.getElementById('groupInfoModal').classList.add('active');
+        }
+
+        function renderMembersList() {
+            const membersList = document.getElementById('membersList');
+            const memberCount = document.getElementById('memberCount');
+            
+            if (!membersList || !memberCount) return;
+            
+            memberCount.textContent = communityMembers.length;
+            
+            membersList.innerHTML = communityMembers.map(member => `
+                <div class="member-item">
+                    <div class="member-avatar ${member.isOnline ? 'online' : ''}">
+                        ${member.avatar}
+                    </div>
+                    <div class="member-details">
+                        <div class="member-name">
+                            ${member.name}
+                            ${member.role === 'Teacher' ? '<span class="role-badge">Teacher</span>' : ''}
+                        </div>
+                        <div class="member-role">${member.role} ${member.isOnline ? '· Online' : '· Offline'}</div>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function searchMessages() {
@@ -1228,6 +1279,11 @@
                     localStorage.removeItem('communityQuestionDraft');
                 }
             }
+        }
+
+        // Clear any existing messages from localStorage on page load
+        if (localStorage.getItem('physicsCommunityMessages')) {
+            localStorage.removeItem('physicsCommunityMessages');
         }
 
         // Initialize

@@ -92,10 +92,20 @@
             }
         }
 
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
         /* Main Layout */
         .main-layout {
             display: flex;
             min-height: 100vh;
+            padding-top: 80px;
         }
 
         /* Physics Dashboard Header */
@@ -106,8 +116,11 @@
             padding: 1rem 0;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             margin: 0;
-            position: relative;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             z-index: 999;
         }
@@ -165,7 +178,7 @@
         /* Sidebar Toggle Button */
         .sidebar-toggle-btn {
             position: fixed;
-            top: 100px;
+            top: 145px;
             right: 20px;
             z-index: 1000;
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-color) 100%);
@@ -204,8 +217,8 @@
             flex-direction: column;
             position: fixed;
             right: 0;
-            top: 0;
-            height: 100vh;
+            top: 80px;
+            height: calc(100vh - 80px);
             z-index: 100;
             box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
             animation: slideInRight 0.6s ease;
@@ -609,9 +622,9 @@
 
         /* Back Button */
         .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
+            position: fixed !important;
+            top: 19px !important;
+            left: 20px !important;
             z-index: 1000;
             background: rgba(255, 255, 255, 0.95);
             border: none;
@@ -622,9 +635,11 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: none !important;
+            transition: none !important;
+            transform: none !important;
         }
 
         .back-button:hover {
@@ -1143,34 +1158,7 @@
         <div class="container-fluid">
             <!-- Top Header with Hamburger Menu and Navigation Buttons -->
             <div class="row" style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
-                <div class="col-6">
-                    <div class="d-flex align-items-center">
-                        <!-- Hamburger Menu Button -->
-                        <button class="hamburger-menu-btn" onclick="toggleSidebar()" style="width: 45px; height: 45px; background: white; border: 1px solid #e9ecef; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-right: 1rem;" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
-                            <iconify-icon icon="material-symbols:menu" style="font-size: 1.5rem; color: #333;"></iconify-icon>
-                        </button>
-                        
-                        <!-- Personalized Greeting -->
-                        <div class="personalized-greeting" onclick="toggleBadgesBar()" style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.9); border-radius: 25px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)'">
-                            <div class="greeting-content">
-                                <div class="greeting-text" id="greetingText" style="font-weight: 600; color: #333; font-size: 0.9rem;">Good afternoon, Alex!</div>
-                                <div class="ranking-info" style="font-size: 0.75rem; color: #666; display: flex; align-items: center; gap: 0.3rem;">
-                                    <span id="studentRanking">#2 in class</span>
-                                    <span>•</span>
-                                    <span id="totalPoints" style="color: #667eea; font-weight: 600;">0 points</span>
-                                    <span>•</span>
-                                    <span id="earnedBadges">3 badges</span>
-                                </div>
-                            </div>
-                            <div class="sample-badges" style="display: flex; gap: 0.2rem;">
-                                <div class="badge-sample" style="width: 24px; height: 24px; background: linear-gradient(135deg, #ffd700, #ffed4e); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #333; font-weight: bold;">1</div>
-                                <div class="badge-sample" style="width: 24px; height: 24px; background: linear-gradient(135deg, #c0c0c0, #e5e5e5); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #333; font-weight: bold;">2</div>
-                                <div class="badge-sample" style="width: 24px; height: 24px; background: linear-gradient(135deg, #cd7f32, #daa520); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: white; font-weight: bold;">3</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
+                <div class="col-12">
                     <div class="d-flex justify-content-end align-items-center gap-2">
                         <!-- IG Nation Logo -->
                         <a href="student-dashboard.html" style="margin-right: 2rem; display: flex; align-items: center; text-decoration: none;">
@@ -1183,10 +1171,12 @@
                         </button>
                         
                         <!-- Notifications Button -->
-                        <button class="nav-icon-btn" onclick="navigateToNotifications()" style="width: 45px; height: 45px; background: white; border: 1px solid #e9ecef; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative;" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
-                            <iconify-icon icon="material-symbols:notifications" style="font-size: 1.2rem; color: #333;"></iconify-icon>
-                            <span id="notificationBadge" style="position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; font-weight: 700;">0</span>
-                        </button>
+                        <div class="notifications-container" style="position: relative;">
+                            <button class="nav-icon-btn" onclick="openNotifications()" style="width: 45px; height: 45px; background: white; border: 1px solid #e9ecef; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative;" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
+                                <iconify-icon icon="material-symbols:notifications" style="font-size: 1.2rem; color: #333;"></iconify-icon>
+                                <span id="notificationBadge" class="notification-badge" style="position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center; font-weight: 700;">0</span>
+                            </button>
+                        </div>
                         
                         <!-- Community Button -->
                         <button class="nav-icon-btn" onclick="navigateToCommunity()" style="width: 45px; height: 45px; background: white; border: 1px solid #e9ecef; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
@@ -1224,13 +1214,13 @@
 
     <!-- Main Layout -->
     <div class="main-layout">
+        <!-- Back Button - Outside content area to prevent animation -->
+        <button class="back-button" onclick="history.back()" title="Back">
+            <iconify-icon icon="material-symbols:arrow-back" style="font-size: 1.5rem; color: #667eea;"></iconify-icon>
+        </button>
+        
         <!-- Content Area -->
         <div class="content-area" id="contentArea">
-            <!-- Back Button -->
-            <button class="back-button" onclick="history.back()" title="Back">
-                <iconify-icon icon="material-symbols:arrow-back" style="font-size: 1.5rem; color: #667eea;"></iconify-icon>
-            </button>
-
             <!-- Main Content -->
             <div class="main-content">
                 <div class="container">
@@ -1326,15 +1316,142 @@
         }
 
         function navigateToNotifications() {
-            window.location.href = 'notifications.html';
+            openNotifications();
         }
 
         function navigateToCommunity() {
-            window.location.href = 'community.html';
+            window.location.href = 'physics-community.html';
+        }
+
+        function calculateStudentPoints() {
+            let totalPoints = 0;
+            let quizPoints = 0;
+            let assignmentPoints = 0;
+            let examPoints = 0;
+            let completedQuizzes = 0;
+            let completedAssignments = 0;
+            let completedExams = 0;
+
+            // Calculate quiz points from all quiz storage keys
+            const studentQuizzes = JSON.parse(localStorage.getItem('physicsQuizzes') || '[]');
+            const teacherQuizzes = JSON.parse(localStorage.getItem('physicsTeacherQuizzes') || '[]');
+            const mathematicsQuizzes = JSON.parse(localStorage.getItem('physicsQuizzesList') || '[]');
+            
+            [...studentQuizzes, ...teacherQuizzes, ...mathematicsQuizzes].forEach(quiz => {
+                if (quiz.completed === true && quiz.score !== undefined) {
+                    const points = Math.round((quiz.score / 100) * (quiz.points || (quiz.questions ? quiz.questions.length * 10 : 50)));
+                    quizPoints += points;
+                    totalPoints += points;
+                    completedQuizzes++;
+                }
+            });
+
+            // Calculate assignment points
+            const studentAssignments = JSON.parse(localStorage.getItem('physicsAssignments') || '[]');
+            const teacherAssignments = JSON.parse(localStorage.getItem('physicsTeacherAssignments') || '[]');
+            const mathematicsAssignments = JSON.parse(localStorage.getItem('physicsAssignmentsList') || '[]');
+            
+            [...studentAssignments, ...teacherAssignments, ...mathematicsAssignments].forEach(assignment => {
+                if (assignment.completed === true && assignment.score !== undefined) {
+                    const points = assignment.points || (assignment.totalScore || 100);
+                    assignmentPoints += points;
+                    totalPoints += points;
+                    completedAssignments++;
+                }
+            });
+
+            // Calculate exam points
+            const studentExams = JSON.parse(localStorage.getItem('physicsExams') || '[]');
+            const teacherExams = JSON.parse(localStorage.getItem('physicsTeacherExams') || '[]');
+            const mathematicsExams = JSON.parse(localStorage.getItem('physicsExamsList') || '[]');
+            
+            [...studentExams, ...teacherExams, ...mathematicsExams].forEach(exam => {
+                if (exam.completed === true && exam.score !== undefined) {
+                    const points = exam.points || (exam.totalScore || 200);
+                    examPoints += points;
+                    totalPoints += points;
+                    completedExams++;
+                }
+            });
+
+            return {
+                totalPoints,
+                quizPoints,
+                assignmentPoints,
+                examPoints,
+                completedQuizzes,
+                completedAssignments,
+                completedExams
+            };
         }
 
         function navigateToProfile() {
-            window.location.href = 'profile.html';
+            console.log('Profile button clicked');
+            
+            // Get actual user info from localStorage
+            const userName = localStorage.getItem('userName') || 'Student';
+            const userEmail = localStorage.getItem('userEmail') || 'student@example.com';
+            
+            // Calculate total points from completed work
+            const pointsData = calculateStudentPoints();
+            const totalPoints = pointsData.totalPoints || 0;
+            
+            // Create profile dropdown menu
+            const dropdownHtml = `
+                <div id="profileDropdown" style="position: fixed; top: 70px; right: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); padding: 1rem; z-index: 9999; min-width: 250px; animation: fadeIn 0.3s ease;">
+                    <div style="border-bottom: 1px solid #e9ecef; padding-bottom: 0.75rem; margin-bottom: 0.75rem;">
+                        <div style="font-weight: 600; color: #333; font-size: 1.1rem;">${userName}</div>
+                        <div style="font-size: 0.85rem; color: #666;">${userEmail}</div>
+                        <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem;">
+                            <span style="background: #667eea; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">${totalPoints} pts</span>
+                            <span style="background: #22c55e; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">Active</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <button onclick="event.stopPropagation(); window.location.href='student-profile.html'" style="width: 100%; text-align: left; padding: 0.75rem; background: transparent; border: none; cursor: pointer; border-radius: 8px; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">
+                            <iconify-icon icon="material-symbols:person" style="font-size: 1.2rem; color: #667eea;"></iconify-icon>
+                            <span>My Profile</span>
+                        </button>
+                        <button onclick="event.stopPropagation(); handleLogout()" style="width: 100%; text-align: left; padding: 0.75rem; background: transparent; border: none; cursor: pointer; border-radius: 8px; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; color: #ef4444;" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='transparent'">
+                            <iconify-icon icon="material-symbols:logout" style="font-size: 1.2rem;"></iconify-icon>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing dropdown if any
+            const existing = document.getElementById('profileDropdown');
+            if (existing) {
+                existing.remove();
+                return;
+            }
+            
+            // Add dropdown to page
+            document.body.insertAdjacentHTML('beforeend', dropdownHtml);
+            
+            // Close on outside click
+            setTimeout(() => {
+                document.addEventListener('click', function closeDropdown(e) {
+                    const dropdown = document.getElementById('profileDropdown');
+                    if (dropdown && !dropdown.contains(e.target)) {
+                        dropdown.remove();
+                        document.removeEventListener('click', closeDropdown);
+                    }
+                });
+            }, 0);
+        }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('userId');
+                localStorage.removeItem('userLoggedIn');
+                window.location.href = 'index.html';
+            }
         }
 
         function toggleBadgesBar() {
@@ -1624,6 +1741,12 @@
 
             selectedLecture = index;
             
+            // Hide welcome message if visible
+            const welcomeMessage = document.querySelector('.welcome-message');
+            if (welcomeMessage) {
+                welcomeMessage.remove();
+            }
+            
             // Update active state in sidebar
             document.querySelectorAll('.lecture-item').forEach((item) => {
                 const itemIndex = parseInt(item.dataset.index);
@@ -1636,8 +1759,10 @@
             if (isVideo) {
                 openVideoPlayer(file);
             } else {
-                // For PDF files, open in enhanced viewer
-                openPdfViewer(file);
+                // For PDF files, open in new window
+                if (file.url) {
+                    window.open(file.url, '_blank');
+                }
             }
         }
 
@@ -1648,6 +1773,12 @@
             const videoIframe = document.getElementById('videoIframe');
             const lectureInfoTitle = document.getElementById('lectureInfoTitle');
             const lectureDetails = document.getElementById('lectureDetails');
+            
+            // Hide welcome message if visible
+            const welcomeMessage = document.querySelector('.welcome-message');
+            if (welcomeMessage) {
+                welcomeMessage.remove();
+            }
             
             // Hide PDF viewer if open
             pdfViewerArea.style.display = 'none';
@@ -1711,6 +1842,12 @@
             const pdfIframe = document.getElementById('pdfIframe');
             const pdfInfoTitle = document.getElementById('pdfInfoTitle');
             const pdfDetails = document.getElementById('pdfDetails');
+            
+            // Hide welcome message if visible
+            const welcomeMessage = document.querySelector('.welcome-message');
+            if (welcomeMessage) {
+                welcomeMessage.remove();
+            }
             
             // Hide video player if open
             videoPlayerArea.classList.remove('active');
@@ -1972,9 +2109,24 @@
             searchInput.focus();
         }
 
+        // Initialize with sidebar open by default
+        function initializeSidebar() {
+            const sidebar = document.getElementById('lecturesSidebar');
+            const toggleBtn = document.getElementById('sidebarToggleBtn');
+            
+            // Ensure sidebar is open on load
+            if (sidebar && !sidebar.classList.contains('closed')) {
+                sidebar.classList.remove('closed');
+                if (toggleBtn) {
+                    toggleBtn.classList.add('hidden');
+                }
+            }
+        }
+
         // Initialize
         loadContent();
         initializeSearch();
+        initializeSidebar();
     </script>
 </body>
 </html>

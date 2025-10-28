@@ -794,10 +794,6 @@
                                 <iconify-icon icon="material-symbols:visibility"></iconify-icon>
                                 Review (${quiz.score}%)
                             </button>
-                            <button class="btn btn-primary" onclick="retakeQuiz(${quiz.id})">
-                                <iconify-icon icon="material-symbols:refresh"></iconify-icon>
-                                Retake
-                            </button>
                         ` : `
                             <button class="btn btn-primary" onclick="startQuiz(${quiz.id})">
                                 <iconify-icon icon="material-symbols:play-arrow"></iconify-icon>
@@ -1267,14 +1263,6 @@
             document.getElementById('timer').style.fontWeight = 'normal';
         });
 
-        function retakeQuiz(quizId) {
-            const quiz = quizzes.find(q => q.id === quizId);
-            if (quiz) {
-                if (confirm(`Are you sure you want to retake "${quiz.title}"? Your previous score will be replaced.`)) {
-                    startQuiz(quizId);
-                }
-            }
-        }
 
         // Search functionality
         document.getElementById('quizSearch').addEventListener('input', function(e) {

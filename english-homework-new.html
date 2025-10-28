@@ -1055,7 +1055,6 @@
           <div class="homework-actions">
             ${a.status === 'completed' || a.status === 'graded' ? `
               <button class="btn btn-outline" onclick="reviewHomework('${a.id}')"><iconify-icon icon="material-symbols:visibility"></iconify-icon>Review</button>
-              <button class="btn btn-primary" onclick="retakeHomework('${a.id}')"><iconify-icon icon="material-symbols:refresh"></iconify-icon>Retake</button>
             ` : a.status === 'pending-grading' ? `
               <button class="btn btn-warning" disabled><iconify-icon icon="material-symbols:schedule"></iconify-icon>Pending Grading</button>
               <button class="btn btn-outline" onclick="reviewHomework('${a.id}')"><iconify-icon icon="material-symbols:visibility"></iconify-icon>View Submission</button>
@@ -1951,14 +1950,6 @@
       
       container.innerHTML = reviewHtml;
       console.log('Review content loaded successfully');
-    }
-    function retakeHomework(id){ 
-      // Reload homework data to ensure we have the latest
-      homework = getPublishedHomework();
-      const a = homework.find(h => h.id === id); 
-      if (a && confirm(`Retake "${a.title}"?`)) { 
-        startHomework(id);
-      } 
     }
 
     function searchHomework(e) {

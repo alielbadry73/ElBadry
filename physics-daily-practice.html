@@ -261,8 +261,8 @@
 
         /* Practice Folders Section */
         .practice-folders-section {
-            margin-top: 0;
-            padding: 0;
+            margin-top: 3rem;
+            padding: 2rem 0;
         }
 
         .folders-container {
@@ -504,8 +504,8 @@
                                     <iconify-icon icon="material-symbols:quiz"></iconify-icon>
                                 </div>
                                 <div class="progress-info">
-                                    <h3 id="totalQuestionsToday">0</h3>
-                                    <p>Questions Today</p>
+                                    <h3 id="totalQuestions">0</h3>
+                                    <p>Total Questions</p>
                                 </div>
                             </div>
                         </div>
@@ -515,8 +515,8 @@
                                     <iconify-icon icon="material-symbols:check-circle"></iconify-icon>
                                 </div>
                                 <div class="progress-info">
-                                    <h3 id="correctAnswersToday">0</h3>
-                                    <p>Correct Today</p>
+                                    <h3 id="correctlySolved">0</h3>
+                                    <p>Correctly Solved</p>
                                 </div>
                             </div>
                         </div>
@@ -599,6 +599,24 @@
             loadWrongQuestionsCount();
             loadPracticeFolders();
             loadProgressStats();
+            
+            // Listen for localStorage changes to update wrong questions count
+            window.addEventListener('storage', function() {
+                loadWrongQuestionsCount();
+                loadProgressStats();
+            });
+            
+            // Also listen for custom event for same-tab updates
+            document.addEventListener('localStorageUpdated', function() {
+                loadWrongQuestionsCount();
+                loadProgressStats();
+            });
+            
+            // Update count every 5 seconds to ensure it stays current
+            setInterval(function() {
+                loadWrongQuestionsCount();
+                loadProgressStats();
+            }, 5000);
         });
 
         // Header navigation functions
@@ -625,22 +643,217 @@
 
         // Wrong Questions functionality
         function navigateToWrongQuestions() {
-            window.location.href = 'physics-wrong-questions.html';
+            // Load wrong questions from localStorage
+            const answeredQuestions = JSON.parse(localStorage.getItem('physicsAnsweredQuestions') || '[]');
+            const wrongQuestions = answeredQuestions.filter(q => q.isCorrect === false);
+            
+            // Show modal with wrong questions (even if empty)
+            showWrongQuestionsModal(wrongQuestions);
+        }
+        
+        function showWrongQuestionsModal(wrongQuestions) {
+            const modalHtml = `
+                <div id="wrongQuestionsModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease;" onclick="if(event.target.id==='wrongQuestionsModal') closeWrongQuestionsModal()">
+                    <div style="background: white; border-radius: 16px; max-width: 900px; width: 90%; max-height: 85vh; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3);" onclick="event.stopPropagation()">
+                        <div style="padding: 1.5rem; border-bottom: 1px solid #e9ecef; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                            <div>
+                                <h3 style="margin: 0; font-size: 1.5rem; color: white;">❌ Review Wrong Questions</h3>
+                                <p style="margin: 0; font-size: 0.85rem; color: rgba(255,255,255,0.9);">${wrongQuestions.length} question${wrongQuestions.length !== 1 ? 's' : ''} to review</p>
+                            </div>
+                            <button onclick="closeWrongQuestionsModal()" style="background: rgba(255,255,255,0.2); border: none; width: 30px; height: 30px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center;">×</button>
+                        </div>
+                        <div style="padding: 1rem; max-height: 70vh; overflow-y: auto;">
+                            ${wrongQuestions.length === 0 ? `
+                                <div style="text-align: center; padding: 4rem 2rem;">
+                                    <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1)); width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem auto;">
+                                        <iconify-icon icon="material-symbols:check-circle" style="font-size: 4rem; color: #16a981;"></iconify-icon>
+                                    </div>
+                                    <h3 style="margin: 0 0 1rem 0; color: #1e293b; font-weight: 700; font-size: 1.5rem;">No Wrong Questions! 🎉</h3>
+                                    <p style="margin: 0; font-size: 1.1rem; color: #64748b; max-width: 500px; margin: 0 auto;">Great job! You haven't answered any questions incorrectly yet. Keep up the excellent work!</p>
+                                    <button onclick="closeWrongQuestionsModal()" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 2rem; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(239, 68, 68, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                        Close
+                                    </button>
+                                </div>
+                            ` : `
+                            ${wrongQuestions.map((answeredQuestion, index) => {
+                                const q = answeredQuestion.question;
+                                if (!q) return '';
+                                
+                                // Debug logging
+                                console.log('Displaying wrong question:', {
+                                    type: q.type,
+                                    userAnswer: answeredQuestion.userAnswer,
+                                    isCorrect: answeredQuestion.isCorrect
+                                });
+                                
+                                return `
+                                    <div style="padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem; border: 2px solid #fee2e2; background: #fef2f2;">
+                                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                            <div style="flex: 1;">
+                                                <h5 style="margin: 0 0 0.5rem 0; color: #1e293b; font-weight: 700;">Question ${index + 1}</h5>
+                                                ${q.type && q.difficulty ? `
+                                                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                                        <span style="background: #ef4444; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600;">${q.type}</span>
+                                                        <span style="background: #f59e0b; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600;">${q.difficulty}</span>
+                                                        ${q.topic ? `<span style="background: #10b981; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600;">${q.topic}</span>` : ''}
+                                                    </div>
+                                                ` : ''}
+                                                <p style="margin: 0; color: #1e293b; line-height: 1.6; font-size: 1rem;">${q.question || q.questionText || 'No question text available'}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Show user's answer if it's not a multiple choice -->
+                                        ${!q.options || q.options.length === 0 ? `
+                                            <div style="margin-bottom: 1rem; padding: 1rem; background: #fee2e2; border-radius: 8px; border-left: 4px solid #dc2626;">
+                                                <p style="font-weight: 600; margin-bottom: 0.5rem; color: #991b1b;">❌ Your Answer:</p>
+                                                ${(q.type === 'bullet-points' || q.type === 'bullet-point') ? `
+                                                    <div style="padding-left: 1.5rem;">
+                                                        ${answeredQuestion.userAnswer ? answeredQuestion.userAnswer.split('\n').filter(line => line.trim()).map(line => `
+                                                            <div style="margin-bottom: 0.5rem; color: #991b1b;">• ${line.trim()}</div>
+                                                        `).join('') : '<p style="color: #991b1b; font-style: italic;">No answer provided</p>'}
+                                                    </div>
+                                                ` : ''}
+                                                ${(q.type === 'short-answer' || q.type === 'short-answer-text') ? `
+                                                    <div style="padding: 0.75rem; background: white; border-radius: 6px; color: #1e293b; border: 1px solid #fca5a5;">
+                                                        ${answeredQuestion.userAnswer || '<span style="color: #999; font-style: italic;">No answer provided</span>'}
+                                                    </div>
+                                                ` : ''}
+                                                ${q.type === 'file-upload' ? `
+                                                    <div style="padding: 0.75rem; background: white; border-radius: 6px; border: 1px solid #fca5a5;">
+                                                        <iconify-icon icon="material-symbols:attach-file" style="font-size: 1.5rem; vertical-align: middle; color: #dc2626;"></iconify-icon>
+                                                        <span style="margin-left: 0.5rem; color: #1e293b; font-weight: 600;">${answeredQuestion.userAnswer || 'No file uploaded'}</span>
+                                                    </div>
+                                                ` : ''}
+                                                ${(!q.type || (q.type !== 'bullet-points' && q.type !== 'bullet-point' && q.type !== 'short-answer' && q.type !== 'short-answer-text' && q.type !== 'file-upload')) && answeredQuestion.userAnswer ? `
+                                                    <div style="padding: 0.75rem; background: white; border-radius: 6px; color: #1e293b; border: 1px solid #fca5a5;">
+                                                        ${answeredQuestion.userAnswer}
+                                                    </div>
+                                                ` : ''}
+                                            </div>
+                                        ` : ''}
+                                        
+                                        ${q.options && q.options.length > 0 ? `
+                                            <div style="margin-bottom: 1rem;">
+                                                <p style="font-weight: 600; margin-bottom: 0.5rem; color: #dc2626;">Options:</p>
+                                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                                    ${q.options.map((option, i) => {
+                                                        const letter = String.fromCharCode(65 + i);
+                                                        const isUserAnswer = answeredQuestion.userAnswer === option;
+                                                        const correctAnswer = q.correctAnswer || q.answer || q.correctAnswerIndex;
+                                                        let isCorrectAnswer = false;
+                                                        
+                                                        // Determine if this option is the correct answer
+                                                        if (typeof correctAnswer === 'number') {
+                                                            isCorrectAnswer = i === correctAnswer;
+                                                        } else if (typeof correctAnswer === 'string' && correctAnswer.match(/^[A-D]$/)) {
+                                                            const letterIndex = correctAnswer.charCodeAt(0) - 65;
+                                                            isCorrectAnswer = i === letterIndex;
+                                                        } else {
+                                                            isCorrectAnswer = option === correctAnswer;
+                                                        }
+                                                        
+                                                        let bgColor = '#ffffff';
+                                                        let borderColor = '#e9ecef';
+                                                        if (isUserAnswer && isCorrectAnswer) {
+                                                            bgColor = '#dcfce7';
+                                                            borderColor = '#16a34a';
+                                                        } else if (isUserAnswer) {
+                                                            bgColor = '#fee2e2';
+                                                            borderColor = '#dc2626';
+                                                        } else if (isCorrectAnswer) {
+                                                            bgColor = '#dcfce7';
+                                                            borderColor = '#16a34a';
+                                                        }
+                                                        
+                                                        return `
+                                                            <div style="padding: 0.75rem; border: 2px solid ${borderColor}; border-radius: 8px; background: ${bgColor};">
+                                                                <span style="font-weight: 600; color: #1e293b;">${letter}. ${option}</span>
+                                                                ${isUserAnswer && !isCorrectAnswer ? '<span style="color: #dc2626; font-weight: 600; margin-left: 0.5rem;">❌ Your Answer</span>' : ''}
+                                                                ${isCorrectAnswer ? '<span style="color: #16a34a; font-weight: 600; margin-left: 0.5rem;">✅ Correct Answer</span>' : ''}
+                                                            </div>
+                                                        `;
+                                                    }).join('')}
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        
+                                        <!-- Show correct answer for non-multiple choice questions -->
+                                        ${!q.options || q.options.length === 0 ? `
+                                            <div style="margin-bottom: 1rem; padding: 1rem; background: #dcfce7; border-radius: 8px; border-left: 4px solid #16a34a;">
+                                                <p style="font-weight: 600; margin-bottom: 0.5rem; color: #166534;">✅ Correct Answer:</p>
+                                                ${(q.type === 'bullet-points' || q.type === 'bullet-point') ? `
+                                                    <div style="padding-left: 1.5rem;">
+                                                        ${(q.correctAnswer || q.answer) ? (q.correctAnswer || q.answer).split('\n').filter(line => line.trim()).map(line => `
+                                                            <div style="margin-bottom: 0.5rem; color: #166534;">• ${line.trim()}</div>
+                                                        `).join('') : '<p style="color: #166534; font-style: italic;">No correct answer provided</p>'}
+                                                    </div>
+                                                ` : ''}
+                                                ${(q.type === 'short-answer' || q.type === 'short-answer-text') ? `
+                                                    <div style="padding: 0.75rem; background: white; border-radius: 6px; color: #166534; border: 1px solid #86efac;">
+                                                        ${q.correctAnswer || q.answer || '<span style="color: #999; font-style: italic;">No answer provided</span>'}
+                                                    </div>
+                                                ` : ''}
+                                                ${q.type === 'file-upload' ? `
+                                                    <div style="padding: 0.75rem; background: white; border-radius: 6px; border: 1px solid #86efac;">
+                                                        <iconify-icon icon="material-symbols:attach-file" style="font-size: 1.5rem; vertical-align: middle; color: #16a34a;"></iconify-icon>
+                                                        <span style="margin-left: 0.5rem; color: #166534; font-weight: 600;">${q.correctAnswer || q.answer || 'No file specified'}</span>
+                                                    </div>
+                                                ` : ''}
+                                                ${(!q.type || (q.type !== 'bullet-points' && q.type !== 'bullet-point' && q.type !== 'short-answer' && q.type !== 'short-answer-text' && q.type !== 'file-upload')) && (q.correctAnswer || q.answer) ? `
+                                                    <div style="padding: 0.75rem; background: white; border-radius: 6px; color: #166534; border: 1px solid #86efac;">
+                                                        ${q.correctAnswer || q.answer}
+                                                    </div>
+                                                ` : ''}
+                                            </div>
+                                        ` : ''}
+                                        
+                                        ${q.explanation ? `
+                                            <div style="padding: 1rem; background: #fff7ed; border-radius: 8px; border-left: 4px solid #f59e0b; margin-top: 1rem;">
+                                                <p style="margin: 0; font-weight: 600; color: #1e293b;">Explanation:</p>
+                                                <p style="margin: 0.5rem 0 0 0; color: #333; line-height: 1.6;">${q.explanation}</p>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                            `}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+        }
+        
+        function closeWrongQuestionsModal() {
+            const modal = document.getElementById('wrongQuestionsModal');
+            if (modal) modal.remove();
+            // Refresh the count after closing the modal
+            loadWrongQuestionsCount();
         }
 
         function loadWrongQuestionsCount() {
             try {
-                // Load wrong questions from localStorage
-                const wrongQuestionsData = localStorage.getItem('physics_wrong_questions') || '[]';
-                const wrongQuestions = JSON.parse(wrongQuestionsData);
+                // Load answered questions from localStorage
+                const answeredQuestions = JSON.parse(localStorage.getItem('physicsAnsweredQuestions') || '[]');
+                console.log('Total answered questions:', answeredQuestions.length);
+                
+                // Filter to get only wrong questions
+                const wrongQuestions = answeredQuestions.filter(q => {
+                    // Check if the question object exists and if isCorrect is explicitly false
+                    return q !== null && q !== undefined && q.isCorrect === false;
+                });
+                
+                console.log('Wrong questions found:', wrongQuestions.length);
                 
                 // Update the count display
                 const countElement = document.getElementById('wrongQuestionsCount');
                 if (countElement) {
                     countElement.textContent = wrongQuestions.length;
+                    console.log('Updated count display to:', wrongQuestions.length);
+                } else {
+                    console.log('Count element not found');
                 }
-                
-                console.log('Wrong questions count loaded:', wrongQuestions.length);
             } catch (error) {
                 console.error('Error loading wrong questions count:', error);
                 // Set count to 0 if there's an error
@@ -1019,26 +1232,78 @@
         // Progress Statistics Functions
         function loadProgressStats() {
             try {
-                // Load today's progress data
-                const today = new Date().toDateString();
-                const progressData = JSON.parse(localStorage.getItem('physics_daily_progress') || '{}');
-                const todayProgress = progressData[today] || {
-                    questionsAnswered: 0,
-                    correctAnswers: 0,
-                    streakDays: 0,
-                    accuracyRate: 0
-                };
+                // Load answered questions from localStorage
+                const answeredQuestions = JSON.parse(localStorage.getItem('physicsAnsweredQuestions') || '[]');
+                
+                // Calculate total questions and correctly solved
+                const totalQuestions = answeredQuestions.length;
+                const correctlySolved = answeredQuestions.filter(q => q.isCorrect === true).length;
+                
+                // Calculate day streak based on consecutive days with answered questions
+                const streak = calculateConsecutiveDaysStreak(answeredQuestions);
+                
+                // Calculate accuracy rate as percentage of total questions solved correctly
+                const accuracy = totalQuestions > 0 ? Math.round((correctlySolved / totalQuestions) * 100) : 0;
 
                 // Update progress cards
-                document.getElementById('totalQuestionsToday').textContent = todayProgress.questionsAnswered;
-                document.getElementById('correctAnswersToday').textContent = todayProgress.correctAnswers;
-                document.getElementById('streakDays').textContent = todayProgress.streakDays;
-                document.getElementById('accuracyRate').textContent = todayProgress.accuracyRate + '%';
+                document.getElementById('totalQuestions').textContent = totalQuestions;
+                document.getElementById('correctlySolved').textContent = correctlySolved;
+                document.getElementById('streakDays').textContent = streak;
+                document.getElementById('accuracyRate').textContent = accuracy + '%';
 
-                console.log('Progress stats loaded:', todayProgress);
+                console.log('Progress stats loaded:', {
+                    totalQuestions,
+                    correctlySolved,
+                    streak,
+                    accuracy: accuracy + '%'
+                });
             } catch (error) {
                 console.error('Error loading progress stats:', error);
             }
+        }
+        
+        // Calculate consecutive days streak
+        function calculateConsecutiveDaysStreak(answeredQuestions) {
+            if (!answeredQuestions || answeredQuestions.length === 0) return 0;
+            
+            // Get unique dates from answered questions
+            const dates = answeredQuestions
+                .filter(q => q.timestamp)
+                .map(q => {
+                    const date = new Date(q.timestamp);
+                    return date.toDateString();
+                })
+                .filter((value, index, self) => self.indexOf(value) === index) // Get unique dates
+                .sort((a, b) => new Date(b) - new Date(a)); // Sort descending (most recent first)
+            
+            if (dates.length === 0) return 0;
+            
+            // Check if the most recent date is today or yesterday
+            const today = new Date().toDateString();
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toDateString();
+            
+            if (dates[0] !== today && dates[0] !== yesterdayStr) {
+                return 0; // No recent activity
+            }
+            
+            // Count consecutive days starting from today
+            let streak = 0;
+            let currentDate = new Date();
+            
+            for (let i = 0; i < dates.length; i++) {
+                const expectedDate = currentDate.toDateString();
+                
+                if (dates.includes(expectedDate)) {
+                    streak++;
+                    currentDate.setDate(currentDate.getDate() - 1);
+                } else {
+                    break;
+                }
+            }
+            
+            return streak;
         }
 
 

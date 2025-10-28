@@ -314,20 +314,61 @@
 
         // Load exams on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Only clear data on first visit (if flag doesn't exist)
+            if (!localStorage.getItem('physicsAcademicDataCleared')) {
+                clearPhysicsAcademicData();
+                localStorage.setItem('physicsAcademicDataCleared', 'true');
+            }
             loadExams();
         });
+        
+        // Function to clear all quizzes, assignments, and exams
+        function clearPhysicsAcademicData() {
+            console.log('🧹 Starting to clear physics academic data...');
+            
+            // Clear quizzes
+            localStorage.removeItem('physicsQuizzes');
+            localStorage.removeItem('physicsTeacherQuizzes');
+            localStorage.removeItem('physicsQuizzesList');
+            
+            // Clear assignments (homeworks)
+            localStorage.removeItem('physicsAssignments');
+            localStorage.removeItem('physicsTeacherAssignments');
+            localStorage.removeItem('physicsAssignmentsList');
+            
+            // Clear exams
+            localStorage.removeItem('physicsExams');
+            localStorage.removeItem('physicsTeacherExams');
+            localStorage.removeItem('physicsExamsList');
+            
+            // Clear assessments (used by the new system)
+            localStorage.removeItem('physicsAssessments');
+            
+            // Verify clearing
+            const remaining = localStorage.getItem('physicsAssessments');
+            console.log('📦 physicsAssessments after clearing:', remaining);
+            console.log('✅ Cleared all physics quizzes, assignments, and exams from localStorage');
+        }
 
         // Load exams from localStorage
         function loadExams() {
+            // Clear existing exams array first
+            allExams = [];
+            
+            console.log('🔍 Loading exams...');
+            
             // Try new teacher dashboard system first
             let rawData = localStorage.getItem('physicsAssessments');
+            console.log('📦 physicsAssessments data:', rawData);
             
             if (rawData) {
                 try {
                     const assessments = JSON.parse(rawData);
+                    console.log('📝 Parsed assessments:', assessments);
                     const examAssessments = assessments.filter(assessment => 
                         assessment.type === 'exam' && assessment.status === 'published'
                     );
+                    console.log('📊 Filtered exam assessments:', examAssessments);
                     
                     allExams = examAssessments.map(assessment => ({
                         id: assessment.id,
@@ -376,6 +417,7 @@
                 }
             }
             
+            console.log('✅ Total exams loaded:', allExams.length);
             displayExams();
         }
 

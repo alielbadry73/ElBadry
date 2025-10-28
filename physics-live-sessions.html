@@ -401,55 +401,52 @@
     </style>
 </head>
 <body>
-    <!-- Physics Dashboard Header -->
+    <!-- Dashboard Header - Exact same as physics-progress.html -->
     <header class="dashboard-header">
         <div class="container-fluid">
             <!-- Top Header with Hamburger Menu and Navigation Buttons -->
-            <div class="row" style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+            <div class="row align-items-center" style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
                 <div class="col-6">
                     <div class="d-flex align-items-center">
                         <!-- Hamburger Menu Button -->
                         <button class="hamburger-menu-btn" onclick="toggleSidebar()" style="width: 45px; height: 45px; background: white; border: 1px solid #e9ecef; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-right: 1rem;" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
                             <iconify-icon icon="material-symbols:menu" style="font-size: 1.5rem; color: #333;"></iconify-icon>
                         </button>
-                        
-                        <!-- Course Title -->
-                        <div style="display: flex; align-items: center; gap: 1rem;">
-                            <div class="course-icon">
-                                <iconify-icon icon="material-symbols:science"></iconify-icon>
-                            </div>
-                            <div>
-                                <h1 style="margin: 0; font-size: 1.5rem; font-weight: 700; color: #333;">Physics Live Sessions</h1>
-                                <p style="margin: 0; font-size: 0.9rem; color: #666;">Interactive learning with expert instructors</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="col-6">
-                    <div class="d-flex justify-content-end align-items-center gap: 2">
+                    <div class="d-flex justify-content-end align-items-center gap-2">
                         <!-- IG Nation Logo -->
-                        <a href="physics-dashboard.html" style="margin-right: 2rem; display: flex; align-items: center; text-decoration: none;">
+                        <a href="student-dashboard.html" style="margin-right: 2rem; display: flex; align-items: center; text-decoration: none;">
                             <img src="images/ig-nation-logo-graduation.png" alt="IG Nation" style="height: 45px; width: auto;">
                         </a>
                         
-                        <!-- Teacher Panel Button -->
-                        <button class="nav-icon-btn" onclick="window.location.href='physics-teacher-panel.html'" style="width: 45px; height: 45px; background: white; border: 1px solid #e9ecef; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
-                            <iconify-icon icon="material-symbols:person" style="font-size: 1.2rem; color: #333;"></iconify-icon>
+                        <!-- Focus Mode Button -->
+                        <button class="nav-icon-btn" onclick="navigateToFocusMode()" style="width: 45px; height: 45px; background: white; border: 1px solid #e9ecef; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
+                            <img src="images/7898418_focus_business_finance_office_marketing_icon.png" alt="Focus" style="width: 20px; height: 20px; filter: brightness(0) invert(0);">
                         </button>
                         
                         <!-- Notifications Button -->
-                        <button class="nav-icon-btn" onclick="window.location.href='student-dashboard.html#notifications'" style="width: 45px; height: 45px; background: white; border: 1px solid #e9ecef; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                            <iconify-icon icon="material-symbols:notifications" style="font-size: 1.2rem; color: #333;"></iconify-icon>
+                        <div class="notifications-container" style="position: relative;">
+                            <button class="nav-icon-btn" onclick="openNotifications()" style="width: 45px; height: 45px; background: white; border: 1px solid #e9ecef; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative;" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
+                                <iconify-icon icon="material-symbols:notifications" style="font-size: 1.2rem; color: #333;"></iconify-icon>
+                                <span id="notificationBadge" class="notification-badge" style="position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: none; align-items: center; justify-content: center; font-weight: 700;">0</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Community Button -->
+                        <button class="nav-icon-btn" onclick="navigateToCommunity()" style="width: 45px; height: 45px; background: white; border: 1px solid #e9ecef; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
+                            <img src="images/4213440_community_group_leader_people_team_icon.png" alt="Community" style="width: 20px; height: 20px; filter: brightness(0) invert(0);">
                         </button>
-                    </div>
+                        
+                        <!-- Profile Button -->
+                        <button class="nav-icon-btn" onclick="navigateToProfile()" style="width: 45px; height: 45px; background: white; border: 1px solid #e9ecef; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
+                            <img src="images/4092564_profile_about_mobile ui_user_icon.png" alt="Profile" style="width: 20px; height: 20px; filter: brightness(0) invert(0);">
+                        </button>
+                        </div>
                 </div>
             </div>
             
-            <!-- Navigation Tabs -->
-            <div class="row">
-                <div class="col-12">
-                </div>
-            </div>
         </div>
     </header>
 
@@ -468,7 +465,7 @@
             <!-- Books Section -->
             <div class="menu-section">
                 <div class="menu-item" onclick="window.location.href='physics-library.html'" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                         <iconify-icon icon="material-symbols:menu-book" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
@@ -482,7 +479,7 @@
             <!-- Lectures Section -->
             <div class="menu-section">
                 <div class="menu-item" onclick="window.location.href='physics-lectures.html'" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                         <iconify-icon icon="material-symbols:play-circle" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
@@ -496,7 +493,7 @@
             <!-- Track Progress Section -->
             <div class="menu-section">
                 <div class="menu-item" onclick="toggleSubmenu('progress')" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                         <iconify-icon icon="material-symbols:trending-up" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
@@ -515,7 +512,7 @@
             <!-- Practice Section -->
             <div class="menu-section">
                 <div class="menu-item" onclick="window.location.href='coming-soon.html'" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                         <iconify-icon icon="material-symbols:fitness-center" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
@@ -529,7 +526,7 @@
             <!-- Badges Section -->
             <div class="menu-section">
                 <div class="menu-item" onclick="toggleSubmenu('badges')" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                         <iconify-icon icon="material-symbols:workspace-premium" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
@@ -545,59 +542,43 @@
                 </div>
             </div>
 
+            
             <!-- Live Sessions Section -->
             <div class="menu-section">
-                <div class="menu-item" onclick="window.location.href='physics-live-sessions.html'" style="display: flex; align-items: center; padding: 1rem; background: #e8f5e8; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease; border: 2px solid #10b981;" onmouseover="this.style.background='#d4edda'" onmouseout="this.style.background='#e8f5e8'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                <div class="menu-item" onclick="window.location.href='physics-live-sessions.html'" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                         <iconify-icon icon="material-symbols:video-call" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
-                        <div class="menu-title" style="font-weight: 600; color: #10b981; font-size: 1rem;">Live Sessions</div>
-                        <div class="menu-subtitle" style="font-size: 0.8rem; color: #059669;">Interactive Learning Sessions</div>
-                    </div>
-                    <iconify-icon icon="material-symbols:keyboard-arrow-right" style="font-size: 1.2rem; color: #10b981;"></iconify-icon>
-                </div>
-            </div>
-
-            <!-- Flashcards Section -->
-            <div class="menu-section">
-                <div class="menu-item" onclick="window.location.href='physics-flashcards.html'" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
-                        <iconify-icon icon="material-symbols:style" style="font-size: 1.5rem; color: white;"></iconify-icon>
-                    </div>
-                    <div class="menu-text" style="flex: 1;">
-                        <div class="menu-title" style="font-weight: 600; color: #333; font-size: 1rem;">Flashcards</div>
-                        <div class="menu-subtitle" style="font-size: 0.8rem; color: #666;">Interactive Study Cards</div>
+                        <div class="menu-title" style="font-weight: 600; color: #333; font-size: 1rem;">Live Sessions</div>
+                        <div class="menu-subtitle" style="font-size: 0.8rem; color: #666;">Interactive Learning Sessions</div>
                     </div>
                     <iconify-icon icon="material-symbols:keyboard-arrow-right" style="font-size: 1.2rem; color: #666;"></iconify-icon>
                 </div>
             </div>
-
+            
             <!-- Past Papers Section -->
             <div class="menu-section">
-                <div class="menu-item" onclick="window.location.href='physics-past-papers.html'" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                <div class="menu-item" onclick="toggleSubmenu('papers')" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                         <iconify-icon icon="material-symbols:description" style="font-size: 1.5rem; color: white;"></iconify-icon>
                     </div>
                     <div class="menu-text" style="flex: 1;">
                         <div class="menu-title" style="font-weight: 600; color: #333; font-size: 1rem;">Past Papers</div>
-                        <div class="menu-subtitle" style="font-size: 0.8rem; color: #666;">Exam Practice & Solutions</div>
+                        <div class="menu-subtitle" style="font-size: 0.8rem; color: #666;">Previous Exam Papers & Solutions</div>
                     </div>
-                    <iconify-icon icon="material-symbols:keyboard-arrow-right" style="font-size: 1.2rem; color: #666;"></iconify-icon>
+                    <iconify-icon id="papers-arrow" icon="material-symbols:keyboard-arrow-down" style="font-size: 1.2rem; color: #666; transition: transform 0.3s ease;"></iconify-icon>
                 </div>
-            </div>
-
-            <!-- Community Section -->
-            <div class="menu-section">
-                <div class="menu-item" onclick="window.location.href='physics-community.html'" style="display: flex; align-items: center; padding: 1rem; background: #f8f9fa; border-radius: 12px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                    <div class="menu-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
-                        <iconify-icon icon="material-symbols:groups" style="font-size: 1.5rem; color: white;"></iconify-icon>
-                    </div>
-                    <div class="menu-text" style="flex: 1;">
-                        <div class="menu-title" style="font-weight: 600; color: #333; font-size: 1rem;">Community</div>
-                        <div class="menu-subtitle" style="font-size: 0.8rem; color: #666;">Study Groups & Discussions</div>
-                    </div>
-                    <iconify-icon icon="material-symbols:keyboard-arrow-right" style="font-size: 1.2rem; color: #666;"></iconify-icon>
+                <div id="papers-submenu" class="submenu" style="display: none; margin-left: 1rem; margin-bottom: 0.5rem;">
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">All Past Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2025.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2025 Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2024.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2024 Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2023.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2023 Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2022.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2022 Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2021.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2021 Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2020.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2020 Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2019.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; margin-bottom: 0.25rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2019 Papers</div>
+                    <div class="submenu-item" onclick="window.location.href='physics-past-papers-2018.html'" style="padding: 0.75rem; color: #666; font-size: 0.9rem; border-left: 2px solid #e9ecef; padding-left: 1rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa'; this.style.color='#667eea'" onmouseout="this.style.background='transparent'; this.style.color='#666'">2018 Papers</div>
                 </div>
             </div>
         </div>
@@ -754,84 +735,31 @@
         </div>
         
         <div id="upcoming-sessions" class="sessions-grid" style="display: none;">
-            <!-- Upcoming Session 1 -->
-            <div class="session-card">
-                <span class="session-status status-upcoming">📅 UPCOMING</span>
-                <h3 class="session-title">Thermodynamics - Heat Transfer</h3>
-                <div class="session-instructor">
-                    <i class="bi bi-person-circle"></i>
-                    <span>Dr. Emily Rodriguez</span>
-                </div>
-                <div class="session-time">
-                    <i class="bi bi-clock"></i>
-                    <span>Starts in 2 hours</span>
-                </div>
-                <div class="session-date">
-                    <i class="bi bi-calendar"></i>
-                    <span>Today, 6:00 PM - 7:30 PM</span>
-                </div>
-                <p class="session-description">
-                    Explore heat transfer mechanisms: conduction, convection, and radiation with real-world applications.
-                </p>
-                <div class="session-stats">
-                    <div class="stat-item">
-                        <i class="bi bi-alarm"></i>
-                        <span>Reminder set</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="bi bi-people"></i>
-                        <span>28 registered</span>
-                    </div>
-                </div>
-                <div class="session-actions">
-                    <button class="btn-primary-custom" onclick="registerSession('upcoming1')">
-                        <i class="bi bi-calendar-check"></i>
-                        Register
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Upcoming Session 2 -->
-            <div class="session-card">
-                <span class="session-status status-upcoming">📅 UPCOMING</span>
-                <h3 class="session-title">Waves - Sound and Light</h3>
-                <div class="session-instructor">
-                    <i class="bi bi-person-circle"></i>
-                    <span>Dr. Sarah Johnson</span>
-                </div>
-                <div class="session-time">
-                    <i class="bi bi-clock"></i>
-                    <span>Tomorrow at 2:00 PM</span>
-                </div>
-                <div class="session-date">
-                    <i class="bi bi-calendar"></i>
-                    <span>Friday, Oct 10, 2:00 PM - 3:30 PM</span>
-                </div>
-                <p class="session-description">
-                    Understanding wave properties, sound waves, and light waves with interactive demonstrations.
-                </p>
-                <div class="session-stats">
-                    <div class="stat-item">
-                        <i class="bi bi-people"></i>
-                        <span>35 registered</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="bi bi-hourglass-split"></i>
-                        <span>90 min</span>
-                    </div>
-                </div>
-                <div class="session-actions">
-                    <button class="btn-primary-custom" onclick="registerSession('upcoming2')">
-                        <i class="bi bi-calendar-check"></i>
-                        Register
-                    </button>
-                </div>
+            <!-- Upcoming sessions will be loaded dynamically here -->
+            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; color: #94a3b8;">
+                <iconify-icon icon="material-symbols:event-available" style="font-size: 4rem; opacity: 0.3; margin-bottom: 1rem;"></iconify-icon>
+                <h3 style="color: #64748b; margin-bottom: 0.5rem;">No Upcoming Sessions</h3>
+                <p>Check back later for scheduled live sessions.</p>
             </div>
         </div>
         
     </div>
     
+    <script src="js/notifications.js"></script>
     <script>
+        // Navigation Functions
+        function navigateToFocusMode() {
+            window.location.href = 'focus-mode.html';
+        }
+        
+        function navigateToCommunity() {
+            window.location.href = 'physics-community.html';
+        }
+        
+        function navigateToProfile() {
+            window.location.href = 'student-profile.html';
+        }
+        
         // Sidebar Functions
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');

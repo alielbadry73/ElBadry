@@ -4,8 +4,45 @@
 // Function to detect current course from URL
 function detectCourse() {
     const url = window.location.href.toLowerCase();
-    if (url.includes('physics')) return 'physics';
-    if (url.includes('english')) return 'english';
+    
+    // Check URL for course name
+    if (url.includes('physics')) {
+        return 'physics';
+    }
+    if (url.includes('english')) {
+        return 'english';
+    }
+    if (url.includes('mathematics')) {
+        return 'mathematics';
+    }
+    
+    // Check localStorage for course context (for view-content and similar pages)
+    const physicsFolders = localStorage.getItem('physicsFolders');
+    const mathematicsFolders = localStorage.getItem('mathematicsFolders');
+    const englishFolders = localStorage.getItem('englishFolders');
+    
+    // For view-content pages, check which course has data
+    if (url.includes('view-content')) {
+        if (physicsFolders && JSON.parse(physicsFolders).length > 0) {
+            return 'physics';
+        }
+        if (mathematicsFolders && JSON.parse(mathematicsFolders).length > 0) {
+            return 'mathematics';
+        }
+        if (englishFolders && JSON.parse(englishFolders).length > 0) {
+            return 'english';
+        }
+        
+        // Check if there are any physics items in localStorage
+        const physicsAssignments = localStorage.getItem('physicsAssignments') || '[]';
+        const physicsQuizzes = localStorage.getItem('physicsQuizzes') || '[]';
+        const physicsExams = localStorage.getItem('physicsExams') || '[]';
+        
+        if (JSON.parse(physicsAssignments).length > 0 || JSON.parse(physicsQuizzes).length > 0 || JSON.parse(physicsExams).length > 0) {
+            return 'physics';
+        }
+    }
+    
     return 'mathematics'; // default
 }
 
@@ -88,13 +125,16 @@ function countAllNotifications() {
         });
         
         // Count unpublished or incomplete assignments
-        count += allAssignments.filter(a => !a.completed && a.published !== false).length;
+        const incompleteAssignments = allAssignments.filter(a => !a.completed && a.published !== false);
+        count += incompleteAssignments.length;
         
         // Count available quizzes
-        count += allQuizzes.filter(q => q.published !== false && !q.completed).length;
+        const availableQuizzes = allQuizzes.filter(q => q.published !== false && !q.completed);
+        count += availableQuizzes.length;
         
         // Count available exams
-        count += allExams.filter(e => e.published !== false && !e.completed).length;
+        const availableExams = allExams.filter(e => e.published !== false && !e.completed);
+        count += availableExams.length;
         
         return count;
     } catch (error) {
@@ -310,6 +350,11 @@ function showNotificationsModal() {
     `;
     
     document.body.insertAdjacentHTML('beforeend', notificationsHtml);
+}
+
+// Wrapper function to open notifications (for onclick handlers)
+function openNotifications() {
+    showNotificationsModal();
 }
 
 // Update badge on page load

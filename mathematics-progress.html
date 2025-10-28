@@ -496,21 +496,27 @@
                     </div>
                     
                     <!-- Recent Month Performance -->
-                    <div class="mb-3">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span style="color: #64748b; font-weight: 600;">Recent Quizzes</span>
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 style="color: #1e293b; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+                                <iconify-icon icon="material-symbols:quiz" style="color: #667eea; font-size: 1.25rem;"></iconify-icon>
+                                Recent Quizzes
+                            </h5>
                             <button class="btn btn-sm btn-outline-primary" onclick="showAllQuizGrades()">View All</button>
                         </div>
-                        <div id="recentQuizGrades" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <div id="recentQuizGrades" style="display: flex; gap: 1rem; flex-wrap: wrap;">
                             <!-- Recent quiz grades will be loaded here -->
                         </div>
                     </div>
-                    <div>
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span style="color: #64748b; font-weight: 600;">Recent Exams</span>
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 style="color: #1e293b; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+                                <iconify-icon icon="material-symbols:assignment" style="color: #8b5cf6; font-size: 1.25rem;"></iconify-icon>
+                                Recent Exams
+                            </h5>
                             <button class="btn btn-sm btn-outline-primary" onclick="showAllExamGrades()">View All</button>
                         </div>
-                        <div id="recentExamGrades" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <div id="recentExamGrades" style="display: flex; gap: 1rem; flex-wrap: wrap;">
                             <!-- Recent exam grades will be loaded here -->
                         </div>
                     </div>

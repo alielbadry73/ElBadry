@@ -1111,6 +1111,26 @@
             <div>
               <div class="homework-card-title">${a.title}</div>
               <span class="status-badge status-${a.status || 'pending'}">${(a.status || 'pending').toUpperCase()}</span>
+              ${('finalScore' in a || 'score' in a) ? `
+                <div class="grade-display" style="margin-top: 8px; padding: 6px 12px; background: linear-gradient(135deg, #28a745, #20c997); color: white; border-radius: 20px; font-weight: 600; font-size: 0.9rem; display: inline-block; box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);">
+                  <iconify-icon icon="material-symbols:grade" style="margin-right: 4px;"></iconify-icon>
+                  Grade: ${(() => {
+                    const score = a.finalScore !== undefined ? a.finalScore : (a.score !== undefined ? a.score : 0);
+                    const totalPoints = a.points || a.totalPoints || 10;
+                    
+                    // If score is a percentage (0-100), convert to points
+                    if (score <= 100 && score > 0 && totalPoints > 10) {
+                      const pointsEarned = Math.round((score / 100) * totalPoints);
+                      const percentage = Math.round(score);
+                      return `${pointsEarned}/${totalPoints} (${percentage}%)`;
+                    }
+                    
+                    // If score is already in points, calculate percentage
+                    const percentage = Math.round((score / totalPoints) * 100);
+                    return `${score}/${totalPoints} (${percentage}%)`;
+                  })()}
+                </div>
+              ` : ''}
             </div>
           </div>
           <div class="homework-card-description">${a.description}</div>
@@ -1125,14 +1145,23 @@
             <div class="detail-row"><span class="detail-label">Your Score:</span><span class="detail-value" style="color:#28a745;font-weight:600;">${(() => {
               const score = a.finalScore || a.score || 0;
               const totalPoints = a.points || a.totalPoints || 10;
-              return score > totalPoints ? Math.round(score * totalPoints / 100) : score;
-            })()}/${a.points || a.totalPoints || 10}</span></div>
+              
+              // If score is a percentage (0-100), convert to points
+              if (score <= 100 && score > 0 && totalPoints > 10) {
+                const pointsEarned = Math.round((score / 100) * totalPoints);
+                const percentage = Math.round(score);
+                return `${pointsEarned}/${totalPoints} (${percentage}%)`;
+              }
+              
+              // If score is already in points, calculate percentage
+              const percentage = Math.round((score / totalPoints) * 100);
+              return `${score}/${totalPoints} (${percentage}%)`;
+            })()}</span></div>
             <div class="detail-row"><span class="detail-label">Time Spent:</span><span class="detail-value">${a.timeSpent || 0} minutes</span></div>` : ''}
           </div>
           <div class="homework-actions">
             ${a.status === 'completed' || a.status === 'graded' ? `
               <button class="btn btn-outline" onclick="reviewHomework('${a.id}')"><iconify-icon icon="material-symbols:visibility"></iconify-icon>Review</button>
-              <button class="btn btn-primary" onclick="retakeHomework('${a.id}')"><iconify-icon icon="material-symbols:refresh"></iconify-icon>Retake</button>
             ` : (a.status === 'pending' && a.gradingStatus === 'pending') || (a.status === 'pending-grading') ? `
               <div class="alert alert-info mb-2" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
                 <iconify-icon icon="material-symbols:pending" class="me-1"></iconify-icon>
@@ -1461,15 +1490,109 @@
       const question = currentAssignment.questions[currentQuestionIndex];
       const trickyQuestions = JSON.parse(localStorage.getItem('englishTrickyQuestions')) || [];
       
-      const existingIndex = trickyQuestions.findIndex(q => q.id === question.id);
+      // Create unique question identifier combining assignment ID and question ID
+      const uniqueQuestionId = `${currentAssignment.id}_${question.id}`;
+      
+      const existingIndex = trickyQuestions.findIndex(q => q.id === uniqueQuestionId);
       
       if (existingIndex >= 0) {
         showNotification('Question already in Tricky Questions!', 'info');
         return;
       }
       
+      // Show folder selection modal
+      showFolderSelectionModal(question);
+    }
+    
+    function showFolderSelectionModal(question) {
+      const customFolders = JSON.parse(localStorage.getItem('englishTrickyFolders')) || [];
+      
+      if (customFolders.length === 0) {
+        // No folders available, add directly to tricky questions
+        addToTrickyQuestions(question, null);
+        return;
+      }
+      
+      // Create modal HTML
+      const modalHtml = `
+        <div class="modal fade" id="folderSelectionModal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Choose Folder for Tricky Question</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <p>Select a folder to organize this tricky question:</p>
+                <div class="list-group">
+                  <button type="button" class="list-group-item list-group-item-action" onclick="selectFolder(null, 'No Folder')">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h6 class="mb-1">No Folder</h6>
+                      <small>Add to general tricky questions</small>
+                    </div>
+                  </button>
+                  ${customFolders.map(folder => `
+                    <button type="button" class="list-group-item list-group-item-action" onclick="selectFolder('${folder.id}', '${folder.name.replace(/'/g, "\\'")}')">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1">${folder.name}</h6>
+                        <small>${folder.description || 'Custom folder'}</small>
+                      </div>
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      // Remove existing modal if any
+      const existingModal = document.getElementById('folderSelectionModal');
+      if (existingModal) {
+        existingModal.remove();
+      }
+      
+      // Add modal to body
+      document.body.insertAdjacentHTML('beforeend', modalHtml);
+      
+      // Show modal
+      const modal = new bootstrap.Modal(document.getElementById('folderSelectionModal'));
+      modal.show();
+      
+      // Store question data for later use
+      window.currentTrickyQuestion = question;
+    }
+    
+    function selectFolder(folderId, folderName) {
+      const question = window.currentTrickyQuestion;
+      if (!question) return;
+      
+      // Close modal
+      const modal = bootstrap.Modal.getInstance(document.getElementById('folderSelectionModal'));
+      modal.hide();
+      
+      // Add to tricky questions with selected folder
+      addToTrickyQuestions(question, folderId);
+      
+      // Clean up
+      setTimeout(() => {
+        const modalElement = document.getElementById('folderSelectionModal');
+        if (modalElement) {
+          modalElement.remove();
+        }
+        delete window.currentTrickyQuestion;
+      }, 300);
+    }
+    
+    function addToTrickyQuestions(question, folderId) {
+      const trickyQuestions = JSON.parse(localStorage.getItem('englishTrickyQuestions')) || [];
+      
       const trickyQuestion = {
-        id: question.id,
+        id: `${currentAssignment.id}_${question.id}`, // Unique ID combining assignment and question
+        originalQuestionId: question.id, // Keep original question ID for reference
         text: question.text,
         type: question.type,
         options: question.options || [],
@@ -1481,11 +1604,14 @@
         chapterId: currentAssignment.chapterId || null,
         addedAt: new Date().toISOString(),
         points: question.points || 1,
-        difficulty: currentAssignment.difficulty || 'medium'
+        difficulty: currentAssignment.difficulty || 'medium',
+        folderId: folderId
       };
       
       trickyQuestions.push(trickyQuestion);
-      showNotification('⭐ Question marked as tricky and added to Tricky Questions!', 'success');
+      
+      const folderMessage = folderId ? ` in folder` : '';
+      showNotification(`⭐ Question marked as tricky and added to Tricky Questions${folderMessage}!`, 'success');
       
       localStorage.setItem('englishTrickyQuestions', JSON.stringify(trickyQuestions));
     }
@@ -1599,10 +1725,10 @@
     }
     
     function checkTextAnswer(userAnswer, question) {
-      if (!userAnswer.trim()) return;
+      if (!userAnswer || (typeof userAnswer === 'string' && !userAnswer.trim())) return;
       
       const correctAnswer = question.correctAnswer.toLowerCase().trim();
-      const userAnswerLower = userAnswer.toLowerCase().trim();
+      const userAnswerLower = String(userAnswer).toLowerCase().trim();
       
       let isCorrect = false;
       
@@ -1736,6 +1862,54 @@
       }
     }
 
+    // Function to grade bullet point questions
+    function gradeBulletPointQuestion(question, userAnswer) {
+      if (!question.correctBulletPoints || !userAnswer) {
+        return 0; // No correct answers defined or no user answer
+      }
+      
+      const correctPoints = question.correctBulletPoints;
+      const userPoints = Array.isArray(userAnswer) ? userAnswer : [userAnswer];
+      
+      // Convert to lowercase for comparison
+      const correctPointsLower = correctPoints.map(point => point.toLowerCase().trim());
+      const userPointsLower = userPoints.map(point => String(point).toLowerCase().trim());
+      
+      let score = 0;
+      const pointsPerCorrectAnswer = (question.points || 1) / correctPoints.length;
+      
+      // Check each user point against correct points
+      userPointsLower.forEach(userPoint => {
+        if (userPoint && correctPointsLower.includes(userPoint)) {
+          score += pointsPerCorrectAnswer;
+        }
+      });
+      
+      // Also check for partial matches (keywords)
+      if (question.allowPartialCredit) {
+        userPointsLower.forEach(userPoint => {
+          if (userPoint) {
+            correctPointsLower.forEach(correctPoint => {
+              // Check if user point contains key words from correct point
+              const correctWords = correctPoint.split(' ').filter(word => word.length > 3);
+              const userWords = userPoint.split(' ').filter(word => word.length > 3);
+              
+              const matchingWords = correctWords.filter(word => 
+                userWords.some(userWord => userWord.includes(word) || word.includes(userWord))
+              );
+              
+              if (matchingWords.length > 0) {
+                const partialScore = (matchingWords.length / correctWords.length) * pointsPerCorrectAnswer * 0.5;
+                score += partialScore;
+              }
+            });
+          }
+        });
+      }
+      
+      return Math.min(score, question.points || 1); // Cap at maximum points
+    }
+
     function submitAssignment() {
       saveCurrentAnswer();
       
@@ -1750,6 +1924,15 @@
         if (question.type === 'multiple-choice') {
           if (userAnswers[index] === question.correctAnswer) {
             score += question.points || 1;
+          }
+        } else if (question.type === 'bullet-points') {
+          // Grade bullet point questions automatically if correctBulletPoints are defined
+          if (question.correctBulletPoints && question.correctBulletPoints.length > 0) {
+            const bulletScore = gradeBulletPointQuestion(question, userAnswers[index]);
+            score += bulletScore;
+          } else {
+            // No correct answers defined - manual grading required
+            hasManualGradingQuestions = true;
           }
         } else if (question.type === 'text' || question.type === 'file') {
           // For text and file questions, no automatic scoring - manual grading required
@@ -2041,7 +2224,7 @@
               <p class="question-text">${question.text}</p>
               
               ${question.type === 'multiple-choice' && question.options ? `
-                ${!userAnswer || userAnswer === 'Not answered' || userAnswer.trim() === '' ? `
+                ${!userAnswer || userAnswer === 'Not answered' || (typeof userAnswer === 'string' && userAnswer.trim() === '') ? `
                   <div class="not-answered-display p-3 bg-warning bg-opacity-25 border border-warning rounded">
                     <div class="d-flex align-items-center">
                       <iconify-icon icon="material-symbols:warning" class="text-warning me-2"></iconify-icon>
@@ -2094,7 +2277,7 @@
               ` : `
                 <div class="answer-section mb-3">
                   <strong>Your Answer:</strong>
-                  ${!userAnswer || userAnswer === 'Not answered' || userAnswer.trim() === '' ? `
+                  ${!userAnswer || userAnswer === 'Not answered' || (typeof userAnswer === 'string' && userAnswer.trim() === '') ? `
                     <div class="not-answered-display p-3 bg-warning bg-opacity-25 border border-warning rounded mt-1">
                       <div class="d-flex align-items-center">
                         <iconify-icon icon="material-symbols:warning" class="text-warning me-2"></iconify-icon>
@@ -2148,14 +2331,6 @@
       container.innerHTML = reviewHtml;
       console.log('Review content loaded successfully');
     }
-    function retakeHomework(id){ 
-      // Reload homework data to ensure we have the latest
-      homework = getPublishedHomework();
-      const a = homework.find(h => h.id === id); 
-      if (a && confirm(`Retake "${a.title}"?`)) { 
-        startHomework(id);
-      } 
-    }
 
     function searchHomework(e) {
       const term = e.target.value.toLowerCase();
@@ -2170,7 +2345,27 @@
       grid.innerHTML=homework.map(a=>`
         <div class="homework-card">
           <div class="homework-card-header"><div class="homework-icon"><iconify-icon icon="material-symbols:assignment"></iconify-icon></div>
-          <div><div class="homework-card-title">${a.title}</div><span class="status-badge status-${a.status || 'pending'}">${(a.status || 'pending').toUpperCase()}</span></div></div>
+          <div><div class="homework-card-title">${a.title}</div><span class="status-badge status-${a.status || 'pending'}">${(a.status || 'pending').toUpperCase()}</span>
+          ${(a.status === 'completed' || a.status === 'graded') ? `
+            <div class="grade-display" style="margin-top: 8px; padding: 6px 12px; background: linear-gradient(135deg, #28a745, #20c997); color: white; border-radius: 20px; font-weight: 600; font-size: 0.9rem; display: inline-block; box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);">
+              <iconify-icon icon="material-symbols:grade" style="margin-right: 4px;"></iconify-icon>
+              Grade: ${(() => {
+                const score = a.finalScore || a.score || 0;
+                const totalPoints = a.points || a.totalPoints || 10;
+                
+                // If score is a percentage (0-100), convert to points
+                if (score <= 100 && score > 0 && totalPoints > 10) {
+                  const pointsEarned = Math.round((score / 100) * totalPoints);
+                  const percentage = Math.round(score);
+                  return `${pointsEarned}/${totalPoints} (${percentage}%)`;
+                }
+                
+                // If score is already in points, calculate percentage
+                const percentage = Math.round((score / totalPoints) * 100);
+                return `${score}/${totalPoints} (${percentage}%)`;
+              })()}
+            </div>
+          ` : ''}</div></div>
           <div class="homework-card-description">${a.description}</div>
         </div>`).join('');
     }
