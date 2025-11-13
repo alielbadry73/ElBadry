@@ -929,7 +929,9 @@ if (process.env.SMTP_HOST && process.env.SMTP_USER) {
 }
 
 function sendResetEmail(toEmail, code) {
-    const resetLink = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/?reset_email=${encodeURIComponent(toEmail)}&reset_code=${encodeURIComponent(code)}`;
+    // Use Railway frontend URL or environment variable, fallback to localhost for development
+    const frontendUrl = process.env.FRONTEND_URL || process.env.RAILWAY_PUBLIC_DOMAIN || 'http://localhost:3000';
+    const resetLink = `${frontendUrl}/?reset_email=${encodeURIComponent(toEmail)}&reset_code=${encodeURIComponent(code)}`;
     const subject = 'Password reset for your account';
     const text = `We received a request to reset your password. Use this 6-digit code: ${code}\nOr click the link: ${resetLink}\nIf you didn't request this, ignore this message.`;
     const html = `<p>We received a request to reset your password.</p><p><strong>Verification code:</strong> ${code}</p><p>Or click the link: <a href="${resetLink}">${resetLink}</a></p><p>If you didn't request this, ignore this message.</p>`;

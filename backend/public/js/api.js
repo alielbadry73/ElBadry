@@ -1,8 +1,9 @@
 // API Integration for IG Way Frontend
 class IGWayAPI {
     constructor() {
-        // Use full API URL to ensure correct port
-        this.baseURL = 'http://localhost:3000/api';
+        // Use configuration from config.js, fallback to Railway URL if config not loaded
+        const apiConfig = window.API_CONFIG || { apiURL: 'https://your-app-name.up.railway.app/api' };
+        this.baseURL = apiConfig.apiURL || 'https://your-app-name.up.railway.app/api';
         this.token = localStorage.getItem('authToken');
     }
 
