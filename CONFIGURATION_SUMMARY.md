@@ -84,3 +84,6 @@ const RAILWAY_BACKEND_URL = 'https://your-actual-url.up.railway.app';
 
 **Status**: ✅ Code updated to use Railway. Just update the URL in `js/config.js` and deploy!
 
+
+
+

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -54,7 +54,7 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">English</a></li>
-            <li><a class="dropdown-item" href="#">العربية</a></li>
+            <li><a class="dropdown-item" href="#">Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©</a></li>
           </ul>
         </div>
 
@@ -314,40 +314,40 @@
         title: 'IGCSE Mathematics (Extended)',
         instructor: 'Dr. Sarah Mitchell',
         board: 'Cambridge Board',
-        price: '£299.00',
-        originalPrice: '£399.00',
+        price: 'Â£299.00',
+        originalPrice: 'Â£399.00',
         image: 'images/teacher1.PNG'
       },
       physics: {
         title: 'IGCSE Physics',
         instructor: 'Prof. Michael Chen',
         board: 'Cambridge Board',
-        price: '£279.00',
-        originalPrice: '£349.00',
+        price: 'Â£279.00',
+        originalPrice: 'Â£349.00',
         image: 'images/teacher2.PNG'
       },
       english: {
         title: 'IGCSE English Language',
         instructor: 'Dr. Emily Rodriguez',
         board: 'Cambridge Board',
-        price: '£249.00',
-        originalPrice: '£329.00',
+        price: 'Â£249.00',
+        originalPrice: 'Â£329.00',
         image: 'images/teacher3.PNG'
       },
       chemistry: {
         title: 'IGCSE Chemistry',
         instructor: 'Dr. James Wilson',
         board: 'Cambridge Board',
-        price: '£269.00',
-        originalPrice: '£339.00',
+        price: 'Â£269.00',
+        originalPrice: 'Â£339.00',
         image: 'images/teacher4.PNG'
       },
       biology: {
         title: 'IGCSE Biology',
         instructor: 'Dr. Lisa Anderson',
         board: 'Cambridge Board',
-        price: '£259.00',
-        originalPrice: '£319.00',
+        price: 'Â£259.00',
+        originalPrice: 'Â£319.00',
         image: 'images/teacher5.PNG'
       }
     };
@@ -378,7 +378,7 @@
           registerBtn.style.display = 'none';
         }
         
-        console.log('✅ User logged in - Login and Register buttons hidden');
+        console.log('âœ… User logged in - Login and Register buttons hidden');
       } else {
         // Hide user name
         const userNameDisplay = document.getElementById('userNameDisplay');
@@ -416,13 +416,13 @@
       const style = document.createElement('style');
       style.textContent = '.login-btn, .register-btn { display: none !important; }';
       document.head.appendChild(style);
-      console.log('🔒 User already logged in - hiding auth buttons immediately');
+      console.log('ðŸ”’ User already logged in - hiding auth buttons immediately');
     }
 
     // Fetch course data from API
     async function fetchCourseData() {
       try {
-        const response = await fetch('http://localhost:3000/api/courses');
+        const response = await fetch('https://elbadry-production.up.railway.app/api/courses');
         if (response.ok) {
           const data = await response.json();
           homenocoursesData = data;
@@ -475,7 +475,7 @@
             title: course.title,
             instructor: course.instructor,
             board: course.board || 'Cambridge Board',
-            price: `£${course.price.toFixed(2)}`,
+            price: `Â£${course.price.toFixed(2)}`,
             image: course.image
           };
           console.log('Returning course data:', result);
@@ -528,7 +528,7 @@
             title: item.title,
             instructor: item.instructor,
             board: item.board || 'Cambridge Board',
-            price: item.price ? `£${item.price.toFixed(2)}` : '£299.00',
+            price: item.price ? `Â£${item.price.toFixed(2)}` : 'Â£299.00',
             image: item.image || 'images/teacher1.PNG'
           };
           console.log('Using course data from cart item:', course);
@@ -549,7 +549,7 @@
           }
         }
         
-        const priceValue = course.price ? parseFloat(course.price.replace('£', '')) : item.price || 299.00;
+        const priceValue = course.price ? parseFloat(course.price.replace('Â£', '')) : item.price || 299.00;
         const itemTotal = priceValue * item.quantity;
         total += itemTotal;
         
@@ -564,7 +564,7 @@
               </div>
             </div>
             <div class="text-end">
-              <div class="fw-bold">£${itemTotal.toFixed(2)}</div>
+              <div class="fw-bold">Â£${itemTotal.toFixed(2)}</div>
             </div>
           </div>
         `;
@@ -572,7 +572,7 @@
         <hr>
         <div class="d-flex justify-content-between align-items-center fw-bold fs-5">
           <span>Total</span>
-          <span class="text-primary">£${total.toFixed(2)}</span>
+          <span class="text-primary">Â£${total.toFixed(2)}</span>
         </div>
       `;
       
@@ -581,8 +581,8 @@
       orderSummary.innerHTML = summaryHTML;
       
       // Update payment amounts
-      document.getElementById('instapayAmount').textContent = `£${total.toFixed(2)}`;
-      document.getElementById('vodafoneAmount').textContent = `£${total.toFixed(2)}`;
+      document.getElementById('instapayAmount').textContent = `Â£${total.toFixed(2)}`;
+      document.getElementById('vodafoneAmount').textContent = `Â£${total.toFixed(2)}`;
     }
 
     function setupCheckoutEventListeners() {
@@ -660,7 +660,7 @@
         if (item.title) {
           course = {
             title: item.title,
-            price: item.price ? `£${item.price.toFixed(2)}` : '£299.00'
+            price: item.price ? `Â£${item.price.toFixed(2)}` : 'Â£299.00'
           };
         } else {
           course = getCourseById(item.courseId) || courses[item.courseId];
@@ -672,12 +672,12 @@
         let course;
         if (item.title) {
           course = {
-            price: item.price ? `£${item.price.toFixed(2)}` : '£299.00'
+            price: item.price ? `Â£${item.price.toFixed(2)}` : 'Â£299.00'
           };
         } else {
           course = getCourseById(item.courseId) || courses[item.courseId];
         }
-        return sum + parseFloat(course.price.replace('£', ''));
+        return sum + parseFloat(course.price.replace('Â£', ''));
       }, 0);
       
       // Get payment method
@@ -762,7 +762,7 @@
               }
             }
             
-            const price = item.price || (course ? parseFloat(course.price.replace('£', '')) : 299.00);
+            const price = item.price || (course ? parseFloat(course.price.replace('Â£', '')) : 299.00);
             return {
               id: courseId,
               quantity: item.quantity,
@@ -798,20 +798,20 @@
       }
       
       // Create WhatsApp message
-      const message = `🎓 *IG Nation - Course Purchase Confirmation*
+      const message = `ðŸŽ“ *IG Nation - Course Purchase Confirmation*
 
-👤 *Student Details:*
-• Name: ${firstName} ${lastName}
-• Email: ${email}
-• Phone: ${phone}
+ðŸ‘¤ *Student Details:*
+â€¢ Name: ${firstName} ${lastName}
+â€¢ Email: ${email}
+â€¢ Phone: ${phone}
 
-📚 *Courses Purchased:*
+ðŸ“š *Courses Purchased:*
 ${orderItems}
 
-💰 *Total Amount: £${total.toFixed(2)}*
-💳 *Payment Method:* ${paymentType === 'instapay' ? 'InstaPay' : 'Vodafone Cash'}
+ðŸ’° *Total Amount: Â£${total.toFixed(2)}*
+ðŸ’³ *Payment Method:* ${paymentType === 'instapay' ? 'InstaPay' : 'Vodafone Cash'}
 
-📸 *Payment Screenshot:* I will attach the screenshot in WhatsApp
+ðŸ“¸ *Payment Screenshot:* I will attach the screenshot in WhatsApp
 
 Please verify the payment and activate my courses. Thank you!`;
 
@@ -833,7 +833,7 @@ Please verify the payment and activate my courses. Thank you!`;
       localStorage.setItem('lastPaymentScreenshot', screenshot.name);
       
       // Show instructions about attaching screenshot
-      alert('📱 You will be redirected to WhatsApp.\n\n⚠️ IMPORTANT: Please attach your payment screenshot manually in WhatsApp before sending the message!\n\nScreenshot file: ' + screenshot.name);
+      alert('ðŸ“± You will be redirected to WhatsApp.\n\nâš ï¸ IMPORTANT: Please attach your payment screenshot manually in WhatsApp before sending the message!\n\nScreenshot file: ' + screenshot.name);
       
       // Open WhatsApp in new tab
       setTimeout(() => {
@@ -927,25 +927,25 @@ Please verify the payment and activate my courses. Thank you!`;
 
     function openWhatsAppDirectly() {
       const phoneNumber = '201027500835'; // Remove + for WhatsApp URL
-      const message = `🎓 *IG Way IGCSE Tutoring - Course Purchase Confirmation*
+      const message = `ðŸŽ“ *IG Way IGCSE Tutoring - Course Purchase Confirmation*
 
-👤 *Student Details:*
-• Name: ${document.getElementById('checkoutFirstName').value} ${document.getElementById('checkoutLastName').value}
-• Email: ${document.getElementById('checkoutEmail').value}
-• Phone: ${document.getElementById('checkoutPhone').value}
+ðŸ‘¤ *Student Details:*
+â€¢ Name: ${document.getElementById('checkoutFirstName').value} ${document.getElementById('checkoutLastName').value}
+â€¢ Email: ${document.getElementById('checkoutEmail').value}
+â€¢ Phone: ${document.getElementById('checkoutPhone').value}
 
-📚 *Courses Purchased:*
+ðŸ“š *Courses Purchased:*
 ${cart.map(item => {
   const course = courses[item.courseId];
   return `${course.title} - ${course.price}`;
 }).join('\n')}
 
-💰 *Total Amount: £${cart.reduce((sum, item) => {
+ðŸ’° *Total Amount: Â£${cart.reduce((sum, item) => {
   const course = courses[item.courseId];
-  return sum + parseFloat(course.price.replace('£', ''));
+  return sum + parseFloat(course.price.replace('Â£', ''));
 }, 0).toFixed(2)}*
 
-📸 *Payment Screenshot Attached*
+ðŸ“¸ *Payment Screenshot Attached*
 
 Please verify the payment and activate my courses. Thank you!`;
       

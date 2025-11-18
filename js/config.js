@@ -2,7 +2,7 @@
 // This file determines which backend URL to use based on the environment
 
 // Railway deployment URL - UPDATE THIS WITH YOUR ACTUAL RAILWAY URL
-const RAILWAY_BACKEND_URL = 'https://your-app-name.up.railway.app';
+const RAILWAY_BACKEND_URL = 'https://elbadry-production.up.railway.app';
 
 // Local development URL
 const LOCAL_BACKEND_URL = 'http://localhost:3000';
@@ -25,4 +25,6 @@ window.API_CONFIG = {
 
 console.log(`🌐 API Configuration: Using ${ENVIRONMENT} environment`);
 console.log(`🔗 Backend URL: ${API_BASE_URL}`);
+
+
 

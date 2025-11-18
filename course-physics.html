@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1407,7 +1407,7 @@
         }
         
         .todo-checkbox:checked::after {
-            content: '✓';
+            content: 'âœ“';
             position: absolute;
             top: 50%;
             left: 50%;
@@ -1961,7 +1961,7 @@
                         
                     <div class="welcome-section">
                             <h4 class="welcome-text mb-0" id="welcomeMessage">Welcome back, Alex!</h4>
-                            <small class="text-muted" id="welcomeSubtext">Physics Leaderboard Rank #4 • 2,150 points</small>
+                            <small class="text-muted" id="welcomeSubtext">Physics Leaderboard Rank #4 â€¢ 2,150 points</small>
                         </div>
                         </div>
                     </div>
@@ -2215,7 +2215,7 @@
                 <div class="col-lg-6">
                     <div class="animate-on-scroll animate-delay-1" style="margin-bottom: 30px;">
                         <div style="display: inline-block; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); padding: 8px 20px; border-radius: 25px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.3);">
-                            <span style="color: white; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">🔬 Physics Mastery</span>
+                            <span style="color: white; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">ðŸ”¬ Physics Mastery</span>
                         </div>
                     </div>
                     
@@ -2533,7 +2533,7 @@
                             <iconify-icon icon="material-symbols:school" style="font-size: 2.5rem; color: white;"></iconify-icon>
                         </div>
                         <p class="mt-2" style="font-weight: 600; font-size: 0.9rem; color: #4a5568;">No students enrolled yet</p>
-                        <p style="color: #718096; font-size: 0.8rem;">Be the first to join Physics course! 🚀</p>
+                        <p style="color: #718096; font-size: 0.8rem;">Be the first to join Physics course! ðŸš€</p>
                     </div>
                     
                     <!-- Leaderboard content will be loaded here -->
@@ -3301,7 +3301,7 @@
             
             if (progressText && progressBar) {
                 progressText.textContent = percentage + '%';
-                const circumference = 126; // 2 * π * 20
+                const circumference = 126; // 2 * Ï€ * 20
                 const offset = circumference - (percentage / 100) * circumference;
                 progressBar.style.strokeDashoffset = offset;
             }
@@ -3337,44 +3337,44 @@
         // Flashcard System
         let flashcards = [
             {
-                question: "What is the derivative of x²?",
+                question: "What is the derivative of xÂ²?",
                 answer: "2x"
             },
             {
                 question: "What is the integral of 2x?",
-                answer: "x² + C"
+                answer: "xÂ² + C"
             },
             {
-                question: "What is the value of sin(90°)?",
+                question: "What is the value of sin(90Â°)?",
                 answer: "1"
             },
             {
                 question: "What is the quadratic formula?",
-                answer: "x = (-b ± √(b² - 4ac)) / 2a"
+                answer: "x = (-b Â± âˆš(bÂ² - 4ac)) / 2a"
             },
             {
                 question: "What is the area of a circle?",
-                answer: "πr²"
+                answer: "Ï€rÂ²"
             },
             {
                 question: "What is the circumference of a circle?",
-                answer: "2πr"
+                answer: "2Ï€r"
             },
             {
                 question: "What is the Pythagorean theorem?",
-                answer: "a² + b² = c²"
+                answer: "aÂ² + bÂ² = cÂ²"
             },
             {
                 question: "What is the slope formula?",
-                answer: "m = (y₂ - y₁) / (x₂ - x₁)"
+                answer: "m = (yâ‚‚ - yâ‚) / (xâ‚‚ - xâ‚)"
             },
             {
                 question: "What is the distance formula?",
-                answer: "d = √((x₂ - x₁)² + (y₂ - y₁)²)"
+                answer: "d = âˆš((xâ‚‚ - xâ‚)Â² + (yâ‚‚ - yâ‚)Â²)"
             },
             {
                 question: "What is the midpoint formula?",
-                answer: "((x₁ + x₂)/2, (y₁ + y₂)/2)"
+                answer: "((xâ‚ + xâ‚‚)/2, (yâ‚ + yâ‚‚)/2)"
             }
         ];
         
@@ -3450,9 +3450,9 @@
                         subject: 'Physics'
                     });
                     localStorage.setItem('incorrectFlashcards', JSON.stringify(incorrectCards));
-                    console.log('✅ Card added to incorrect flashcards!');
+                    console.log('âœ… Card added to incorrect flashcards!');
                 } else {
-                    console.log('⚠️ Card already in incorrect list');
+                    console.log('âš ï¸ Card already in incorrect list');
                 }
             }
         }
@@ -3741,10 +3741,10 @@
             
             if (timerElement) {
                 if (daysRemaining > 0) {
-                    timerElement.textContent = `• Resets in ${daysRemaining} day${daysRemaining !== 1 ? 's' : ''}`;
+                    timerElement.textContent = `â€¢ Resets in ${daysRemaining} day${daysRemaining !== 1 ? 's' : ''}`;
                     timerElement.style.color = daysRemaining <= 3 ? '#dc3545' : '#6c757d';
                 } else {
-                    timerElement.textContent = '• Reset today!';
+                    timerElement.textContent = 'â€¢ Reset today!';
                     timerElement.style.color = '#dc3545';
                     // Reset the leaderboard
                     localStorage.setItem('leaderboardLastReset', new Date().toISOString());
@@ -3800,7 +3800,7 @@
                 ">
                     <div style="margin-bottom: 1.5rem;">
                         <iconify-icon icon="material-symbols:trophy" style="font-size: 3rem; color: #ffd700; margin-bottom: 1rem;"></iconify-icon>
-                        <h2 style="color: #333; font-weight: 700; margin-bottom: 0.5rem;">🏆 Top Performers</h2>
+                        <h2 style="color: #333; font-weight: 700; margin-bottom: 0.5rem;">ðŸ† Top Performers</h2>
                         <p style="color: #666; font-size: 1rem;">Congratulations to this week's top 3 students!</p>
                     </div>
                     
@@ -4072,7 +4072,7 @@
                                     <div class="student-avatar" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #333;">AC</div>
                                     <div class="student-info">
                                         <div class="student-name">Alex Chen</div>
-                                        <div class="student-class">Grade 11A • 2,850 pts</div>
+                                        <div class="student-class">Grade 11A â€¢ 2,850 pts</div>
                                     </div>
                                     <div class="progress-container">
                                         <div class="progress-bar enhanced" style="width: 95%; background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);"></div>
@@ -4084,7 +4084,7 @@
                                     <div class="student-avatar" style="background: linear-gradient(135deg, #C0C0C0 0%, #A8A8A8 100%); color: #333;">SJ</div>
                                     <div class="student-info">
                                         <div class="student-name">Sarah Johnson</div>
-                                        <div class="student-class">Grade 11B • 2,640 pts</div>
+                                        <div class="student-class">Grade 11B â€¢ 2,640 pts</div>
                                     </div>
                                     <div class="progress-container">
                                         <div class="progress-bar enhanced" style="width: 88%; background: linear-gradient(90deg, #C0C0C0 0%, #A8A8A8 100%);"></div>
@@ -4096,7 +4096,7 @@
                                     <div class="student-avatar" style="background: linear-gradient(135deg, #CD7F32 0%, #B8860B 100%); color: white;">MB</div>
                                     <div class="student-info">
                                         <div class="student-name">Michael Brown</div>
-                                        <div class="student-class">Grade 11A • 2,460 pts</div>
+                                        <div class="student-class">Grade 11A â€¢ 2,460 pts</div>
                                     </div>
                                     <div class="progress-container">
                                         <div class="progress-bar enhanced" style="width: 82%; background: linear-gradient(90deg, #CD7F32 0%, #B8860B 100%);"></div>
@@ -4108,7 +4108,7 @@
                                     <div class="student-avatar">EW</div>
                                     <div class="student-info">
                                         <div class="student-name">Emma Wilson</div>
-                                        <div class="student-class">Grade 11C • 2,340 pts</div>
+                                        <div class="student-class">Grade 11C â€¢ 2,340 pts</div>
                                     </div>
                                     <div class="progress-container">
                                         <div class="progress-bar enhanced" style="width: 78%; background: linear-gradient(90deg, #4CAF50 0%, #45a049 100%);"></div>
@@ -4120,7 +4120,7 @@
                                     <div class="student-avatar">DL</div>
                                     <div class="student-info">
                                         <div class="student-name">David Lee</div>
-                                        <div class="student-class">Grade 11B • 2,160 pts</div>
+                                        <div class="student-class">Grade 11B â€¢ 2,160 pts</div>
                                     </div>
                                     <div class="progress-container">
                                         <div class="progress-bar enhanced" style="width: 72%; background: linear-gradient(90deg, #2196F3 0%, #1976D2 100%);"></div>
@@ -4132,7 +4132,7 @@
                                     <div class="student-avatar current">YO</div>
                                     <div class="student-info">
                                         <div class="student-name">You</div>
-                                        <div class="student-class">Grade 11A • 1,950 pts</div>
+                                        <div class="student-class">Grade 11A â€¢ 1,950 pts</div>
                                     </div>
                                     <div class="progress-container">
                                         <div class="progress-bar enhanced" style="width: 65%; background: linear-gradient(90deg, #9C27B0 0%, #7B1FA2 100%);"></div>
@@ -4145,7 +4145,7 @@
                                     <div class="student-avatar">JS</div>
                                     <div class="student-info">
                                         <div class="student-name">Jessica Smith</div>
-                                        <div class="student-class">Grade 11B • 1,820 pts</div>
+                                        <div class="student-class">Grade 11B â€¢ 1,820 pts</div>
                                     </div>
                                     <div class="progress-container">
                                         <div class="progress-bar enhanced" style="width: 58%; background: linear-gradient(90deg, #FF9800 0%, #F57C00 100%);"></div>
@@ -4157,7 +4157,7 @@
                                     <div class="student-avatar">RG</div>
                                     <div class="student-info">
                                         <div class="student-name">Ryan Garcia</div>
-                                        <div class="student-class">Grade 11C • 1,750 pts</div>
+                                        <div class="student-class">Grade 11C â€¢ 1,750 pts</div>
                                     </div>
                                     <div class="progress-container">
                                         <div class="progress-bar enhanced" style="width: 55%; background: linear-gradient(90deg, #E91E63 0%, #C2185B 100%);"></div>
@@ -4441,7 +4441,7 @@
             
             overlay.innerHTML = `
                 <div style="text-align: center; max-width: 500px; padding: 2rem;">
-                    <div style="font-size: 4rem; margin-bottom: 1rem;">🚫</div>
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">ðŸš«</div>
                     <h1 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700;">Focus Mode Active</h1>
                     <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
                         This website is blocked during your focus session to help you stay productive.
@@ -4722,12 +4722,12 @@
         async function syncEnrolledCourses() {
             const authToken = localStorage.getItem('authToken');
             if (!authToken) {
-                console.log('⚠️ No auth token - skipping enrollment sync');
+                console.log('âš ï¸ No auth token - skipping enrollment sync');
                 return;
             }
             
             try {
-                const response = await fetch('http://localhost:3000/api/my-enrollments', {
+                const response = await fetch('https://elbadry-production.up.railway.app/api/my-enrollments', {
                     headers: {
                         'Authorization': `Bearer ${authToken}`
                     }
@@ -4737,12 +4737,12 @@
                     const enrollments = await response.json();
                     const courseIds = enrollments.map(e => e.slug || e.title.toLowerCase().replace(/\s+/g, '-'));
                     localStorage.setItem('enrolledCourses', JSON.stringify(courseIds));
-                    console.log('✅ Synced enrolled courses from backend:', courseIds);
+                    console.log('âœ… Synced enrolled courses from backend:', courseIds);
                     
                     // Update community button visibility
                     checkCommunityAccess();
                 } else {
-                    console.log('⚠️ Failed to sync enrollments from backend');
+                    console.log('âš ï¸ Failed to sync enrollments from backend');
                 }
             } catch (error) {
                 console.error('Error syncing enrollments:', error);
@@ -4757,10 +4757,10 @@
             if (communitySection) {
                 if (enrolledCourses.length > 0) {
                     communitySection.style.display = 'block';
-                    console.log('✅ Community button enabled - User has enrolled courses');
+                    console.log('âœ… Community button enabled - User has enrolled courses');
                 } else {
                     communitySection.style.display = 'none';
-                    console.log('❌ Community button hidden - No enrolled courses');
+                    console.log('âŒ Community button hidden - No enrolled courses');
                 }
             }
         }
@@ -4822,7 +4822,7 @@
                 document.getElementById('leaderboardContent').style.display = 'none';
                 
                 // Get students from public leaderboard API
-                const response = await fetch('http://localhost:3000/api/leaderboard');
+                const response = await fetch('https://elbadry-production.up.railway.app/api/leaderboard');
                 if (!response.ok) {
                     throw new Error('Failed to fetch leaderboard data');
                 }
@@ -5105,3 +5105,4 @@
     </style>
 </body>
 </html>
+

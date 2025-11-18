@@ -2142,6 +2142,8 @@
     
     <!-- Scroll Animation Script -->
     <script>
+        const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://elbadry-production.up.railway.app/api';
+
         // Intersection Observer for scroll animations
         const observerOptions = {
             threshold: 0.1,
@@ -3786,7 +3788,7 @@
             try {
                 console.log('Logging in user:', { email });
                 
-                const response = await fetch('http://localhost:3000/api/login', {
+                const response = await fetch(`${apiUrl}/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -3899,7 +3901,7 @@
                 // Check for pending orders first
                 try {
                     console.log('🔍 Step 1: Checking order status for user ID:', data.user.id);
-                    const orderStatusResponse = await fetch(`http://localhost:3000/api/orders/status/${data.user.id}`, {
+                    const orderStatusResponse = await fetch(`${apiUrl}/orders/status/${data.user.id}`, {
                         headers: { 'Authorization': `Bearer ${data.token}` }
                     });
                     
@@ -3930,7 +3932,7 @@
                                 console.log('🔍 Step 5: Fetching user orders by email:', data.user.email);
                                 
                                 // Use email-based endpoint which doesn't require admin access
-                                const orderDetailsResponse = await fetch(`http://localhost:3000/api/orders/by-email/${encodeURIComponent(data.user.email)}`);
+                                const orderDetailsResponse = await fetch(`${apiUrl}/orders/by-email/${encodeURIComponent(data.user.email)}`);
                                 
                                 if (orderDetailsResponse.ok) {
                                     const orderDetails = await orderDetailsResponse.json();
@@ -4123,7 +4125,7 @@
                 const phoneCountry = document.getElementById('phoneCountry').value;
                 const parentPhoneCountry = document.getElementById('parentPhoneCountry').value;
                 
-                const response = await fetch('http://localhost:3000/api/register', {
+                const response = await fetch(`${apiUrl}/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -4344,7 +4346,7 @@
             }
             
             try {
-                const response = await fetch('http://localhost:3000/api/forgot-password', {
+                const response = await fetch(`${apiUrl}/forgot-password`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -4406,7 +4408,7 @@
             }
             
             try {
-                const response = await fetch('http://localhost:3000/api/verify-reset-code', {
+                const response = await fetch(`${apiUrl}/verify-reset-code`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -4454,7 +4456,7 @@
             }
             
             try {
-                const response = await fetch('http://localhost:3000/api/reset-password', {
+                const response = await fetch(`${apiUrl}/reset-password`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

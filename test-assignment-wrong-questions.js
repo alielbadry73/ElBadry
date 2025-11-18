@@ -1,4 +1,4 @@
-// Test script to verify assignment wrong question creation works properly
+﻿// Test script to verify assignment wrong question creation works properly
 // This script creates test data and provides instructions for testing
 
 console.log('Assignment Wrong Questions Test Script');
@@ -20,10 +20,10 @@ function createTestAssignmentQuestions() {
             points: 5,
             difficulty: 'medium',
             options: [
-                { text: 'KE = mv²', isCorrect: false },
-                { text: 'KE = 1/2mv²', isCorrect: true },
+                { text: 'KE = mvÂ²', isCorrect: false },
+                { text: 'KE = 1/2mvÂ²', isCorrect: true },
                 { text: 'KE = mv', isCorrect: false },
-                { text: 'KE = 2mv²', isCorrect: false }
+                { text: 'KE = 2mvÂ²', isCorrect: false }
             ],
             correctAnswer: 1, // Index of correct answer
             createdAt: new Date().toISOString()
@@ -42,7 +42,7 @@ function createTestAssignmentQuestions() {
                 { text: 'F = ma', isCorrect: true },
                 { text: 'F = mv', isCorrect: false },
                 { text: 'F = m/a', isCorrect: false },
-                { text: 'F = ma²', isCorrect: false }
+                { text: 'F = maÂ²', isCorrect: false }
             ],
             correctAnswer: 0,
             createdAt: new Date().toISOString()
@@ -58,7 +58,7 @@ function createTestAssignmentQuestions() {
     });
     localStorage.setItem('physicsQuestions', JSON.stringify(existingQuestions));
     
-    console.log('✅ Test assignment questions created in physicsQuestions');
+    console.log('âœ… Test assignment questions created in physicsQuestions');
     console.log('Questions:', testQuestions.map(q => ({ title: q.text, assignment: q.activityTitle })));
     
     return testQuestions;
@@ -70,12 +70,12 @@ function clearWrongQuestions() {
     localStorage.removeItem('physicsWrongQuestions');
     localStorage.removeItem('mathematicsWrongQuestions');
     localStorage.removeItem('chemistryWrongQuestions');
-    console.log('✅ All wrong questions cleared');
+    console.log('âœ… All wrong questions cleared');
 }
 
 // Function to test the complete workflow
 function runAssignmentTest() {
-    console.log('\n🧪 Running Assignment Wrong Questions Test');
+    console.log('\nðŸ§ª Running Assignment Wrong Questions Test');
     console.log('==========================================');
     
     // Step 1: Clear existing data
@@ -84,32 +84,32 @@ function runAssignmentTest() {
     // Step 2: Create test questions
     const testQuestions = createTestAssignmentQuestions();
     
-    console.log('\n📋 Test Instructions:');
+    console.log('\nðŸ“‹ Test Instructions:');
     console.log('====================');
-    console.log('1. Go to: http://localhost:3000/physics-assignments.html');
+    console.log('1. Go to: https://elbadry-production.up.railway.app/physics-assignments.html');
     console.log('2. You should see the "yf" assignment');
     console.log('3. Click "Start Assignment"');
-    console.log('4. Answer the first question INCORRECTLY (choose option 0: "KE = mv²")');
+    console.log('4. Answer the first question INCORRECTLY (choose option 0: "KE = mvÂ²")');
     console.log('5. Answer the second question INCORRECTLY (choose option 1: "F = mv")');
     console.log('6. Submit the assignment');
-    console.log('7. Go to: http://localhost:3000/physics-wrong-questions-assignments.html');
+    console.log('7. Go to: https://elbadry-production.up.railway.app/physics-wrong-questions-assignments.html');
     console.log('8. You should see the wrong questions with proper text and answers');
     
-    console.log('\n🎯 Expected Results:');
+    console.log('\nðŸŽ¯ Expected Results:');
     console.log('===================');
-    console.log('✅ Question 1 should show:');
+    console.log('âœ… Question 1 should show:');
     console.log('   - Question: "What is the formula for kinetic energy?"');
-    console.log('   - Your Answer: "KE = mv²" (in red)');
-    console.log('   - Correct Answer: "KE = 1/2mv²" (in green)');
+    console.log('   - Your Answer: "KE = mvÂ²" (in red)');
+    console.log('   - Correct Answer: "KE = 1/2mvÂ²" (in green)');
     console.log('   - Assignment: "yf"');
     console.log('');
-    console.log('✅ Question 2 should show:');
+    console.log('âœ… Question 2 should show:');
     console.log('   - Question: "What is Newton\'s second law of motion?"');
     console.log('   - Your Answer: "F = mv" (in red)');
     console.log('   - Correct Answer: "F = ma" (in green)');
     console.log('   - Assignment: "yf"');
     
-    console.log('\n🔍 Debugging:');
+    console.log('\nðŸ” Debugging:');
     console.log('=============');
     console.log('- Open browser console (F12) to see debug logs');
     console.log('- Check localStorage for "physicsWrongQuestions"');
@@ -132,8 +132,9 @@ if (typeof module !== 'undefined' && module.exports) {
     window.runAssignmentTest = runAssignmentTest;
 }
 
-console.log('\n🚀 Ready to test!');
+console.log('\nðŸš€ Ready to test!');
 console.log('Run: runAssignmentTest() to start the test');
+
 
 
 

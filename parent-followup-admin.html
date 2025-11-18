@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -192,7 +192,7 @@
         // Load assistants
         async function loadAssistants() {
             try {
-                const response = await fetch('http://localhost:3000/api/admin/assistants', {
+                const response = await fetch('https://elbadry-production.up.railway.app/api/admin/assistants', {
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
                 const assistants = await response.json();
@@ -216,7 +216,7 @@
         // Load parents
         async function loadParents() {
             try {
-                const response = await fetch('http://localhost:3000/api/admin/parents', {
+                const response = await fetch('https://elbadry-production.up.railway.app/api/admin/parents', {
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
                 const parents = await response.json();
@@ -251,7 +251,7 @@
         async function loadDueFollowups() {
             try {
                 // Weekly
-                const weeklyResponse = await fetch('http://localhost:3000/api/admin/parents-due-weekly', {
+                const weeklyResponse = await fetch('https://elbadry-production.up.railway.app/api/admin/parents-due-weekly', {
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
                 const weeklyDue = await weeklyResponse.json();
@@ -261,7 +261,7 @@
                     : '<p class="text-muted mb-0">No weekly reports scheduled for today</p>';
                 
                 // Monthly  
-                const monthlyResponse = await fetch('http://localhost:3000/api/admin/parents-due-monthly', {
+                const monthlyResponse = await fetch('https://elbadry-production.up.railway.app/api/admin/parents-due-monthly', {
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
                 const monthlyDue = await monthlyResponse.json();
@@ -280,7 +280,7 @@
             if (!confirm(`Send ${type} report to this parent now?`)) return;
             
             try {
-                const response = await fetch('http://localhost:3000/api/admin/send-parent-followup', {
+                const response = await fetch('https://elbadry-production.up.railway.app/api/admin/send-parent-followup', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -290,7 +290,7 @@
                 });
                 
                 const result = await response.json();
-                alert(`✅ ${result.message}\n\nReport generated successfully!`);
+                alert(`âœ… ${result.message}\n\nReport generated successfully!`);
                 console.log('Report:', result.report);
             } catch (error) {
                 console.error('Error sending followup:', error);
@@ -315,4 +315,5 @@
     </script>
 </body>
 </html>
+
 

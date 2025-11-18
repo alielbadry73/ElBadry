@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -55,7 +55,7 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">English</a></li>
-            <li><a class="dropdown-item" href="#">العربية</a></li>
+            <li><a class="dropdown-item" href="#">Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©</a></li>
           </ul>
         </div>
 
@@ -303,11 +303,11 @@
 
   <script>
     // Global variables
-    console.log('🔵 CHECKOUT PAGE: Starting cart initialization...');
-    console.log('🔵 localStorage.cart:', localStorage.getItem('cart'));
-    console.log('🔵 localStorage.enrollCourse:', localStorage.getItem('enrollCourse'));
-    console.log('🔵 sessionStorage.cart:', sessionStorage.getItem('cart'));
-    console.log('🔵 sessionStorage.currentCourse:', sessionStorage.getItem('currentCourse'));
+    console.log('ðŸ”µ CHECKOUT PAGE: Starting cart initialization...');
+    console.log('ðŸ”µ localStorage.cart:', localStorage.getItem('cart'));
+    console.log('ðŸ”µ localStorage.enrollCourse:', localStorage.getItem('enrollCourse'));
+    console.log('ðŸ”µ sessionStorage.cart:', sessionStorage.getItem('cart'));
+    console.log('ðŸ”µ sessionStorage.currentCourse:', sessionStorage.getItem('currentCourse'));
     
     // TRY ALL SOURCES IN ORDER
     let cart = JSON.parse(localStorage.getItem('cart') || sessionStorage.getItem('cart') || '[]');
@@ -320,7 +320,7 @@
       const bookCart = JSON.parse(localStorage.getItem('bookCart') || '[]');
       if (bookCart && bookCart.length > 0) {
         cart = bookCart;
-        console.log('📚 Book cart loaded:', cart);
+        console.log('ðŸ“š Book cart loaded:', cart);
         // Update page title and header for books
         document.title = 'Checkout - Digital Books | IG Nation';
         const orderSummaryTitle = document.getElementById('orderSummaryTitle');
@@ -335,14 +335,14 @@
       const enrollCourse = JSON.parse(localStorage.getItem('enrollCourse') || sessionStorage.getItem('currentCourse') || 'null');
       if (enrollCourse) {
         cart = [enrollCourse];
-        console.log('🔵 Cart loaded from backup:', cart);
+        console.log('ðŸ”µ Cart loaded from backup:', cart);
       }
     }
     
     // DEBUG: Log cart loading
-    console.log('🛒 Cart loaded from localStorage:', cart);
-    console.log('🛒 Cart length:', cart.length);
-    console.log('🛒 Cart contents:', JSON.stringify(cart, null, 2));
+    console.log('ðŸ›’ Cart loaded from localStorage:', cart);
+    console.log('ðŸ›’ Cart length:', cart.length);
+    console.log('ðŸ›’ Cart contents:', JSON.stringify(cart, null, 2));
     
     // Fetch course data from homenocourses.html if needed
     let homenocoursesData = null;
@@ -353,40 +353,40 @@
         title: 'IGCSE Mathematics (Extended)',
         instructor: 'Dr. Sarah Mitchell',
         board: 'Cambridge Board',
-        price: '£299.00',
-        originalPrice: '£399.00',
+        price: 'Â£299.00',
+        originalPrice: 'Â£399.00',
         image: 'images/teacher1.PNG'
       },
       physics: {
         title: 'IGCSE Physics',
         instructor: 'Prof. Michael Chen',
         board: 'Cambridge Board',
-        price: '£279.00',
-        originalPrice: '£349.00',
+        price: 'Â£279.00',
+        originalPrice: 'Â£349.00',
         image: 'images/teacher2.PNG'
       },
       english: {
         title: 'IGCSE English Language',
         instructor: 'Dr. Emily Rodriguez',
         board: 'Cambridge Board',
-        price: '£249.00',
-        originalPrice: '£329.00',
+        price: 'Â£249.00',
+        originalPrice: 'Â£329.00',
         image: 'images/teacher3.PNG'
       },
       chemistry: {
         title: 'IGCSE Chemistry',
         instructor: 'Dr. James Wilson',
         board: 'Cambridge Board',
-        price: '£269.00',
-        originalPrice: '£339.00',
+        price: 'Â£269.00',
+        originalPrice: 'Â£339.00',
         image: 'images/teacher4.PNG'
       },
       biology: {
         title: 'IGCSE Biology',
         instructor: 'Dr. Lisa Anderson',
         board: 'Cambridge Board',
-        price: '£259.00',
-        originalPrice: '£319.00',
+        price: 'Â£259.00',
+        originalPrice: 'Â£319.00',
         image: 'images/teacher5.PNG'
       }
     };
@@ -417,7 +417,7 @@
           registerBtn.style.display = 'none';
         }
         
-        console.log('✅ User logged in - Login and Register buttons hidden');
+        console.log('âœ… User logged in - Login and Register buttons hidden');
       } else {
         // Hide user name
         const userNameDisplay = document.getElementById('userNameDisplay');
@@ -455,13 +455,13 @@
       const style = document.createElement('style');
       style.textContent = '.login-btn, .register-btn { display: none !important; }';
       document.head.appendChild(style);
-      console.log('🔒 User already logged in - hiding auth buttons immediately');
+      console.log('ðŸ”’ User already logged in - hiding auth buttons immediately');
     }
 
     // Fetch course data from API
     async function fetchCourseData() {
       try {
-        const response = await fetch('http://localhost:3000/api/courses');
+        const response = await fetch('https://elbadry-production.up.railway.app/api/courses');
         if (response.ok) {
           const data = await response.json();
           homenocoursesData = data;
@@ -514,7 +514,7 @@
             title: course.title,
             instructor: course.instructor,
             board: course.board || 'Cambridge Board',
-            price: `£${course.price.toFixed(2)}`,
+            price: `Â£${course.price.toFixed(2)}`,
             image: course.image || 'images/teacher1.PNG'
           };
           console.log('Returning course data:', result);
@@ -527,27 +527,27 @@
 
     // Initialize page
     document.addEventListener('DOMContentLoaded', async function() {
-      console.log('🔵 DOMContentLoaded event fired');
-      console.log('🔵 Current URL:', window.location.href);
-      console.log('🔵 URL Parameters:', new URLSearchParams(window.location.search).toString());
-      console.log('🔵 Cart at DOMContentLoaded:', cart);
-      console.log('🔵 Cart from localStorage:', JSON.parse(localStorage.getItem('cart')) || []);
+      console.log('ðŸ”µ DOMContentLoaded event fired');
+      console.log('ðŸ”µ Current URL:', window.location.href);
+      console.log('ðŸ”µ URL Parameters:', new URLSearchParams(window.location.search).toString());
+      console.log('ðŸ”µ Cart at DOMContentLoaded:', cart);
+      console.log('ðŸ”µ Cart from localStorage:', JSON.parse(localStorage.getItem('cart')) || []);
       
       // CRITICAL: Check if cart is empty and try to reload it
       if (!cart || cart.length === 0) {
-        console.warn('🚨 Cart is empty on page load! Attempting to reload...');
+        console.warn('ðŸš¨ Cart is empty on page load! Attempting to reload...');
         cart = JSON.parse(localStorage.getItem('cart')) || [];
-        console.log('🔄 Reloaded cart:', cart);
+        console.log('ðŸ”„ Reloaded cart:', cart);
         
         // If still empty, check for enrollCourse backup
         if (!cart || cart.length === 0) {
           const enrollCourse = JSON.parse(localStorage.getItem('enrollCourse') || 'null');
           if (enrollCourse) {
-            console.log('🆘 Found backup enrollCourse:', enrollCourse);
+            console.log('ðŸ†˜ Found backup enrollCourse:', enrollCourse);
             cart = [enrollCourse];
             localStorage.setItem('cart', JSON.stringify(cart));
             localStorage.removeItem('enrollCourse'); // Clean up backup
-            console.log('✅ Cart restored from enrollCourse backup:', cart);
+            console.log('âœ… Cart restored from enrollCourse backup:', cart);
           }
         }
         
@@ -556,24 +556,24 @@
           const urlParams = new URLSearchParams(window.location.search);
           const courseParam = urlParams.get('course');
           if (courseParam) {
-            console.log('🎯 Found course parameter:', courseParam);
+            console.log('ðŸŽ¯ Found course parameter:', courseParam);
             // Try to find course data and add to cart
             // This is a fallback for direct "Enroll Now" clicks
             const fallbackCourse = getCourseById(courseParam);
             if (fallbackCourse) {
-              console.log('🆘 Creating fallback cart item from URL:', fallbackCourse);
+              console.log('ðŸ†˜ Creating fallback cart item from URL:', fallbackCourse);
               cart = [{
                 courseId: courseParam,
                 id: courseParam,
                 title: fallbackCourse.title,
-                price: parseFloat(fallbackCourse.price.replace('£', '')),
+                price: parseFloat(fallbackCourse.price.replace('Â£', '')),
                 instructor: fallbackCourse.instructor,
                 board: fallbackCourse.board,
                 image: fallbackCourse.image,
                 quantity: 1
               }];
               localStorage.setItem('cart', JSON.stringify(cart));
-              console.log('✅ Fallback cart created from URL:', cart);
+              console.log('âœ… Fallback cart created from URL:', cart);
             }
           }
         }
@@ -627,8 +627,8 @@
                 </div>
               </div>
               <div class="text-end">
-                <div class="fw-bold">£${itemTotal.toFixed(2)}</div>
-                <div class="text-muted small">£${item.price} each</div>
+                <div class="fw-bold">Â£${itemTotal.toFixed(2)}</div>
+                <div class="text-muted small">Â£${item.price} each</div>
               </div>
             </div>
           `;
@@ -645,7 +645,7 @@
             title: item.title,
             instructor: item.instructor,
             board: item.board || 'Cambridge Board',
-            price: item.price ? `£${item.price.toFixed(2)}` : '£299.00',
+            price: item.price ? `Â£${item.price.toFixed(2)}` : 'Â£299.00',
             image: item.image || 'images/teacher1.PNG'
           };
           console.log('Using course data from cart item:', course);
@@ -666,7 +666,7 @@
           }
         }
         
-        const priceValue = course.price ? parseFloat(course.price.replace('£', '')) : item.price || 299.00;
+        const priceValue = course.price ? parseFloat(course.price.replace('Â£', '')) : item.price || 299.00;
         const itemTotal = priceValue * item.quantity;
         total += itemTotal;
         
@@ -680,7 +680,7 @@
               </div>
             </div>
             <div class="text-end">
-              <div class="fw-bold">£${itemTotal.toFixed(2)}</div>
+              <div class="fw-bold">Â£${itemTotal.toFixed(2)}</div>
             </div>
           </div>
         `;
@@ -688,7 +688,7 @@
         <hr>
         <div class="d-flex justify-content-between align-items-center fw-bold fs-5">
           <span>Total</span>
-          <span class="text-primary">£${total.toFixed(2)}</span>
+          <span class="text-primary">Â£${total.toFixed(2)}</span>
         </div>
       `;
       
@@ -697,8 +697,8 @@
       orderSummary.innerHTML = summaryHTML;
       
       // Update payment amounts
-      document.getElementById('instapayAmount').textContent = `£${total.toFixed(2)}`;
-      document.getElementById('vodafoneAmount').textContent = `£${total.toFixed(2)}`;
+      document.getElementById('instapayAmount').textContent = `Â£${total.toFixed(2)}`;
+      document.getElementById('vodafoneAmount').textContent = `Â£${total.toFixed(2)}`;
     }
 
     function setupCheckoutEventListeners() {
@@ -745,10 +745,10 @@
     }
 
     async function submitOrder() {
-      console.log('🟡 ============ SUBMIT ORDER CALLED ============');
+      console.log('ðŸŸ¡ ============ SUBMIT ORDER CALLED ============');
       
       // CRITICAL: ALWAYS reload cart from ALL sources at the VERY START
-      console.log('🟡 Step 1: Checking all storage sources...');
+      console.log('ðŸŸ¡ Step 1: Checking all storage sources...');
       console.log('   - cart variable:', cart);
       console.log('   - localStorage.cart:', localStorage.getItem('cart'));
       console.log('   - localStorage.enrollCourse:', localStorage.getItem('enrollCourse'));
@@ -762,7 +762,7 @@
       const enrollCourse = JSON.parse(localStorage.getItem('enrollCourse') || 'null');
       if (enrollCourse) {
         recoveredCart = [enrollCourse];
-        console.log('🟡 Using enrollCourse (Priority 1):', recoveredCart);
+        console.log('ðŸŸ¡ Using enrollCourse (Priority 1):', recoveredCart);
       }
       
       // Priority 2: sessionStorage.currentCourse
@@ -770,7 +770,7 @@
         const currentCourse = JSON.parse(sessionStorage.getItem('currentCourse') || 'null');
         if (currentCourse) {
           recoveredCart = [currentCourse];
-          console.log('🟡 Using sessionStorage.currentCourse (Priority 2):', recoveredCart);
+          console.log('ðŸŸ¡ Using sessionStorage.currentCourse (Priority 2):', recoveredCart);
         }
       }
       
@@ -778,7 +778,7 @@
       if (!recoveredCart || recoveredCart.length === 0) {
         recoveredCart = JSON.parse(localStorage.getItem('cart') || 'null');
         if (recoveredCart && recoveredCart.length > 0) {
-          console.log('🟡 Using localStorage.cart (Priority 3):', recoveredCart);
+          console.log('ðŸŸ¡ Using localStorage.cart (Priority 3):', recoveredCart);
         }
       }
       
@@ -786,21 +786,21 @@
       if (!recoveredCart || recoveredCart.length === 0) {
         recoveredCart = JSON.parse(sessionStorage.getItem('cart') || 'null');
         if (recoveredCart && recoveredCart.length > 0) {
-          console.log('🟡 Using sessionStorage.cart (Priority 4):', recoveredCart);
+          console.log('ðŸŸ¡ Using sessionStorage.cart (Priority 4):', recoveredCart);
         }
       }
       
       // Override cart variable with recovered data
       if (recoveredCart && recoveredCart.length > 0) {
         cart = recoveredCart;
-        console.log('🟡 ✅ Cart recovered from storage:', cart);
+        console.log('ðŸŸ¡ âœ… Cart recovered from storage:', cart);
       } else {
-        console.error('🟡 ❌ NO CART DATA FOUND IN ANY SOURCE!');
+        console.error('ðŸŸ¡ âŒ NO CART DATA FOUND IN ANY SOURCE!');
         // ABSOLUTE LAST RESORT
         const urlParams = new URLSearchParams(window.location.search);
         const courseParam = urlParams.get('course');
         if (courseParam) {
-          console.log('🟡 Attempting URL parameter recovery...');
+          console.log('ðŸŸ¡ Attempting URL parameter recovery...');
           await fetchCourseData();
           const course = getCourseById(courseParam);
           if (course) {
@@ -808,19 +808,19 @@
               courseId: courseParam,
               id: courseParam,
               title: course.title,
-              price: parseFloat(course.price.replace('£', '')),
+              price: parseFloat(course.price.replace('Â£', '')),
               instructor: course.instructor,
               board: course.board,
               image: course.image,
               quantity: 1
             }];
-            console.log('🟡 Cart created from URL:', cart);
+            console.log('ðŸŸ¡ Cart created from URL:', cart);
           }
         }
         
         // FINAL FALLBACK
         if (!cart || cart.length === 0) {
-          console.error('🟡 USING HARDCODED FALLBACK!');
+          console.error('ðŸŸ¡ USING HARDCODED FALLBACK!');
           cart = [{
             courseId: 1,
             id: 1,
@@ -834,8 +834,8 @@
         }
       }
       
-      console.log('🟡 Final cart before processing:', cart);
-      console.log('🟡 Final cart length:', cart.length);
+      console.log('ðŸŸ¡ Final cart before processing:', cart);
+      console.log('ðŸŸ¡ Final cart length:', cart.length);
       
       const form = document.getElementById('checkoutForm');
       
@@ -862,27 +862,27 @@
       const phone = document.getElementById('checkoutPhone').value;
       
       // CRITICAL: ALWAYS force reload cart from enrollCourse - don't trust the cart variable
-      console.log('🔵 ===== EMERGENCY CART RELOAD =====');
-      console.log('🔵 Cart value:', cart);
-      console.log('🔵 Cart type:', typeof cart);
-      console.log('🔵 Cart length:', cart ? cart.length : 'N/A');
-      console.log('🔵 Cart is array?:', Array.isArray(cart));
+      console.log('ðŸ”µ ===== EMERGENCY CART RELOAD =====');
+      console.log('ðŸ”µ Cart value:', cart);
+      console.log('ðŸ”µ Cart type:', typeof cart);
+      console.log('ðŸ”µ Cart length:', cart ? cart.length : 'N/A');
+      console.log('ðŸ”µ Cart is array?:', Array.isArray(cart));
       
       // ALWAYS reload from enrollCourse to be 100% sure
       const enrollCourseBackup = localStorage.getItem('enrollCourse');
-      console.log('🔵 Raw enrollCourse from localStorage:', enrollCourseBackup);
+      console.log('ðŸ”µ Raw enrollCourse from localStorage:', enrollCourseBackup);
       
       if (enrollCourseBackup) {
         const parsed = JSON.parse(enrollCourseBackup);
         cart = [parsed];
-        console.log('🔵 ✅ FORCED cart from enrollCourse:', cart);
-        console.log('🔵 ✅ Cart[0]:', cart[0]);
+        console.log('ðŸ”µ âœ… FORCED cart from enrollCourse:', cart);
+        console.log('ðŸ”µ âœ… Cart[0]:', cart[0]);
       } else {
-        console.error('🔵 ❌ No enrollCourse in localStorage!');
+        console.error('ðŸ”µ âŒ No enrollCourse in localStorage!');
       }
       
-      console.log('🔵 Final cart before order items:', cart);
-      console.log('🔵 =================================');
+      console.log('ðŸ”µ Final cart before order items:', cart);
+      console.log('ðŸ”µ =================================');
       
       // Get order summary
       const orderItems = cart.map(item => {
@@ -890,7 +890,7 @@
         if (item.title) {
           course = {
             title: item.title,
-            price: item.price ? `£${item.price.toFixed(2)}` : '£299.00'
+            price: item.price ? `Â£${item.price.toFixed(2)}` : 'Â£299.00'
           };
         } else {
           course = getCourseById(item.courseId) || courses[item.courseId];
@@ -902,12 +902,12 @@
         let course;
         if (item.title) {
           course = {
-            price: item.price ? `£${item.price.toFixed(2)}` : '£299.00'
+            price: item.price ? `Â£${item.price.toFixed(2)}` : 'Â£299.00'
           };
         } else {
           course = getCourseById(item.courseId) || courses[item.courseId];
         }
-        return sum + parseFloat(course.price.replace('£', ''));
+        return sum + parseFloat(course.price.replace('Â£', ''));
       }, 0);
       
       // Get payment method
@@ -915,29 +915,29 @@
       const paymentType = paymentMethod ? paymentMethod.value : 'unknown';
       
       try {
-        console.log('📋 Preparing order from cart:', cart);
-        console.log('📋 Cart length:', cart.length);
-        console.log('📋 Cart JSON:', JSON.stringify(cart));
+        console.log('ðŸ“‹ Preparing order from cart:', cart);
+        console.log('ðŸ“‹ Cart length:', cart.length);
+        console.log('ðŸ“‹ Cart JSON:', JSON.stringify(cart));
         
         // ABSOLUTE FINAL CHECK: If cart is STILL empty here, FORCE load from enrollCourse
         if (!cart || cart.length === 0) {
-          console.error('🚨 CRITICAL: Cart is empty at mapping stage! Force loading from enrollCourse...');
+          console.error('ðŸš¨ CRITICAL: Cart is empty at mapping stage! Force loading from enrollCourse...');
           const forceEnrollCourse = JSON.parse(localStorage.getItem('enrollCourse') || 'null');
           if (forceEnrollCourse) {
             cart = [forceEnrollCourse];
-            console.log('🚨 FORCED cart from enrollCourse:', cart);
+            console.log('ðŸš¨ FORCED cart from enrollCourse:', cart);
           } else {
-            console.error('🚨 FINAL ERROR: No enrollCourse found either!');
+            console.error('ðŸš¨ FINAL ERROR: No enrollCourse found either!');
             showToast('CRITICAL ERROR: No course data found. Please try again.', 'error');
             return;
           }
         }
         
-        console.log('📋 Cart items:', cart.map(item => ({ courseId: item.courseId, title: item.title, quantity: item.quantity })));
+        console.log('ðŸ“‹ Cart items:', cart.map(item => ({ courseId: item.courseId, title: item.title, quantity: item.quantity })));
         
         // SIMPLE APPROACH: Use cart data directly without complex mapping
         const coursesForOrder = cart.map((item, index) => {
-          console.log(`🔍 Processing cart item ${index + 1}:`, item);
+          console.log(`ðŸ” Processing cart item ${index + 1}:`, item);
           console.log(`   - item.title: "${item.title}"`);
           console.log(`   - item.courseId: ${item.courseId}`);
           console.log(`   - item.id: ${item.id}`);
@@ -955,46 +955,46 @@
             quantity: item.quantity || 1
           };
           
-          console.log('✅ Simple course data created:', courseData);
+          console.log('âœ… Simple course data created:', courseData);
           console.log('   - Final title:', courseData.title);
           return courseData;
         });
         
-        console.log('📦 Courses prepared for order:', coursesForOrder);
-        console.log('📦 Courses count:', coursesForOrder.length);
-        console.log('📦 Courses details:', coursesForOrder.map(c => ({ id: c.id, title: c.title, price: c.price })));
+        console.log('ðŸ“¦ Courses prepared for order:', coursesForOrder);
+        console.log('ðŸ“¦ Courses count:', coursesForOrder.length);
+        console.log('ðŸ“¦ Courses details:', coursesForOrder.map(c => ({ id: c.id, title: c.title, price: c.price })));
         
         // CRITICAL VALIDATION: Ensure courses are not empty
         if (!coursesForOrder || coursesForOrder.length === 0) {
-          console.error('❌ CRITICAL: coursesForOrder is empty!');
-          console.error('❌ cart variable:', cart);
-          console.error('❌ cart length:', cart ? cart.length : 'undefined');
-          console.error('❌ cart JSON:', JSON.stringify(cart));
+          console.error('âŒ CRITICAL: coursesForOrder is empty!');
+          console.error('âŒ cart variable:', cart);
+          console.error('âŒ cart length:', cart ? cart.length : 'undefined');
+          console.error('âŒ cart JSON:', JSON.stringify(cart));
           alert('CRITICAL ERROR: Cart is empty! Check console for details.');
           return;
         }
         
         // Use coursesForOrder directly - no filtering needed since we create valid data
         const validCourses = coursesForOrder;
-        console.log('✅ Using courses directly:', validCourses.length);
-        console.log('✅ validCourses:', validCourses);
-        console.log('✅ validCourses[0]:', validCourses[0]);
+        console.log('âœ… Using courses directly:', validCourses.length);
+        console.log('âœ… validCourses:', validCourses);
+        console.log('âœ… validCourses[0]:', validCourses[0]);
         
         // FINAL SAFETY CHECK before creating orderData
         if (!validCourses || validCourses.length === 0 || !validCourses[0] || !validCourses[0].title) {
-          console.error('❌ CRITICAL: validCourses is invalid!');
-          console.error('❌ validCourses:', validCourses);
+          console.error('âŒ CRITICAL: validCourses is invalid!');
+          console.error('âŒ validCourses:', validCourses);
           alert('CRITICAL ERROR: Course data is invalid! Check console.');
           return;
         }
         
         // ABSOLUTE FINAL CHECK: Ensure validCourses is not empty before saving
         if (!validCourses || validCourses.length === 0 || !validCourses[0]?.title) {
-          console.error('❌❌❌ CRITICAL: validCourses is invalid! Using enrollCourse as absolute fallback');
+          console.error('âŒâŒâŒ CRITICAL: validCourses is invalid! Using enrollCourse as absolute fallback');
           const absoluteFallback = JSON.parse(localStorage.getItem('enrollCourse') || 'null');
           if (absoluteFallback) {
             validCourses = [absoluteFallback];
-            console.log('✅ Used enrollCourse fallback:', validCourses);
+            console.log('âœ… Used enrollCourse fallback:', validCourses);
           }
         }
         
@@ -1009,10 +1009,10 @@
           payment_screenshot: screenshot.name
         };
         
-        console.log('💾💾💾 FINAL orderData.courses:', orderData.courses);
-        console.log('💾💾💾 FINAL parsed courses:', JSON.parse(orderData.courses));
+        console.log('ðŸ’¾ðŸ’¾ðŸ’¾ FINAL orderData.courses:', orderData.courses);
+        console.log('ðŸ’¾ðŸ’¾ðŸ’¾ FINAL parsed courses:', JSON.parse(orderData.courses));
         
-        console.log('💾 Saving order to database:', orderData);
+        console.log('ðŸ’¾ Saving order to database:', orderData);
         console.log('   Courses JSON:', orderData.courses);
         console.log('   Courses parsed:', JSON.parse(orderData.courses));
         console.log('   Total amount:', orderData.total_amount);
@@ -1022,12 +1022,12 @@
         // FINAL SAFETY CHECK: Ensure courses array is not empty
         const parsedCourses = JSON.parse(orderData.courses);
         if (!parsedCourses || parsedCourses.length === 0) {
-          console.error('❌ CRITICAL: Courses array is empty before saving!');
+          console.error('âŒ CRITICAL: Courses array is empty before saving!');
           showToast('Error: Course data is missing. Please try again.', 'error');
           return;
         }
         
-        const orderResponse = await fetch('http://localhost:3000/api/orders', {
+        const orderResponse = await fetch('https://elbadry-production.up.railway.app/api/orders', {
           method: 'POST',
           headers: { 
             'Content-Type': 'application/json',
@@ -1039,8 +1039,8 @@
         if (orderResponse.ok) {
           const orderResult = await orderResponse.json();
           console.log('Order saved to database successfully:', orderResult);
-          console.log('✅ Order ID:', orderResult.orderId);
-          console.log('✅ Courses in order:', validCourses);
+          console.log('âœ… Order ID:', orderResult.orderId);
+          console.log('âœ… Courses in order:', validCourses);
           
           // Save complete order details to localStorage
           const orderDetails = {
@@ -1053,17 +1053,17 @@
           };
           
           localStorage.setItem('lastOrder', JSON.stringify(orderDetails));
-          console.log('✅ Saved to lastOrder:', orderDetails);
+          console.log('âœ… Saved to lastOrder:', orderDetails);
           
           // Save purchased cart for display on order processing page
           localStorage.setItem('lastPurchasedCart', JSON.stringify(validCourses));
-          console.log('✅ Saved to lastPurchasedCart:', validCourses);
+          console.log('âœ… Saved to lastPurchasedCart:', validCourses);
           
           showToast('Order created successfully! Redirecting to WhatsApp...', 'success');
           
           // Create WhatsApp message with order details
           const whatsappMessage = `
-🎓 *New Order from IG Nation*
+ðŸŽ“ *New Order from IG Nation*
 
 *Customer Details:*
 Name: ${firstName} ${lastName}
@@ -1073,11 +1073,11 @@ Phone: ${phone}
 *Order Details:*
 ${orderItems}
 
-*Total Amount:* £${total.toFixed(2)}
+*Total Amount:* Â£${total.toFixed(2)}
 *Payment Method:* ${paymentType === 'instapay' ? 'Instapay' : 'Vodafone Cash'}
 *Order ID:* ${orderResult.orderId}
 
-✅ Payment screenshot will be attached separately`;
+âœ… Payment screenshot will be attached separately`;
           
           // Clear cart
           cart = [];
@@ -1180,7 +1180,7 @@ ${orderItems}
                   <ol class="mb-0">
                     <li>Click the <strong>"Open WhatsApp"</strong> button below</li>
                     <li>Your order details will be pre-filled in the message</li>
-                    <li><strong>Click the attachment icon (📎) in WhatsApp</strong></li>
+                    <li><strong>Click the attachment icon (ðŸ“Ž) in WhatsApp</strong></li>
                     <li><strong>Attach your payment screenshot</strong> from your device</li>
                     <li>Send the message to complete your order</li>
                   </ol>
@@ -1240,25 +1240,25 @@ ${orderItems}
 
     function openWhatsAppDirectly() {
       const phoneNumber = '201027500835'; // Remove + for WhatsApp URL
-      const message = `🎓 *IG Way IGCSE Tutoring - Course Purchase Confirmation*
+      const message = `ðŸŽ“ *IG Way IGCSE Tutoring - Course Purchase Confirmation*
 
-👤 *Student Details:*
-• Name: ${document.getElementById('checkoutFirstName').value} ${document.getElementById('checkoutLastName').value}
-• Email: ${document.getElementById('checkoutEmail').value}
-• Phone: ${document.getElementById('checkoutPhone').value}
+ðŸ‘¤ *Student Details:*
+â€¢ Name: ${document.getElementById('checkoutFirstName').value} ${document.getElementById('checkoutLastName').value}
+â€¢ Email: ${document.getElementById('checkoutEmail').value}
+â€¢ Phone: ${document.getElementById('checkoutPhone').value}
 
-📚 *Courses Purchased:*
+ðŸ“š *Courses Purchased:*
 ${cart.map(item => {
   const course = courses[item.courseId];
   return `${course.title} - ${course.price}`;
 }).join('\n')}
 
-💰 *Total Amount: £${cart.reduce((sum, item) => {
+ðŸ’° *Total Amount: Â£${cart.reduce((sum, item) => {
   const course = courses[item.courseId];
-  return sum + parseFloat(course.price.replace('£', ''));
+  return sum + parseFloat(course.price.replace('Â£', ''));
 }, 0).toFixed(2)}*
 
-📸 *Payment Screenshot Attached*
+ðŸ“¸ *Payment Screenshot Attached*
 
 Please verify the payment and activate my courses. Thank you!`;
       
@@ -1316,3 +1316,4 @@ Please verify the payment and activate my courses. Thank you!`;
   </script>
 </body>
 </html>
+

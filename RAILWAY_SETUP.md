@@ -134,3 +134,4 @@ const RAILWAY_BACKEND_URL = 'https://your-actual-railway-url.up.railway.app';
 
 **Note**: After updating the Railway URL in `js/config.js`, commit and push your changes so the frontend uses the correct URL.
 
+

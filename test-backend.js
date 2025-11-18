@@ -1,6 +1,6 @@
-const http = require('http');
+﻿const http = require('http');
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'https://elbadry-production.up.railway.app';
 
 // Test function
 async function testEndpoint(method, path, body = null, token = null) {
@@ -44,7 +44,7 @@ async function testEndpoint(method, path, body = null, token = null) {
 }
 
 async function runTests() {
-  console.log('🧪 Testing IG Nation Backend API...\n');
+  console.log('ðŸ§ª Testing IG Nation Backend API...\n');
 
   try {
     // Test 1: Health Check
@@ -78,7 +78,7 @@ async function runTests() {
     console.log('5. Testing Get Orders (Admin)...');
     const orders = await testEndpoint('GET', '/api/admin/orders', null, token);
     console.log(`   Status: ${orders.status} - Found ${orders.data.length} orders`);
-    console.log(`   Orders: ${orders.data.map(o => `#${o.id} - £${o.total_amount}`).join(', ')}\n`);
+    console.log(`   Orders: ${orders.data.map(o => `#${o.id} - Â£${o.total_amount}`).join(', ')}\n`);
 
     // Test 6: Get Teachers (Admin)
     console.log('6. Testing Get Teachers (Admin)...');
@@ -91,18 +91,19 @@ async function runTests() {
     const enrollments = await testEndpoint('GET', '/api/admin/enrollments', null, token);
     console.log(`   Status: ${enrollments.status} - Found ${enrollments.data.length} enrollments\n`);
 
-    console.log('✅ All tests completed successfully!');
-    console.log('\n🎉 Backend is fully functional!');
-    console.log('📊 Admin Panel: http://localhost:3000/admin-panel.html');
-    console.log('🔐 Admin Login: admin@ignation.com / admin123');
+    console.log('âœ… All tests completed successfully!');
+    console.log('\nðŸŽ‰ Backend is fully functional!');
+    console.log('ðŸ“Š Admin Panel: https://elbadry-production.up.railway.app/admin-panel.html');
+    console.log('ðŸ” Admin Login: admin@ignation.com / admin123');
 
   } catch (error) {
-    console.error('❌ Test failed:', error.message);
+    console.error('âŒ Test failed:', error.message);
   }
 }
 
 // Run tests
 runTests();
+
 
 
 

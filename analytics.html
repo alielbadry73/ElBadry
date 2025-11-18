@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -333,7 +333,7 @@
         async function loadAnalyticsData() {
             try {
                 // Simulate API calls - replace with actual backend endpoints
-                const response = await fetch('http://localhost:3000/api/analytics/overview');
+                const response = await fetch('https://elbadry-production.up.railway.app/api/analytics/overview');
                 if (response.ok) {
                     const data = await response.json();
                     analyticsData = { ...analyticsData, ...data };
@@ -711,6 +711,7 @@
     </script>
 </body>
 </html>
+
 
 
 

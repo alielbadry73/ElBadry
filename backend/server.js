@@ -14,6 +14,7 @@ const fs = require('fs');
 const axios = require('axios');
 
 const app = express();
+app.set('trust proxy', true);
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'change-this-secret-for-prod';
 
@@ -336,7 +337,49 @@ db.serialize(() => {
     `);
 });
 
+// Helper utilities
+function getClientIp(req) {
+    const headerIp = req.headers['cf-connecting-ip']
+        || req.headers['x-forwarded-for']
+        || req.headers['x-real-ip'];
+    if (headerIp && typeof headerIp === 'string') {
+        return headerIp.split(',')[0].trim();
+    }
+    if (req.ip) {
+        return req.ip.replace('::ffff:', '');
+    }
+    return req.connection?.remoteAddress?.replace('::ffff:', '') || null;
+}
+
+const geoCache = new Map();
+const GEO_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
 // API Routes
+
+app.get('/api/utils/ip-geolocation', async (req, res) => {
+    const clientIp = getClientIp(req);
+    const cacheKey = clientIp || 'unknown';
+    const cached = geoCache.get(cacheKey);
+    if (cached && (Date.now() - cached.timestamp) < GEO_CACHE_TTL) {
+        return res.json(cached.data);
+    }
+
+    const lookupUrl = clientIp && clientIp !== '::1'
+        ? `https://ipapi.co/${clientIp}/json/`
+        : 'https://ipapi.co/json/';
+
+    try {
+        const response = await axios.get(lookupUrl, { timeout: 5000 });
+        geoCache.set(cacheKey, { data: response.data, timestamp: Date.now() });
+        return res.json(response.data);
+    } catch (error) {
+        console.error('IP geolocation fetch failed:', error.message || error);
+        return res.status(500).json({
+            error: 'Geo lookup failed',
+            message: 'Unable to detect country automatically'
+        });
+    }
+});
 
 // Login endpoint
 app.post('/api/login', (req, res) => {

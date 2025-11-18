@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -217,7 +217,7 @@
                 <!-- Total -->
                 <div class="info-row">
                     <span class="info-label">Total Amount</span>
-                    <span class="info-value" id="totalAmount">£0.00</span>
+                    <span class="info-value" id="totalAmount">Â£0.00</span>
                 </div>
             </div>
             
@@ -243,12 +243,12 @@
         // Load order details on page load
         document.addEventListener('DOMContentLoaded', async function() {
             // DIAGNOSTIC: Show what's in localStorage
-            console.log('🔴 ============ ORDER PROCESSING PAGE LOADED ============');
-            console.log('🔴 localStorage.cart:', localStorage.getItem('cart'));
-            console.log('🔴 localStorage.enrollCourse:', localStorage.getItem('enrollCourse'));
-            console.log('🔴 localStorage.lastPurchasedCart:', localStorage.getItem('lastPurchasedCart'));
-            console.log('🔴 localStorage.lastOrder:', localStorage.getItem('lastOrder'));
-            console.log('🔴 ============================================');
+            console.log('ðŸ”´ ============ ORDER PROCESSING PAGE LOADED ============');
+            console.log('ðŸ”´ localStorage.cart:', localStorage.getItem('cart'));
+            console.log('ðŸ”´ localStorage.enrollCourse:', localStorage.getItem('enrollCourse'));
+            console.log('ðŸ”´ localStorage.lastPurchasedCart:', localStorage.getItem('lastPurchasedCart'));
+            console.log('ðŸ”´ localStorage.lastOrder:', localStorage.getItem('lastOrder'));
+            console.log('ðŸ”´ ============================================');
             
             await loadOrderDetails();
             
@@ -267,7 +267,7 @@
                 }
                 
                 // Fetch user's pending order
-                const response = await fetch(`http://localhost:3000/api/orders/pending/${userId}`, {
+                const response = await fetch(`https://elbadry-production.up.railway.app/api/orders/pending/${userId}`, {
                     headers: {
                         'Authorization': `Bearer ${authToken}`
                     }
@@ -292,7 +292,7 @@
             document.getElementById('orderDate').textContent = new Date(order.created_at).toLocaleString();
             document.getElementById('customerName').textContent = order.customer_name || localStorage.getItem('userName');
             document.getElementById('customerEmail').textContent = order.customer_email || localStorage.getItem('userEmail');
-            document.getElementById('totalAmount').textContent = `£${parseFloat(order.total_amount).toFixed(2)}`;
+            document.getElementById('totalAmount').textContent = `Â£${parseFloat(order.total_amount).toFixed(2)}`;
             
             // Display courses
             const coursesList = document.getElementById('coursesList');
@@ -314,13 +314,13 @@
                                     <div class="course-title">${courseTitle}</div>
                                     <div class="course-instructor">${courseInstructor}</div>
                                 </div>
-                                <div class="course-price">£${parseFloat(coursePrice).toFixed(2)}</div>
+                                <div class="course-price">Â£${parseFloat(coursePrice).toFixed(2)}</div>
                             </div>
                         `;
                     }).join('');
                 } else {
                     // No courses in order, try MULTIPLE fallback sources
-                    console.warn('⚠️ No courses found in order, trying fallback sources...');
+                    console.warn('âš ï¸ No courses found in order, trying fallback sources...');
                     console.log('Order data:', order);
                     console.log('Order courses field:', order.courses);
                     
@@ -355,7 +355,7 @@
                         console.log('Trying enrollCourse fallback:', enrollCourse);
                         if (enrollCourse) {
                             cart = [enrollCourse];
-                            console.log('✅ Cart loaded from enrollCourse:', cart);
+                            console.log('âœ… Cart loaded from enrollCourse:', cart);
                         }
                     }
                     
@@ -365,15 +365,15 @@
                         console.log('Trying sessionStorage fallback:', sessionCourse);
                         if (sessionCourse) {
                             cart = [sessionCourse];
-                            console.log('✅ Cart loaded from sessionStorage:', cart);
+                            console.log('âœ… Cart loaded from sessionStorage:', cart);
                         }
                     }
                     
                     if (cart && cart.length > 0) {
-                        console.log('✅ Found cart data from fallback:', cart);
+                        console.log('âœ… Found cart data from fallback:', cart);
                         displayCoursesFromCart(cart);
                     } else {
-                        console.error('❌ No course data found in any source!');
+                        console.error('âŒ No course data found in any source!');
                         coursesList.innerHTML = `
                             <div class="alert alert-warning">
                                 <iconify-icon icon="material-symbols:warning"></iconify-icon>
@@ -432,12 +432,12 @@
                             <div class="course-title">${item.title}</div>
                             <div class="course-instructor">${item.instructor || 'Instructor'}</div>
                         </div>
-                        <div class="course-price">£${price.toFixed(2)}</div>
+                        <div class="course-price">Â£${price.toFixed(2)}</div>
                     </div>
                 `;
             }).join('');
             
-            document.getElementById('totalAmount').textContent = `£${total.toFixed(2)}`;
+            document.getElementById('totalAmount').textContent = `Â£${total.toFixed(2)}`;
         }
         
         async function checkOrderStatus() {
@@ -447,7 +447,7 @@
                 
                 if (!authToken || !userId) return;
                 
-                const response = await fetch(`http://localhost:3000/api/orders/status/${userId}`, {
+                const response = await fetch(`https://elbadry-production.up.railway.app/api/orders/status/${userId}`, {
                     headers: {
                         'Authorization': `Bearer ${authToken}`
                     }
@@ -492,6 +492,7 @@
     </script>
 </body>
 </html>
+
 
 
 

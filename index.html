@@ -2784,9 +2784,17 @@
         
         // Auto-detect user's country
         function autoDetectCountry() {
-            // Try to get user's country from IP geolocation
-            fetch('https://ipapi.co/json/')
-                .then(response => response.json())
+            const apiConfig = window.API_CONFIG || { apiURL: 'https://elbadry-production.up.railway.app/api' };
+            const geoEndpoint = `${apiConfig.apiURL}/utils/ip-geolocation`;
+            
+            // Try to get user's country from IP geolocation via backend proxy
+            fetch(geoEndpoint)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Geo endpoint returned an error');
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     const countryCode = data.country_code;
                     console.log('Detected country:', countryCode, data.country_name);
@@ -3785,7 +3793,7 @@
             
             try {
                 console.log('Logging in user:', { email });
-                const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://your-app-name.up.railway.app/api';
+                const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://elbadry-production.up.railway.app/api';
                 
                 const response = await fetch(`${apiUrl}/login`, {
                     method: 'POST',
@@ -3907,7 +3915,7 @@
                 // Check for pending orders first
                 try {
                     console.log('🔍 Step 1: Checking order status for user ID:', data.user.id);
-                    const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://your-app-name.up.railway.app/api';
+                    const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://elbadry-production.up.railway.app/api';
                     const orderStatusResponse = await fetch(`${apiUrl}/orders/status/${data.user.id}`, {
                         headers: { 'Authorization': `Bearer ${data.token}` }
                     });
@@ -3939,7 +3947,7 @@
                                 console.log('🔍 Step 5: Fetching user orders by email:', data.user.email);
                                 
                                 // Use email-based endpoint which doesn't require admin access
-                                const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://your-app-name.up.railway.app/api';
+                                const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://elbadry-production.up.railway.app/api';
                                 const orderDetailsResponse = await fetch(`${apiUrl}/orders/by-email/${encodeURIComponent(data.user.email)}`);
                                 
                                 if (orderDetailsResponse.ok) {
@@ -4354,7 +4362,7 @@
             }
             
             try {
-                const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://your-app-name.up.railway.app/api';
+                const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://elbadry-production.up.railway.app/api';
                 const response = await fetch(`${apiUrl}/forgot-password`, {
                     method: 'POST',
                     headers: {
@@ -4417,7 +4425,7 @@
             }
             
             try {
-                const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://your-app-name.up.railway.app/api';
+                const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://elbadry-production.up.railway.app/api';
                 const response = await fetch(`${apiUrl}/verify-reset-code`, {
                     method: 'POST',
                     headers: {
@@ -4466,7 +4474,7 @@
             }
             
             try {
-                const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://your-app-name.up.railway.app/api';
+                const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://elbadry-production.up.railway.app/api';
                 const response = await fetch(`${apiUrl}/reset-password`, {
                     method: 'POST',
                     headers: {
