@@ -1711,7 +1711,7 @@
         async function grantAccess(userId, courseId) {
             try {
                 console.log('Granting access:', { userId, courseId });
-                const response = await fetch(`${getApiUrl()}/admin/grant-access', {
+                const response = await fetch(`${getApiUrl()}/admin/grant-access`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1747,7 +1747,7 @@
             try {
                 console.log('Revoking access for user:', userId, 'course:', courseId);
                 
-                const response = await fetch(`${getApiUrl()}/admin/revoke-access', {
+                const response = await fetch(`${getApiUrl()}/admin/revoke-access`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1885,7 +1885,7 @@
                     is_active: document.getElementById('editStatus').value === '1'
                 };
 
-                const response = await fetch(`${getApiUrl()}/admin/update-student', {
+                const response = await fetch(`${getApiUrl()}/admin/update-student`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1940,7 +1940,7 @@
                 console.log(`Removing student ${studentId} (${studentName})...`);
                 console.log('Auth token:', authToken ? 'Present' : 'Missing');
                 
-                const response = await fetch(`${getApiUrl()}/admin/remove-student', {
+                const response = await fetch(`${getApiUrl()}/admin/remove-student`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2178,7 +2178,7 @@
             }
 
             try {
-                const response = await fetch(`${getApiUrl()}/admin/delete-enrollment', {
+                const response = await fetch(`${getApiUrl()}/admin/delete-enrollment`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2478,7 +2478,7 @@
 
             try {
                 console.log('ðŸ—‘ï¸ Deleting order:', orderId);
-                const response = await fetch(`${getApiUrl()}/admin/delete-order', {
+                const response = await fetch(`${getApiUrl()}/admin/delete-order`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2777,7 +2777,7 @@
             }
 
             try {
-                const response = await fetch(`${getApiUrl()}/admin/teachers', {
+                const response = await fetch(`${getApiUrl()}/admin/teachers`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2965,7 +2965,7 @@
         async function loadParents() {
             try {
                 console.log('Loading parents from database...');
-                const response = await fetch(`${getApiUrl()}/admin/parents', {
+                const response = await fetch(`${getApiUrl()}/admin/parents`, {
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
                 
@@ -3230,7 +3230,7 @@
 
         async function exportParents() {
             try {
-                const response = await fetch(`${getApiUrl()}/admin/parents/export', {
+                const response = await fetch(`${getApiUrl()}/admin/parents/export`, {
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
                 
@@ -3994,7 +3994,7 @@
             const points = prompt('Enter points to award:');
             if (points && !isNaN(points) && points > 0) {
                 try {
-                    const response = await fetch(`${getApiUrl()}/admin/update-student-points', {
+                    const response = await fetch(`${getApiUrl()}/admin/update-student-points`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
