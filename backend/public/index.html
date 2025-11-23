@@ -877,7 +877,7 @@
                         <!-- Course Image -->
                         <div style="position: relative; overflow: hidden; height: 220px;">
                             <a href="course-details.html?course=mathematics">
-                                <img src="images/teacher1.png" class="img-fluid" alt="IGCSE Mathematics Course" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;" 
+                                <img src="images/teacher1.PNG" class="img-fluid" alt="IGCSE Mathematics Course" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;" 
                                      onmouseover="this.style.transform='scale(1.05)'" 
                                      onmouseout="this.style.transform='scale(1)'">
                             </a>
@@ -963,7 +963,7 @@
                         <!-- Course Image -->
                         <div style="position: relative; overflow: hidden; height: 220px;">
                             <a href="course-details.html?course=physics">
-                                <img src="images/teacher2.png" class="img-fluid" alt="IGCSE Physics Course" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;" 
+                                <img src="images/teacher2.PNG" class="img-fluid" alt="IGCSE Physics Course" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;" 
                                      onmouseover="this.style.transform='scale(1.05)'" 
                                      onmouseout="this.style.transform='scale(1)'">
                             </a>
@@ -1049,7 +1049,7 @@
                         <!-- Course Image -->
                         <div style="position: relative; overflow: hidden; height: 220px;">
                             <a href="course-details.html?course=english">
-                                <img src="images/teacher3.png" class="img-fluid" alt="IGCSE English Language Course" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;" 
+                                <img src="images/teacher3.PNG" class="img-fluid" alt="IGCSE English Language Course" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;" 
                                      onmouseover="this.style.transform='scale(1.05)'" 
                                      onmouseout="this.style.transform='scale(1)'">
                             </a>
@@ -4124,6 +4124,9 @@
                 // Get country codes
                 const phoneCountry = document.getElementById('phoneCountry').value;
                 const parentPhoneCountry = document.getElementById('parentPhoneCountry').value;
+                
+                // Use API_CONFIG to get the correct API URL
+                const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://elbadry-production.up.railway.app/api';
                 
                 const response = await fetch(`${apiUrl}/register`, {
                     method: 'POST',

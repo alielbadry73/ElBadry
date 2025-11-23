@@ -4141,7 +4141,10 @@
                 const phoneCountry = document.getElementById('phoneCountry').value;
                 const parentPhoneCountry = document.getElementById('parentPhoneCountry').value;
                 
-                const response = await fetch('https://elbadry-production.up.railway.app/api/register', {
+                // Use API_CONFIG to get the correct API URL
+                const apiUrl = (window.API_CONFIG && window.API_CONFIG.apiURL) || 'https://elbadry-production.up.railway.app/api';
+                
+                const response = await fetch(`${apiUrl}/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
