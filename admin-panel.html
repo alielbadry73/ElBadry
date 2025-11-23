@@ -328,7 +328,7 @@
                                 <div class="card stats-card">
                                     <div class="card-body text-center">
                                         <i class="bi bi-currency-pound fs-1 mb-2"></i>
-                                        <h3 id="totalRevenue">Â£0</h3>
+                                        <h3 id="totalRevenue">£0</h3>
                                         <p class="mb-0">Total Revenue</p>
                                     </div>
                                 </div>
@@ -358,7 +358,7 @@
                                             <div class="col-md-4">
                                                 <div class="card h-100" style="border: 2px solid #28a745; transition: all 0.3s; cursor: pointer;" onclick="showAddCourseModal()" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 20px rgba(40,167,69,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow=''">
                                                     <div class="card-body text-center">
-                                                        <div style="font-size: 3rem; margin-bottom: 1rem;">âž•</div>
+                                                        <i class="bi bi-plus-circle fs-1 mb-2"></i>
                                                         <h5 style="color: #28a745; font-weight: 700;">Add New Course</h5>
                                                         <p class="text-muted mb-0" style="font-size: 0.9rem;">Create a new course from scratch</p>
                                                     </div>
@@ -367,7 +367,7 @@
                                             <div class="col-md-4">
                                                 <div class="card h-100" style="border: 2px solid #f59e0b; transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 20px rgba(245,158,11,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow=''">
                                                     <div class="card-body text-center">
-                                                        <div style="font-size: 3rem; margin-bottom: 1rem;">ðŸ“Š</div>
+                                                        <i class="bi bi-graph-up fs-1 mb-2"></i>
                                                         <h5 style="color: #f59e0b; font-weight: 700;">View Reports</h5>
                                                         <p class="text-muted mb-0" style="font-size: 0.9rem;">Access detailed analytics and reports</p>
                                                     </div>
@@ -1390,7 +1390,7 @@
                 
                 // Calculate revenue
                 const revenue = orders.reduce((sum, order) => sum + (order.total_amount || 0), 0);
-                document.getElementById('totalRevenue').textContent = 'Â£' + revenue.toFixed(2);
+                document.getElementById('totalRevenue').textContent = '£' + revenue.toFixed(2);
 
 
                 // Load recent activity
@@ -1402,7 +1402,7 @@
                 document.getElementById('totalStudents').textContent = '0';
                 document.getElementById('totalCourses').textContent = '0';
                 document.getElementById('totalEnrollments').textContent = '0';
-                document.getElementById('totalRevenue').textContent = 'Â£0.00';
+                document.getElementById('totalRevenue').textContent = '£0.00';
             }
         }
 
@@ -1424,7 +1424,7 @@
                     })),
                     ...orders.slice(0, 3).map(o => ({
                         type: 'order',
-                        text: `${o.first_name} ${o.last_name} placed an order for Â£${o.total_amount}`,
+                        text: `${o.first_name} ${o.last_name} placed an order for £${o.total_amount}`,
                         date: o.created_at
                     }))
                 ].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
@@ -1694,7 +1694,7 @@
                     <tr>
                         <td>${course.title}</td>
                         <td>${course.instructor}</td>
-                        <td>Â£${course.price}</td>
+                        <td>£${course.price}</td>
                         <td>
                             <button class="btn btn-sm btn-primary" onclick="grantAccess(${studentId}, ${course.id})">
                                 <i class="bi bi-plus-circle"></i> Grant Access
@@ -2030,7 +2030,7 @@
                                                             </div>
                                                             <div class="text-end">
                                                                 <span class="badge bg-primary">Qty: ${item.quantity || 1}</span>
-                                                                <br><strong>Â£${item.price}</strong>
+                                                                <br><strong>£${item.price}</strong>
                                                             </div>
                                                         </div>
                                                     </div>`
@@ -2041,7 +2041,7 @@
                                     </div>
                                     <hr>
                                     <div>
-                                        <h5>Total Amount: Â£${order.total_amount}</h5>
+                                        <h5>Total Amount: £${order.total_amount}</h5>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -2092,7 +2092,7 @@
                 document.getElementById('totalEnrollments').textContent = enrollments.length;
                 
                 const revenue = orders.reduce((sum, order) => sum + (order.total_amount || 0), 0);
-                document.getElementById('totalRevenue').textContent = 'Â£' + revenue.toFixed(2);
+                document.getElementById('totalRevenue').textContent = '£' + revenue.toFixed(2);
 
                 loadRecentActivity();
             } catch (error) {
@@ -2100,7 +2100,7 @@
                 document.getElementById('totalStudents').textContent = '0';
                 document.getElementById('totalCourses').textContent = '0';
                 document.getElementById('totalEnrollments').textContent = '0';
-                document.getElementById('totalRevenue').textContent = 'Â£0.00';
+                document.getElementById('totalRevenue').textContent = '£0.00';
             }
         }
 
@@ -2114,7 +2114,7 @@
                         <td>${course.id}</td>
                         <td>${course.title}</td>
                         <td>${course.instructor}</td>
-                        <td>Â£${course.price}</td>
+                        <td>£${course.price}</td>
                         <td>${course.level}</td>
                         <td>
                             <span class="badge ${course.is_active ? 'bg-success' : 'bg-danger'}">${course.is_active ? 'Active' : 'Inactive'}</span>
@@ -2301,7 +2301,7 @@
                                 <div>${coursesInfo}</div>
                                 ${coursesList.length > 0 ? `<small class="text-muted">${coursesList.length} course${coursesList.length > 1 ? 's' : ''}</small>` : ''}
                             </td>
-                            <td><strong>Â£${parseFloat(order.total_amount).toFixed(2)}</strong></td>
+                            <td><strong>£${parseFloat(order.total_amount).toFixed(2)}</strong></td>
                             <td>
                                 <span class="badge bg-info">${order.payment_method || 'N/A'}</span>
                             </td>
@@ -2425,7 +2425,7 @@
                                             <h6>Order Information</h6>
                                             <ul class="list-group mb-3">
                                                 <li class="list-group-item"><strong>Order ID:</strong> #${order.id}</li>
-                                                <li class="list-group-item"><strong>Total Amount:</strong> Â£${parseFloat(order.total_amount).toFixed(2)}</li>
+                                                <li class="list-group-item"><strong>Total Amount:</strong> £${parseFloat(order.total_amount).toFixed(2)}</li>
                                                 <li class="list-group-item"><strong>Payment Method:</strong> ${order.payment_method || 'N/A'}</li>
                                                 <li class="list-group-item"><strong>Status:</strong> <span class="badge ${order.status === 'approved' ? 'bg-success' : 'bg-warning'}">${order.status || 'pending'}</span></li>
                                                 <li class="list-group-item"><strong>Created:</strong> ${new Date(order.created_at).toLocaleString()}</li>
@@ -2505,7 +2505,7 @@
             const searchTerm = document.getElementById('studentSearch').value.toLowerCase();
             
             try {
-                const response = await fetch(`${getApiUrl()}/admin/students', {
+                const response = await fetch(`${getApiUrl()}/admin/students`, {
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
                 const students = await response.json();
@@ -2603,7 +2603,7 @@
         async function testAdminToken(token) {
             try {
                 // Test the token with a simple API call
-                const response = await fetch(`${getApiUrl()}/admin/students', {
+            const response = await fetch(`${getApiUrl()}/admin/students`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -4118,7 +4118,7 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header bg-success text-white">
-                                <h5 class="modal-title">âž• Create New Course</h5>
+                                <h5 class="modal-title">Create New Course</h5>
                                 <button type="button" class="btn-close btn-close-white" onclick="closeAddCourseModal()"></button>
                             </div>
                             <div class="modal-body">
@@ -4143,7 +4143,7 @@
                                             <input type="text" class="form-control" id="courseInstructor" placeholder="e.g., Dr. Smith">
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label"><strong>Price (Â£)</strong> <span class="text-danger">*</span></label>
+                                            <label class="form-label"><strong>Price (£)</strong> <span class="text-danger">*</span></label>
                                             <input type="number" class="form-control" id="coursePrice" placeholder="299" required>
                                         </div>
                                     </div>
