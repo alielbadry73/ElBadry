@@ -1455,12 +1455,9 @@
                 });
                 
                 if (response.status === 401) {
-                    // Unauthorized - token expired or invalid
                     localStorage.removeItem('adminToken');
                     authToken = null;
-                    showToast('Session expired. Please login again.', 'error');
-                    document.getElementById('mainContent').style.display = 'none';
-                    showLoginModal();
+                    document.getElementById('studentsTable').innerHTML = '<tr><td colspan="6" class="text-center">No permission to view students. Contact admin.</td></tr>';
                     return;
                 }
                 
@@ -1474,7 +1471,7 @@
             } catch (error) {
                 console.error('Error loading students:', error);
                 showToast('Error loading students data', 'error');
-                document.getElementById('studentsTable').innerHTML = '<tr><td colspan="6" class="text-center text-danger">Error loading students. Please login first.</td></tr>';
+                document.getElementById('studentsTable').innerHTML = '<tr><td colspan="6" class="text-center text-danger">Error loading students. Please try again later.</td></tr>';
             }
         }
 
