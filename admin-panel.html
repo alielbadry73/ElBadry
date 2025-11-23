@@ -219,32 +219,7 @@
     </style>
 </head>
 <body>
-    <!-- Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Admin Login</h5>
-                </div>
-                <div class="modal-body">
-                    <form id="loginForm">
-                        <div class="mb-3">
-                            <label for="adminEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="adminEmail" autocapitalize="none" autocorrect="off" spellcheck="false" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="adminPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="adminPassword" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" required>
-                        </div>
-                        <div class="alert alert-danger" id="loginError" style="display: none;"></div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="adminLogin()">Login</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <div class="container-fluid" id="mainContent" style="display: block;">
         <div class="row">
@@ -1238,32 +1213,23 @@
 
         // Initialize admin panel
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if already logged in
             const savedToken = localStorage.getItem('adminToken');
             if (savedToken) {
                 authToken = savedToken;
-                document.getElementById('mainContent').style.display = 'block';
-                loadDashboard();
-                
-                // Auto-refresh data every 30 seconds
-                setInterval(() => {
-                    if (document.getElementById('students-section').style.display !== 'none') {
-                        loadStudents();
-                    }
-                    if (document.getElementById('dashboard-section').style.display !== 'none') {
-                        loadDashboard();
-                    }
-                }, 30000);
-            } else {
-                document.getElementById('mainContent').style.display = 'none';
-                showLoginModal();
             }
+            document.getElementById('mainContent').style.display = 'block';
+            loadDashboard();
+            setInterval(() => {
+                if (document.getElementById('students-section').style.display !== 'none') {
+                    loadStudents();
+                }
+                if (document.getElementById('dashboard-section').style.display !== 'none') {
+                    loadDashboard();
+                }
+            }, 30000);
         });
 
-        function showLoginModal() {
-            const modal = new bootstrap.Modal(document.getElementById('loginModal'));
-            modal.show();
-        }
+        function showLoginModal() {}
 
         async function login(email, password) {
             try {
@@ -1298,19 +1264,13 @@
             }
         }
 
-        // Handle login form submission
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('adminEmail').value;
-            const password = document.getElementById('adminPassword').value;
-            login(email, password);
-        });
+        // Login form removed
 
         function logout() {
             authToken = null;
             localStorage.removeItem('adminToken');
-            document.getElementById('mainContent').style.display = 'none';
-            showLoginModal();
+            document.getElementById('mainContent').style.display = 'block';
+            loadDashboard();
         }
 
         async function apiCall(endpoint, options = {}) {
@@ -2617,11 +2577,8 @@
             localStorage.removeItem('adminEmail');
             localStorage.removeItem('adminToken');
             authToken = null;
-            
-            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-            loginModal.show();
-            document.getElementById('mainContent').style.display = 'none';
-            
+            document.getElementById('mainContent').style.display = 'block';
+            initializeAdminPanel();
             console.log('ðŸšª Admin logged out');
         }
 
@@ -2638,9 +2595,8 @@
                 localStorage.removeItem('adminToken');
                 authToken = null;
                 
-                const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-                loginModal.show();
-                document.getElementById('mainContent').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                initializeAdminPanel();
             }
         }
 
@@ -2667,9 +2623,8 @@
                     localStorage.removeItem('adminToken');
                     authToken = null;
                     
-                    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-                    loginModal.show();
-                    document.getElementById('mainContent').style.display = 'none';
+                    document.getElementById('mainContent').style.display = 'block';
+                    initializeAdminPanel();
                 }
             } catch (error) {
                 console.log('âŒ Auth token validation error, clearing stored data');
@@ -2677,9 +2632,8 @@
                 localStorage.removeItem('adminToken');
                 authToken = null;
                 
-                const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-                loginModal.show();
-                document.getElementById('mainContent').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                initializeAdminPanel();
             }
         }
 
